@@ -1,0 +1,164 @@
+---
+// Testimonials section — mirrors `.work_testimonials_section` on live Webflow.
+// Live uses a Swiper slider (2 slides × 2 cards); we render slide 1 statically
+// (2 cards) with non-functional prev/next arrows for visual parity. Swiper
+// animation is deferred to Phase 4.
+//
+// Quotes, names, roles, and avatars are copied LITERALLY from the live site —
+// including the CMS-flattened duplicate wording and the fact that all four
+// cards use the same person and same Avatar-898.svg placeholder.
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+}
+
+const slide1: Testimonial[] = [
+  {
+    quote:
+      '“Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user experience that just works.“Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user.”',
+    name: 'Sarah Jenkins',
+    role: 'CEO, Kestrel',
+  },
+  {
+    quote:
+      '“Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a userthat just.”',
+    name: 'Sarah Jenkins',
+    role: 'CEO, Kestrel',
+  },
+];
+
+const avatar = '/assets/testimonials/Avatar-898.svg';
+const bgSrc = '/assets/testimonials/footer-image.webp';
+const bgSrcset = [
+  '/assets/testimonials/footer-image-p-500.webp 500w',
+  '/assets/testimonials/footer-image-p-800.webp 800w',
+  '/assets/testimonials/footer-image-p-1080.webp 1080w',
+  '/assets/testimonials/footer-image-p-1600.webp 1600w',
+  '/assets/testimonials/footer-image-p-2000.webp 2000w',
+  '/assets/testimonials/footer-image.webp 4312w',
+].join(', ');
+---
+<section id="testimonials" class="relative isolate overflow-hidden bg-bg">
+  {/* Full-bleed background image */}
+  <img
+    src={bgSrc}
+    srcset={bgSrcset}
+    sizes="100vw"
+    alt=""
+    loading="lazy"
+    class="absolute inset-0 z-0 h-full w-full object-cover opacity-40"
+  />
+  <div class="absolute inset-0 z-[1] bg-bg/60" aria-hidden="true"></div>
+
+  <div class="relative z-10 px-small md:px-large py-section-large">
+    <div class="mx-auto max-w-site-xlarge">
+      {/* Header: label + heading + arrows (arrows deferred to Phase 4) */}
+      <div class="flex flex-col gap-medium">
+        {/* Label row */}
+        <div class="flex items-center gap-small">
+          <p class="font-body text-xs uppercase tracking-widest text-stone-200">
+            Testimonials
+          </p>
+          <div class="h-px flex-1 bg-white/30" aria-hidden="true"></div>
+        </div>
+
+        {/* Heading + arrows */}
+        <div class="flex flex-col gap-medium md:flex-row md:items-end md:justify-between md:gap-large">
+          <h2
+            class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.15] font-black text-white max-w-site-large"
+          >
+            What my team has to say
+          </h2>
+
+          {/* Prev/Next buttons — visual parity only (non-functional; swiper deferred) */}
+          <div class="flex gap-small" aria-hidden="true">
+            <button
+              type="button"
+              disabled
+              class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/40 text-white/60 transition-opacity disabled:opacity-40"
+              aria-label="Previous testimonial (disabled)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                class="rotate-180"
+              >
+                <path
+                  d="M0.8125 8H15.1875"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+            <button
+              type="button"
+              disabled
+              class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/40 text-white/60 transition-opacity disabled:opacity-40"
+              aria-label="Next testimonial (disabled)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M0.8125 8H15.1875"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Slide 1: 2 cards */}
+      <div class="mt-large grid grid-cols-1 gap-large md:grid-cols-2 md:gap-xlarge">
+        {slide1.map((t) => (
+          <article
+            class="flex items-start gap-medium rounded-2xl border border-white/10 bg-white/5 p-large backdrop-blur-sm"
+          >
+            <div class="flex-1">
+              <p
+                class="font-heading text-xl md:text-2xl font-light leading-[1.35] text-white"
+              >
+                {t.quote}
+              </p>
+              <div class="mt-medium">
+                <p class="font-body text-sm font-medium text-white">{t.name}</p>
+                <p class="font-body text-sm text-stone-300">{t.role}</p>
+              </div>
+            </div>
+            <img
+              src={avatar}
+              alt=""
+              loading="lazy"
+              class="h-16 w-16 shrink-0 rounded-full object-cover md:h-20 md:w-20"
+            />
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
