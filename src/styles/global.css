@@ -1,7 +1,95 @@
 @import "tailwindcss";
 
+@theme {
+  /* Default background */
+  --color-bg: #171717;
+  --color-bg-light: #f5f5f4;
+
+  /* Neutrals */
+  --color-stone-200: #d6d3d1;
+  --color-stone-400: #a8a29e;
+
+  --color-gray-200: #e2e8f0;
+  --color-gray-400: #b2c0d1;
+  --color-gray-800: #27272a;
+  --color-gray-900: #171717;
+
+  --color-neutral-900: #171717;
+
+  /* Accent pastels */
+  --color-mint-100: #cff3e6;
+  --color-mint-200: #9ecfb6;
+
+  --color-blue-200: #7fb9c8;
+  --color-blue-400: #84afe2;
+
+  --color-yellow-300: #f9e27d;
+  --color-yellow-500: #d1a451;
+  --color-yellow-600: #d9a441;
+
+  --color-orange-200: #f2b38c;
+
+  --color-purple-200: #e4dbf5;
+  --color-purple-400: #b79be6;
+  --color-purple-600: #9c5cd1;
+
+  --color-pink-300: #e09aaf;
+
+  /* Brand */
+  --color-purple-jam: #662998;
+  --color-persian-indigo: #3b2084;
+  --color-navy-dark: #14202e;
+
+  /* Fonts (Typekit loaded in Task 0.4) */
+  --font-heading: "neue-haas-grotesk-display", sans-serif;
+  --font-body: "neue-haas-grotesk-text", sans-serif;
+
+  /* Finsweet Client-First 12-step spacing scale (semantic names → rem).
+     Exact px→rem values come from the Webflow source CSS variables. */
+  --spacing-tiny: 0.25rem;
+  --spacing-xxsmall: 0.5rem;
+  --spacing-xsmall: 1rem;
+  --spacing-small: 1.5rem;
+  --spacing-medium: 2rem;
+  --spacing-large: 3rem;
+  --spacing-xlarge: 4rem;
+  --spacing-xxlarge: 5rem;
+  --spacing-huge: 6rem;
+  --spacing-xhuge: 7rem;
+  --spacing-xxhuge: 10rem;
+  --spacing-section-small: 3rem;
+  --spacing-section-medium: 5rem;
+  --spacing-section-large: 4rem;
+  --spacing-section-huge: 5.5rem;
+
+  /* Max widths */
+  --max-w-xxsmall: 20rem;
+  --max-w-xsmall: 24rem;
+  --max-w-small: 32rem;
+  --max-w-medium: 48rem;
+  --max-w-large: 64rem;
+  --max-w-xlarge: 80rem;
+  --max-w-xxlarge: 96rem;
+
+  /* Zero out radii — brand uses square corners everywhere */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: #fff;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
