@@ -1,15 +1,9 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Token test</title>
-  </head>
-  <body class="bg-bg text-white font-body p-large">
-    <h1 class="font-heading text-5xl text-mint-200">Heading font + mint accent</h1>
-    <p class="mt-medium text-stone-200">Body font on dark background.</p>
-    <div class="mt-large p-small bg-purple-jam">Purple jam brand color</div>
-  </body>
-</html>
+<BaseLayout title="Typekit test">
+  <main class="p-large">
+    <h1 class="font-heading text-6xl text-mint-200">Neue Haas Grotesk Display</h1>
+    <p class="mt-medium font-body text-xl text-stone-200">Neue Haas Grotesk Text — body font test.</p>
+  </main>
+</BaseLayout>
