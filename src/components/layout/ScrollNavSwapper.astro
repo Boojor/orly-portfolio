@@ -1,0 +1,10 @@
+---
+// Renders a sentinel div at the top of the hero. Nav.astro's "absolute"
+// variant disappears when this sentinel scrolls out of view; the "fixed"
+// variant appears in its place.
+---
+<div data-nav-sentinel class="absolute top-0 left-0 w-full h-1 pointer-events-none"></div>
+<script>
+  import { initNavScrollSwap } from '../../scripts/nav-scroll-swap';
+  initNavScrollSwap();
+</script>
