@@ -1,0 +1,58 @@
+---
+import Logo from './Logo.astro';
+import { navLinks } from '../../config';
+---
+<!-- Absolute variant: transparent, overlaid on hero -->
+<nav
+  data-nav="absolute"
+  class="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-small md:px-large py-medium"
+>
+  <Logo class="h-8 w-auto text-white" />
+  <ul class="hidden md:flex items-center gap-large font-body text-white">
+    {navLinks.map((link) => (
+      <li>
+        <a href={link.href} class="hover:text-mint-200 transition-colors">
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <button
+    data-mobile-toggle
+    class="md:hidden text-white"
+    aria-label="Open menu"
+    aria-expanded="false"
+  >
+    <!-- MenuIcon will be imported in Task 1.6 -->
+    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+    <span class="block w-6 h-0.5 bg-white"></span>
+  </button>
+</nav>
+
+<!-- Fixed variant: solid, appears on scroll. Hidden by default; swapper toggles. -->
+<nav
+  data-nav="fixed"
+  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 items-center justify-between px-small md:px-large py-medium"
+>
+  <Logo class="h-8 w-auto text-white" />
+  <ul class="hidden md:flex items-center gap-large font-body text-white">
+    {navLinks.map((link) => (
+      <li>
+        <a href={link.href} class="hover:text-mint-200 transition-colors">
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+  <button
+    data-mobile-toggle
+    class="md:hidden text-white"
+    aria-label="Open menu"
+    aria-expanded="false"
+  >
+    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+    <span class="block w-6 h-0.5 bg-white mb-1"></span>
+    <span class="block w-6 h-0.5 bg-white"></span>
+  </button>
+</nav>
