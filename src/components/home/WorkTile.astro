@@ -1,0 +1,61 @@
+---
+// A single tile in the WorkGrid — mirrors `.work_visuals` + `.project-overlay` +
+// `.project-hover` from the live Webflow site. The image fills the tile and a
+// dark overlay with a pill label fades in on hover.
+interface Props {
+  href: string;
+  thumbnail?: string;
+  srcset?: string;
+  alt: string;
+  label?: string;
+  isPlaceholder?: boolean;
+}
+
+const {
+  href,
+  thumbnail,
+  srcset,
+  alt,
+  label = 'DIVE IN',
+  isPlaceholder = false,
+} = Astro.props;
+---
+<a
+  href={href}
+  class:list={[
+    'group relative block w-full overflow-hidden rounded-2xl bg-stone-900 min-h-[22rem] md:min-h-[19.25rem] md:aspect-square lg:min-h-[30rem] lg:aspect-auto',
+    isPlaceholder && 'pointer-events-none',
+  ]}
+  aria-disabled={isPlaceholder ? 'true' : undefined}
+  tabindex={isPlaceholder ? -1 : undefined}
+>
+  {thumbnail ? (
+    <img
+      src={thumbnail}
+      srcset={srcset}
+      sizes="(min-width: 1024px) 40vw, (min-width: 768px) 45vw, 90vw"
+      alt={alt}
+      loading="lazy"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+  ) : (
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-stone-800 to-stone-950"
+      aria-hidden="true"
+    ></div>
+  )}
+  <div
+    class:list={[
+      'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
+      isPlaceholder
+        ? 'bg-bg/50 opacity-100'
+        : 'bg-bg/70 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100',
+    ]}
+  >
+    <div
+      class="rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl"
+    >
+      {label}
+    </div>
+  </div>
+</a>

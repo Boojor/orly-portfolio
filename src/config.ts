@@ -29,6 +29,8 @@ export interface WorkItem {
   client: string;
   year: number;
   cover: string;
+  thumbnail: string;
+  thumbnailSrcset?: string;
   featured: boolean;
 }
 
@@ -39,6 +41,9 @@ export const work: WorkItem[] = [
     client: 'Cinch',
     year: 2024,
     cover: '/assets/cinch-cover.jpg',
+    thumbnail: '/assets/work/cinch.webp',
+    thumbnailSrcset:
+      '/assets/work/cinch-500.webp 500w, /assets/work/cinch-800.webp 800w, /assets/work/cinch-1080.webp 1080w, /assets/work/cinch.webp 1600w',
     featured: true,
   },
   {
@@ -47,6 +52,9 @@ export const work: WorkItem[] = [
     client: 'Fundbox',
     year: 2023,
     cover: '/assets/fundbox-cover.jpg',
+    thumbnail: '/assets/work/fbx-checkout.webp',
+    thumbnailSrcset:
+      '/assets/work/fbx-checkout-500.webp 500w, /assets/work/fbx-checkout-800.webp 800w, /assets/work/fbx-checkout.webp 1200w',
     featured: true,
   },
   {
@@ -55,6 +63,9 @@ export const work: WorkItem[] = [
     client: 'Fundbox',
     year: 2022,
     cover: '/assets/partnerships-cover.jpg',
+    thumbnail: '/assets/work/fbx-partnerships.png',
+    thumbnailSrcset:
+      '/assets/work/fbx-partnerships-500.png 500w, /assets/work/fbx-partnerships-800.png 800w, /assets/work/fbx-partnerships-1080.png 1080w, /assets/work/fbx-partnerships.png 1600w',
     featured: true,
   },
 ];

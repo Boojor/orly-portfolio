@@ -1,0 +1,90 @@
+---
+// "My Work" section — 6-cell grid mirroring the live Webflow site:
+//   [cinch tile]         [text block]
+//   [fbx-checkout tile]  [placeholder tile]
+//   [placeholder tile]   [fbx-partnerships tile]
+// Mobile collapses to a single column, preserving visual order.
+import { work } from '../../config';
+import WorkTile from './WorkTile.astro';
+
+const cinch = work.find((w) => w.slug === 'cinch-logistics')!;
+const fbxCheckout = work.find((w) => w.slug === 'fundbox-pay-checkout')!;
+const fbxPartnerships = work.find((w) => w.slug === 'fundbox-partnerships')!;
+---
+<section id="my-work" class="bg-bg px-small md:px-large py-section-large">
+  <div class="mx-auto max-w-site-xlarge">
+    <div class="grid grid-cols-1 gap-large md:grid-cols-2 md:gap-x-large md:gap-y-xlarge">
+      {/* 1. Cinch tile */}
+      <WorkTile
+        href={`/work/${cinch.slug}`}
+        thumbnail={cinch.thumbnail}
+        srcset={cinch.thumbnailSrcset}
+        alt={cinch.title}
+      />
+
+      {/* 2. Text block */}
+      <div class="flex items-center gap-medium md:gap-large">
+        {/* Vertical label — hidden below md, mirrors live `.vertical-label` */}
+        <div class="hidden md:flex flex-col items-center gap-small min-h-[14rem] opacity-70">
+          <div class="h-8 w-px bg-white/30" aria-hidden="true"></div>
+          <p
+            class="font-body text-xs text-stone-200 uppercase tracking-widest [writing-mode:vertical-rl] rotate-180 whitespace-nowrap"
+          >
+            The Designer Effect
+          </p>
+          <div class="h-8 w-px bg-white/30 flex-1" aria-hidden="true"></div>
+        </div>
+
+        <div class="flex flex-col items-start">
+          <h2 class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.15] font-black">
+            Examples of My Work
+          </h2>
+          <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-stone-200 leading-relaxed">
+            Working across industries keeps my thinking fresh and my skills
+            sharp. But I&rsquo;m especially drawn to complex B2B products where
+            the layers, decisions, and details turn the work into something
+            deeply rewarding.
+          </p>
+          <a
+            href="#"
+            class="mt-medium inline-flex items-center justify-center bg-yellow-500 px-medium py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
+          >
+            See all work
+          </a>
+        </div>
+      </div>
+
+      {/* 3. Fundbox Pay Checkout tile */}
+      <WorkTile
+        href={`/work/${fbxCheckout.slug}`}
+        thumbnail={fbxCheckout.thumbnail}
+        srcset={fbxCheckout.thumbnailSrcset}
+        alt={fbxCheckout.title}
+      />
+
+      {/* 4. Placeholder tile — coming soon */}
+      <WorkTile
+        href="#"
+        alt="More case studies coming soon"
+        label="COMING SOON"
+        isPlaceholder
+      />
+
+      {/* 5. Placeholder tile — coming soon */}
+      <WorkTile
+        href="#"
+        alt="More case studies coming soon"
+        label="COMING SOON"
+        isPlaceholder
+      />
+
+      {/* 6. Fundbox Partnerships tile */}
+      <WorkTile
+        href={`/work/${fbxPartnerships.slug}`}
+        thumbnail={fbxPartnerships.thumbnail}
+        srcset={fbxPartnerships.thumbnailSrcset}
+        alt={fbxPartnerships.title}
+      />
+    </div>
+  </div>
+</section>
