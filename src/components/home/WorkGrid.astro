@@ -1,30 +1,30 @@
 ---
-// "My Work" section — 6-cell grid mirroring the live Webflow site:
+// "My Work" section — 6-cell grid mirroring the live Webflow site exactly:
 //   [cinch tile]         [text block]
-//   [fbx-checkout tile]  [placeholder tile]
+//   [fbx-checkout tile]  [placeholder tile href="#"]
 //   [placeholder tile]   [fbx-partnerships tile]
-// Mobile collapses to a single column, preserving visual order.
-import { work } from '../../config';
+// All tiles on live use the same generic `Project-thumbnail.webp` and the
+// same "DIVE IN" hover overlay — real links and placeholder links alike.
 import WorkTile from './WorkTile.astro';
 
-const cinch = work.find((w) => w.slug === 'cinch-logistics')!;
-const fbxCheckout = work.find((w) => w.slug === 'fundbox-pay-checkout')!;
-const fbxPartnerships = work.find((w) => w.slug === 'fundbox-partnerships')!;
+const thumbnail = '/assets/work/Project-thumbnail.webp';
+const srcset =
+  '/assets/work/Project-thumbnail-p-500.webp 500w, /assets/work/Project-thumbnail.webp 624w';
 ---
 <section id="my-work" class="bg-bg px-small md:px-large py-section-large">
   <div class="mx-auto max-w-site-xlarge">
-    <div class="grid grid-cols-1 gap-large md:grid-cols-2 md:gap-x-large md:gap-y-xlarge">
+    <div class="flex flex-col gap-[1.5rem] md:grid md:grid-cols-2 md:gap-x-[2rem] md:gap-y-[3rem] lg:gap-y-[3rem]">
       {/* 1. Cinch tile */}
       <WorkTile
-        href={`/work/${cinch.slug}`}
-        thumbnail={cinch.thumbnail}
-        srcset={cinch.thumbnailSrcset}
-        alt={cinch.title}
+        href="/work/cinch-logistics"
+        thumbnail={thumbnail}
+        srcset={srcset}
+        alt=""
       />
 
       {/* 2. Text block */}
-      <div class="flex items-center gap-medium md:gap-large">
-        {/* Vertical label — hidden below md, mirrors live `.vertical-label` */}
+      <div class="flex items-center justify-between gap-medium md:gap-large">
+        {/* Vertical label — mirrors live `.vertical-label` */}
         <div class="hidden md:flex flex-col items-center gap-small min-h-[14rem] opacity-70">
           <div class="h-8 w-px bg-white/30" aria-hidden="true"></div>
           <p
@@ -56,34 +56,24 @@ const fbxPartnerships = work.find((w) => w.slug === 'fundbox-partnerships')!;
 
       {/* 3. Fundbox Pay Checkout tile */}
       <WorkTile
-        href={`/work/${fbxCheckout.slug}`}
-        thumbnail={fbxCheckout.thumbnail}
-        srcset={fbxCheckout.thumbnailSrcset}
-        alt={fbxCheckout.title}
+        href="/work/fundbox-pay-checkout"
+        thumbnail={thumbnail}
+        srcset={srcset}
+        alt=""
       />
 
-      {/* 4. Placeholder tile — coming soon */}
-      <WorkTile
-        href="#"
-        alt="More case studies coming soon"
-        label="COMING SOON"
-        isPlaceholder
-      />
+      {/* 4. Placeholder tile — matches live href="#" */}
+      <WorkTile href="#" thumbnail={thumbnail} srcset={srcset} alt="" />
 
-      {/* 5. Placeholder tile — coming soon */}
-      <WorkTile
-        href="#"
-        alt="More case studies coming soon"
-        label="COMING SOON"
-        isPlaceholder
-      />
+      {/* 5. Placeholder tile — matches live href="#" */}
+      <WorkTile href="#" thumbnail={thumbnail} srcset={srcset} alt="" />
 
       {/* 6. Fundbox Partnerships tile */}
       <WorkTile
-        href={`/work/${fbxPartnerships.slug}`}
-        thumbnail={fbxPartnerships.thumbnail}
-        srcset={fbxPartnerships.thumbnailSrcset}
-        alt={fbxPartnerships.title}
+        href="/work/fundbox-partnerships"
+        thumbnail={thumbnail}
+        srcset={srcset}
+        alt=""
       />
     </div>
   </div>

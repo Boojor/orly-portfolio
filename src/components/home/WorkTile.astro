@@ -1,61 +1,36 @@
 ---
 // A single tile in the WorkGrid — mirrors `.work_visuals` + `.project-overlay` +
-// `.project-hover` from the live Webflow site. The image fills the tile and a
-// dark overlay with a pill label fades in on hover.
+// `.project-hover` from the live Webflow site exactly. Every tile on live uses
+// the same generic `Project-thumbnail.webp` regardless of whether the link is
+// real or `href="#"`, and every overlay says "DIVE IN".
 interface Props {
   href: string;
-  thumbnail?: string;
+  thumbnail: string;
   srcset?: string;
   alt: string;
-  label?: string;
-  isPlaceholder?: boolean;
 }
 
-const {
-  href,
-  thumbnail,
-  srcset,
-  alt,
-  label = 'DIVE IN',
-  isPlaceholder = false,
-} = Astro.props;
+const { href, thumbnail, srcset, alt } = Astro.props;
 ---
 <a
   href={href}
-  class:list={[
-    'group relative block w-full overflow-hidden rounded-2xl bg-stone-900 min-h-[22rem] md:min-h-[19.25rem] md:aspect-square lg:min-h-[30rem] lg:aspect-auto',
-    isPlaceholder && 'pointer-events-none',
-  ]}
-  aria-disabled={isPlaceholder ? 'true' : undefined}
-  tabindex={isPlaceholder ? -1 : undefined}
+  class="group relative block w-full overflow-hidden rounded-2xl bg-stone-900 min-h-[15rem] md:min-h-[19.25rem] md:aspect-square md:max-w-[25rem] md:self-center lg:min-h-[30rem] lg:aspect-auto lg:max-w-none"
 >
-  {thumbnail ? (
-    <img
-      src={thumbnail}
-      srcset={srcset}
-      sizes="(min-width: 1024px) 40vw, (min-width: 768px) 45vw, 90vw"
-      alt={alt}
-      loading="lazy"
-      class="absolute inset-0 h-full w-full object-cover"
-    />
-  ) : (
-    <div
-      class="absolute inset-0 bg-gradient-to-br from-stone-800 to-stone-950"
-      aria-hidden="true"
-    ></div>
-  )}
+  <img
+    src={thumbnail}
+    srcset={srcset}
+    sizes="(min-width: 1024px) 40vw, (min-width: 768px) 45vw, 90vw"
+    alt={alt}
+    loading="lazy"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
   <div
-    class:list={[
-      'absolute inset-0 flex items-center justify-center transition-opacity duration-300',
-      isPlaceholder
-        ? 'bg-bg/50 opacity-100'
-        : 'bg-bg/70 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100',
-    ]}
+    class="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
   >
     <div
       class="rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl"
     >
-      {label}
+      DIVE IN
     </div>
   </div>
 </a>
