@@ -1,34 +1,59 @@
 ---
 // Split-text headline. Each token is an inline-block span so future
-// GSAP / animation work can target words individually. `highlightIndex`
-// recolors a single word using `highlightColor` (a Tailwind text class).
+// GSAP / animation work can target words individually.
+//
+// - `highlightIndex` recolors word(s) using `highlightColor`.
+// - `marks` is an optional array (parallel to `words`) of background-image
+//   URLs rendered to the right of a word as a decorative mark. Words with
+//   a mark get `padding-right: 3rem` so the 32x32 icon clears the glyphs.
+//   Because Tailwind 4 JIT can't see interpolated class strings, the
+//   `background-image` is passed via inline style.
 interface Props {
   words: string[];
   highlightIndex?: number | number[];
   highlightColor?: string;
+  marks?: (string | null)[];
 }
 const {
   words,
   highlightIndex = -1,
   highlightColor = 'text-yellow-500',
+  marks = [],
 } = Astro.props;
 const highlightSet = new Set(
   Array.isArray(highlightIndex) ? highlightIndex : [highlightIndex]
 );
 ---
 <h1
-  class="font-heading font-medium text-white leading-[1.05] tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+  class="font-heading font-light text-white leading-[1.15] tracking-tight text-5xl sm:text-6xl md:text-6xl lg:text-7xl"
 >
   {
-    words.map((word, i) => (
-      <span
-        class:list={[
-          'inline-block mr-[0.25em]',
-          highlightSet.has(i) && highlightColor,
-        ]}
-      >
-        {word}
-      </span>
-    ))
+    words.map((word, i) => {
+      const highlighted = highlightSet.has(i);
+      const mark = marks[i] ?? null;
+      if (mark) {
+        return (
+          <span
+            class:list={[
+              'inline-block mr-[0.25em] bg-no-repeat bg-right pr-[3rem]',
+              highlightColor,
+            ]}
+            style={`background-image: url('${mark}'); background-size: 32px 32px;`}
+          >
+            {word}
+          </span>
+        );
+      }
+      return (
+        <span
+          class:list={[
+            'inline-block mr-[0.25em]',
+            highlighted && highlightColor,
+          ]}
+        >
+          {word}
+        </span>
+      );
+    })
   }
 </h1>

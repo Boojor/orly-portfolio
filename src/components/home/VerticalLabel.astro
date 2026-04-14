@@ -1,0 +1,28 @@
+---
+// Vertical decorative label used inside the hero's metrics column.
+// Mirrors `.vertical-label--hero` from the live Webflow site: heart icon,
+// thin vertical line, then rotated uppercase text. Hidden below md to
+// match the live site (which drops the entire metrics column on tablet).
+---
+<div class="hidden md:flex flex-col items-center gap-small opacity-20 min-h-[18rem]">
+  <svg
+    class="h-4 w-4 text-yellow-500"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      d="M15 4.78393C15 2.69412 13.3125 1 11.2308 1C8.81263 1 8.30986 2.73222 8 3.48201C7.69012 2.73222 7.18737 1 4.76923 1C2.68754 1 1 2.69412 1 4.78393C1 8.88834 5.71823 12.964 8 15C10.2818 12.964 15 8.88834 15 4.78393Z"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <div class="w-px flex-1 bg-white/30"></div>
+  <p
+    class="font-body text-xs text-stone-200 uppercase tracking-widest [writing-mode:vertical-rl] rotate-180 whitespace-nowrap"
+  >
+    I don&rsquo;t need my hand held &mdash; I hold yours.
+  </p>
+</div>

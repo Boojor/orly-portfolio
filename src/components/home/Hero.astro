@@ -1,11 +1,12 @@
 ---
 import HeroSplitText from './HeroSplitText.astro';
 import HeroMetrics from './HeroMetrics.astro';
+import VerticalLabel from './VerticalLabel.astro';
 import ScrollNavSwapper from '../layout/ScrollNavSwapper.astro';
 
-// Real copy from the live Webflow site
-// (https://orly-website.webflow.io). Preserved verbatim; only the
-// highlighted word ("later") swaps color per the live design.
+// Headline structure mirrors the live Webflow markup — four decorated
+// "figure", "it", "out", "later" words flow inside the larger sentence.
+// "I turn" is split into two tokens so per-word animation stays clean.
 const headlineWords = [
   'I',
   'turn',
@@ -17,10 +18,18 @@ const headlineWords = [
   'shipped',
   'product',
 ];
-// Live site colors "figure", "it", "out", and "later" all in the same
-// yellow hue (each decorated with a trailing SVG icon in Webflow — we
-// keep just the color for now; decorative icons are out of scope for 2.2).
 const highlightIndex = [2, 3, 4, 5];
+const marks: (string | null)[] = [
+  null,
+  null,
+  '/assets/hero/mark-figure.svg',
+  '/assets/hero/mark-it.svg',
+  '/assets/hero/mark-out.svg',
+  null,
+  null,
+  null,
+  null,
+];
 
 const subcopy =
   "I dig into the business mess, figure out what actually drives value, and design experiences that deliver. Less stakeholder theater, more product in users' hands.";
@@ -31,28 +40,70 @@ const metrics = [
   { value: '93%', label: 'Clients Returning for More' },
 ];
 ---
-<section
-  class="relative min-h-screen bg-bg flex flex-col justify-center px-small md:px-large pt-huge pb-section-large"
->
+<section class="relative isolate min-h-screen overflow-hidden">
   <ScrollNavSwapper />
-  <div class="mx-auto w-full max-w-site-xlarge">
-    <HeroSplitText words={headlineWords} highlightIndex={highlightIndex} />
 
-    <p
-      class="mt-medium max-w-site-medium font-body text-lg md:text-xl text-stone-200 leading-relaxed"
-    >
-      {subcopy}
-    </p>
+  {/* Decorative background image — absolutely positioned behind content.
+     Section is `isolate` so the image's z-index is scoped to the hero and
+     can't bleed under the page background. */}
+  <img
+    src="/assets/hero/hero-bg.webp"
+    srcset="/assets/hero/hero-bg-p-500.webp 500w, /assets/hero/hero-bg-p-800.webp 800w, /assets/hero/hero-bg-p-1080.webp 1080w, /assets/hero/hero-bg-p-1600.webp 1600w, /assets/hero/hero-bg-p-2000.webp 2000w, /assets/hero/hero-bg-p-2600.webp 2600w, /assets/hero/hero-bg-p-3200.webp 3200w"
+    sizes="100vw"
+    alt=""
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+  />
+  {/* Readability overlay so the headline always clears the background. */}
+  <div class="pointer-events-none absolute inset-0 z-[1] bg-bg/70"></div>
 
-    <div class="mt-large">
-      <a
-        href="#contact"
-        class="inline-flex items-center justify-center bg-yellow-500 px-medium py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
-      >
-        Book a consult
-      </a>
+  <div class="relative z-10 mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-huge pb-xhuge">
+    <div class="grid grid-cols-1 gap-large md:grid-cols-[minmax(0,1fr)_minmax(0,360px)] md:gap-xlarge lg:grid-cols-[minmax(0,1.1fr)_minmax(0,380px)_auto] lg:gap-xlarge items-center">
+      {/* Column 1 — headline + sub + CTA */}
+      <div class="flex flex-col items-start gap-small">
+        <HeroSplitText
+          words={headlineWords}
+          highlightIndex={highlightIndex}
+          marks={marks}
+        />
+
+        <p class="max-w-site-medium font-body text-lg md:text-xl text-stone-200 leading-relaxed">
+          {subcopy}
+        </p>
+
+        <div class="mt-xsmall">
+          <a
+            href="#contact"
+            class="inline-flex items-center justify-center bg-yellow-500 px-medium py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
+          >
+            Book a consult
+          </a>
+        </div>
+      </div>
+
+      {/* Column 2 — portrait */}
+      <div class="relative w-full">
+        <img
+          src="/assets/hero/portrait.webp"
+          alt="Portrait of Orly Boojor"
+          loading="eager"
+          fetchpriority="high"
+          class="mx-auto w-full max-w-[420px] h-auto object-contain"
+        />
+      </div>
+
+      {/* Column 3 — metrics stack + vertical label. Hidden below lg to
+         match the live site where the metrics column drops on tablet. */}
+      <div class="hidden lg:flex items-stretch gap-large">
+        <HeroMetrics metrics={metrics} />
+        <VerticalLabel />
+      </div>
+
+      {/* Mobile metrics (shown only on smallest screens, matching the
+         live site which drops metrics on tablet via `display: none`). */}
+      <div class="md:hidden">
+        <HeroMetrics metrics={metrics} />
+      </div>
     </div>
-
-    <HeroMetrics metrics={metrics} />
   </div>
 </section>

@@ -1,6 +1,8 @@
 ---
 // Hero metric callouts. Copy comes from the parent `Hero.astro` so the
-// values stay editable in one place.
+// values stay editable in one place. The layout is a vertical stack so it
+// can live inside the hero's right-hand column (desktop) or stretch across
+// a row on narrower breakpoints.
 interface Metric {
   value: string;
   label: string;
@@ -10,7 +12,7 @@ interface Props {
 }
 const { metrics } = Astro.props;
 ---
-<div class="mt-xlarge grid grid-cols-1 gap-large sm:grid-cols-3 sm:gap-xlarge">
+<div class="flex flex-col gap-large lg:gap-medium">
   {
     metrics.map((m) => (
       <div class="flex flex-col border-t border-white/15 pt-small">
