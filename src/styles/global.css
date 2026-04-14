@@ -57,19 +57,22 @@
   --spacing-huge: 6rem;
   --spacing-xhuge: 7rem;
   --spacing-xxhuge: 10rem;
+  /* NOTE: section-large (4rem) is intentionally smaller than section-medium (5rem) — mirrors Finsweet Client-First source. */
   --spacing-section-small: 3rem;
   --spacing-section-medium: 5rem;
   --spacing-section-large: 4rem;
   --spacing-section-huge: 5.5rem;
 
-  /* Max widths */
-  --max-w-xxsmall: 20rem;
-  --max-w-xsmall: 24rem;
-  --max-w-small: 32rem;
-  --max-w-medium: 48rem;
-  --max-w-large: 64rem;
-  --max-w-xlarge: 80rem;
-  --max-w-xxlarge: 96rem;
+  /* Max widths — Tailwind 4 drives `max-w-*` utilities from `--container-*`,
+     NOT `--max-w-*`. Declaring these as `--container-*` makes `max-w-medium`,
+     `max-w-large`, etc. generate correctly. */
+  --container-xxsmall: 20rem;
+  --container-xsmall: 24rem;
+  --container-small: 32rem;
+  --container-medium: 48rem;
+  --container-large: 64rem;
+  --container-xlarge: 80rem;
+  --container-xxlarge: 96rem;
 
   /* Zero out radii — brand uses square corners everywhere */
   --radius-sm: 0;
