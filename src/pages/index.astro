@@ -2,23 +2,14 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Nav from '../components/layout/Nav.astro';
 import MobileNav from '../components/layout/MobileNav.astro';
-import ScrollNavSwapper from '../components/layout/ScrollNavSwapper.astro';
 import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/home/Hero.astro';
 ---
 <BaseLayout title="Orly Boojor">
   <Nav slot="nav" />
   <MobileNav />
 
-  <!-- Placeholder hero with sentinel for nav swap -->
-  <section class="relative min-h-screen bg-bg flex items-center justify-center">
-    <ScrollNavSwapper />
-    <h1 class="font-heading text-6xl text-mint-200">Hello</h1>
-  </section>
-
-  <!-- Filler to enable scrolling -->
-  <section class="min-h-screen bg-bg flex items-center justify-center">
-    <p class="font-body text-xl text-stone-200">Scroll up to see absolute→fixed swap</p>
-  </section>
+  <Hero />
 
   <Footer slot="footer" />
 </BaseLayout>

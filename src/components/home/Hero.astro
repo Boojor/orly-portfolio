@@ -1,0 +1,58 @@
+---
+import HeroSplitText from './HeroSplitText.astro';
+import HeroMetrics from './HeroMetrics.astro';
+import ScrollNavSwapper from '../layout/ScrollNavSwapper.astro';
+
+// Real copy from the live Webflow site
+// (https://orly-website.webflow.io). Preserved verbatim; only the
+// highlighted word ("later") swaps color per the live design.
+const headlineWords = [
+  'I',
+  'turn',
+  'figure',
+  'it',
+  'out',
+  'later',
+  'into',
+  'shipped',
+  'product',
+];
+// Live site colors "figure", "it", "out", and "later" all in the same
+// yellow hue (each decorated with a trailing SVG icon in Webflow — we
+// keep just the color for now; decorative icons are out of scope for 2.2).
+const highlightIndex = [2, 3, 4, 5];
+
+const subcopy =
+  "I dig into the business mess, figure out what actually drives value, and design experiences that deliver. Less stakeholder theater, more product in users' hands.";
+
+const metrics = [
+  { value: '15+ yrs', label: 'Shaping Products' },
+  { value: '170+', label: 'Products & Features Shipped' },
+  { value: '93%', label: 'Clients Returning for More' },
+];
+---
+<section
+  class="relative min-h-screen bg-bg flex flex-col justify-center px-small md:px-large pt-huge pb-section-large"
+>
+  <ScrollNavSwapper />
+  <div class="mx-auto w-full max-w-site-xlarge">
+    <HeroSplitText words={headlineWords} highlightIndex={highlightIndex} />
+
+    <p
+      class="mt-medium max-w-site-medium font-body text-lg md:text-xl text-stone-200 leading-relaxed"
+    >
+      {subcopy}
+    </p>
+
+    <div class="mt-large">
+      <a
+        href="#contact"
+        class="inline-flex items-center justify-center bg-yellow-500 px-medium py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
+      >
+        Book a consult
+      </a>
+    </div>
+
+    <HeroMetrics metrics={metrics} />
+  </div>
+</section>

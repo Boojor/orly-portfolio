@@ -1,0 +1,34 @@
+---
+// Split-text headline. Each token is an inline-block span so future
+// GSAP / animation work can target words individually. `highlightIndex`
+// recolors a single word using `highlightColor` (a Tailwind text class).
+interface Props {
+  words: string[];
+  highlightIndex?: number | number[];
+  highlightColor?: string;
+}
+const {
+  words,
+  highlightIndex = -1,
+  highlightColor = 'text-yellow-500',
+} = Astro.props;
+const highlightSet = new Set(
+  Array.isArray(highlightIndex) ? highlightIndex : [highlightIndex]
+);
+---
+<h1
+  class="font-heading font-medium text-white leading-[1.05] tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl"
+>
+  {
+    words.map((word, i) => (
+      <span
+        class:list={[
+          'inline-block mr-[0.25em]',
+          highlightSet.has(i) && highlightColor,
+        ]}
+      >
+        {word}
+      </span>
+    ))
+  }
+</h1>

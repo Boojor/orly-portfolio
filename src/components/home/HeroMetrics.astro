@@ -1,0 +1,26 @@
+---
+// Hero metric callouts. Copy comes from the parent `Hero.astro` so the
+// values stay editable in one place.
+interface Metric {
+  value: string;
+  label: string;
+}
+interface Props {
+  metrics: Metric[];
+}
+const { metrics } = Astro.props;
+---
+<div class="mt-xlarge grid grid-cols-1 gap-large sm:grid-cols-3 sm:gap-xlarge">
+  {
+    metrics.map((m) => (
+      <div class="flex flex-col border-t border-white/15 pt-small">
+        <span class="font-heading text-4xl md:text-5xl text-white leading-none">
+          {m.value}
+        </span>
+        <span class="mt-xxsmall font-body text-sm text-stone-200">
+          {m.label}
+        </span>
+      </div>
+    ))
+  }
+</div>
