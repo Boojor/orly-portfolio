@@ -63,16 +63,19 @@
   --spacing-section-large: 4rem;
   --spacing-section-huge: 5.5rem;
 
-  /* Max widths — Tailwind 4 drives `max-w-*` utilities from `--container-*`,
-     NOT `--max-w-*`. Declaring these as `--container-*` makes `max-w-medium`,
-     `max-w-large`, etc. generate correctly. */
-  --container-xxsmall: 20rem;
-  --container-xsmall: 24rem;
-  --container-small: 32rem;
-  --container-medium: 48rem;
-  --container-large: 64rem;
-  --container-xlarge: 80rem;
-  --container-xxlarge: 96rem;
+  /* Max widths — Tailwind 4 drives `max-w-*` utilities from `--container-*`.
+     Finsweet Client-First uses the same semantic names (`small`, `large`, etc.)
+     for BOTH spacing and max-widths, which means a plain `--container-large`
+     would COLLIDE with `--spacing-large` and Tailwind would resolve `max-w-large`
+     to the spacing value (3rem) instead of the container value (64rem).
+     We prefix with `site-` to keep names unique: `max-w-site-large` → 64rem. */
+  --container-site-xxsmall: 20rem;
+  --container-site-xsmall: 24rem;
+  --container-site-small: 32rem;
+  --container-site-medium: 48rem;
+  --container-site-large: 64rem;
+  --container-site-xlarge: 80rem;
+  --container-site-xxlarge: 96rem;
 
   /* Zero out radii — brand uses square corners everywhere */
   --radius-sm: 0;
