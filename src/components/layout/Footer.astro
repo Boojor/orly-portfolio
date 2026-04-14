@@ -1,48 +1,58 @@
 ---
 // Footer — mirrors live Webflow `.footer_component` exactly.
-// Two sections:
-//   1. footer_top-content:  H2 "Let's work together" + decorative SVG +
-//      paragraph (left) / ContactForm (right)
-//   2. footer_bottom-content: phone + email inline + copyright line
+// Two-tone:
+//   1. footer_top-content:  YELLOW-500 bg + BLACK text. H2 "Let's work together"
+//      with decorative SVG floating above it, paragraph, and contact form.
+//   2. footer_bottom-content: GRAY-900 bg + WHITE text. Phone + email inline
+//      with icons + copyright line.
+//
+// Live CSS references:
+//   .footer_top-content { background-color: yellow-500; color: black; }
+//   .footer_bottom-content { background-color: gray-900; }
+//   .footer_svg { position: absolute; inset: -116px 0% auto 196px;
+//                 width: 126px; } (desktop)
 import ContactForm from '../home/ContactForm.astro';
 import { contact, site } from '../../config';
 ---
-<footer id="contact" class="bg-bg border-t border-white/10">
-  {/* Top section */}
-  <div class="px-small md:px-large py-section-large">
-    <div class="mx-auto max-w-site-xlarge">
-      <div class="flex flex-col gap-large lg:grid lg:grid-cols-2 lg:gap-xlarge">
-        {/* Left: heading + svg + paragraph */}
-        <div class="flex flex-col">
-          <div class="flex items-start gap-medium">
-            <h2
-              class="font-heading text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-[1.05] font-black capitalize text-white"
-            >
-              Let&rsquo;s work together
-            </h2>
-            <img
-              src="/assets/footer/footer.svg"
-              alt=""
-              loading="lazy"
-              class="h-12 w-12 md:h-16 md:w-16 shrink-0"
-            />
+<footer id="contact" class="text-white">
+  {/* Top section — yellow with black text */}
+  <div class="bg-yellow-500 text-bg">
+    <div class="px-small md:px-large py-section-large">
+      <div class="mx-auto max-w-site-xlarge">
+        <div class="flex flex-col gap-large lg:grid lg:grid-cols-2 lg:gap-xlarge">
+          {/* Left: heading + svg + paragraph */}
+          <div class="flex flex-col">
+            {/* Wrapper is relative so the decorative SVG can float above the heading */}
+            <div class="relative">
+              <h2
+                class="font-heading text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-[1.05] font-black capitalize text-bg"
+              >
+                Let&rsquo;s work together
+              </h2>
+              <img
+                src="/assets/footer/footer.svg"
+                alt=""
+                loading="lazy"
+                class="pointer-events-none absolute h-16 w-16 md:h-20 md:w-20 xl:h-[126px] xl:w-[126px] -top-16 right-0 md:-top-24 md:right-4 xl:-top-[116px] xl:left-[196px] xl:right-auto"
+              />
+            </div>
+            <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-bg/80 leading-relaxed">
+              I love meeting new people and hearing about interesting problems.
+              Drop me a line.
+            </p>
           </div>
-          <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-stone-200 leading-relaxed">
-            I love meeting new people and hearing about interesting problems.
-            Drop me a line.
-          </p>
-        </div>
 
-        {/* Right: form */}
-        <div class="w-full">
-          <ContactForm />
+          {/* Right: form */}
+          <div class="w-full">
+            <ContactForm />
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  {/* Bottom section */}
-  <div class="border-t border-white/10 px-small md:px-large py-medium">
+  {/* Bottom section — dark with white text */}
+  <div class="bg-gray-900 px-small md:px-large py-medium">
     <div
       class="mx-auto flex max-w-site-xlarge flex-col gap-small md:flex-row md:items-center md:justify-between"
     >

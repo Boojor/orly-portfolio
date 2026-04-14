@@ -1,14 +1,25 @@
 ---
-// Contact form — mirrors live Webflow `#email-form` in footer_top-content.
-// Fields and copy are copied LITERALLY from live:
-//   1. "Hey, I'm"              -> name (text, required)
-//   2. "Please get back to me via" -> email (text, required)  [live uses type="text"]
-//   3. "I'm reaching out about" -> select with 4 options (First/Second/Third)
-//   4. Submit button "Send it" + arrow icon
+// Contact form — mirrors live Webflow `#email-form` inside footer_top-content.
+// Lives on the YELLOW footer top, so all text is BLACK and inputs use the
+// `.form_input.black` variant from live CSS:
 //
-// Phase 2: UI only. No real backend wired yet — form submits to "#" and logs
-// the payload to console. Phase 5 deploy task will pick a handler (Formspree,
-// Netlify Forms, mailto, etc.) based on the hosting target.
+//   .form_input {
+//     background-color: transparent;
+//     border: 1px solid #fff;
+//     border-radius: 999px;      /* PILL */
+//     padding: .5rem 1.5rem;
+//     font-size: 1.25rem;
+//     font-weight: 500;
+//   }
+//   .form_input.black {
+//     border-color: black;
+//     color: black;
+//   }
+//
+// Submit button is `.button.is-secondary` = BLACK bg, WHITE text, radius 16px.
+//
+// Phase 2: UI only. Stub handler logs payload + reveals success message.
+// Phase 5 deploy task will wire a real handler (Formspree / Netlify / mailto).
 ---
 <form
   id="email-form"
@@ -19,8 +30,11 @@
   class="flex flex-col gap-small"
 >
   {/* Field 1: Name */}
-  <div class="flex flex-col gap-xxsmall">
-    <label for="contact-name" class="font-body text-sm text-stone-200">
+  <div class="flex items-center gap-medium">
+    <label
+      for="contact-name"
+      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0"
+    >
       Hey, I&rsquo;m
     </label>
     <input
@@ -29,13 +43,16 @@
       name="name"
       placeholder="Your name"
       required
-      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white placeholder:text-stone-400 focus:border-yellow-500 focus:outline-none"
+      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20"
     />
   </div>
 
   {/* Field 2: Email (live uses type="text") */}
-  <div class="flex flex-col gap-xxsmall">
-    <label for="contact-email" class="font-body text-sm text-stone-200">
+  <div class="flex items-center gap-medium">
+    <label
+      for="contact-email"
+      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0 whitespace-nowrap"
+    >
       Please get back to me via
     </label>
     <input
@@ -44,20 +61,24 @@
       name="email"
       placeholder="Your email"
       required
-      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white placeholder:text-stone-400 focus:border-yellow-500 focus:outline-none"
+      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20"
     />
   </div>
 
   {/* Field 3: Select */}
-  <div class="flex flex-col gap-xxsmall">
-    <label for="contact-reason" class="font-body text-sm text-stone-200">
+  <div class="flex items-center gap-medium">
+    <label
+      for="contact-reason"
+      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0 whitespace-nowrap"
+    >
       I&rsquo;m reaching out about
     </label>
     <select
       id="contact-reason"
       name="reason"
       required
-      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white focus:border-yellow-500 focus:outline-none"
+      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg focus:outline-none focus:ring-2 focus:ring-bg/20 appearance-none bg-no-repeat"
+      style="background-image: url(&quot;data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'&gt;&lt;path d='M1 1.5L6 6.5L11 1.5' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&quot;); background-position: calc(100% - 1.5rem) center;"
     >
       <option value="placeholder">Please select</option>
       <option value="First">First choice</option>
@@ -66,11 +87,11 @@
     </select>
   </div>
 
-  {/* Submit */}
+  {/* Submit — .button.is-secondary: black bg, white text, 16px radius */}
   <div class="mt-small">
     <button
       type="submit"
-      class="inline-flex items-center gap-small rounded-full bg-yellow-500 px-large py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
+      class="inline-flex items-center gap-small rounded-2xl bg-bg px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-bg/90"
     >
       Send it
       <svg
@@ -100,10 +121,10 @@
   </div>
 
   {/* Success / error states — hidden until a real backend is wired in Phase 5 */}
-  <p data-form-success class="hidden font-body text-sm text-mint-200">
+  <p data-form-success class="hidden font-body text-sm text-bg">
     Thank you! Your submission has been received!
   </p>
-  <p data-form-error class="hidden font-body text-sm text-red-400">
+  <p data-form-error class="hidden font-body text-sm text-red-800">
     Oops! Something went wrong while submitting the form.
   </p>
 </form>

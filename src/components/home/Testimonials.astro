@@ -41,16 +41,21 @@ const bgSrcset = [
 ].join(', ');
 ---
 <section id="testimonials" class="relative isolate overflow-hidden bg-bg">
-  {/* Full-bleed background image */}
+  {/* Full-bleed background image — live uses min-height:1400px so the
+      image dominates the section. We let it fill + apply a gentle dark
+      gradient for text legibility without hiding the image. */}
   <img
     src={bgSrc}
     srcset={bgSrcset}
     sizes="100vw"
     alt=""
     loading="lazy"
-    class="absolute inset-0 z-0 h-full w-full object-cover opacity-40"
+    class="absolute inset-0 z-0 h-full w-full object-cover"
   />
-  <div class="absolute inset-0 z-[1] bg-bg/60" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 z-[1] bg-gradient-to-b from-bg/70 via-bg/40 to-bg/70"
+    aria-hidden="true"
+  ></div>
 
   <div class="relative z-10 px-small md:px-large py-section-large">
     <div class="mx-auto max-w-site-xlarge">
