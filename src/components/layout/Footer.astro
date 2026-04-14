@@ -1,41 +1,99 @@
 ---
-import Logo from './Logo.astro';
-import { contact, social, navLinks, site } from '../../config';
+// Footer — mirrors live Webflow `.footer_component` exactly.
+// Two sections:
+//   1. footer_top-content:  H2 "Let's work together" + decorative SVG +
+//      paragraph (left) / ContactForm (right)
+//   2. footer_bottom-content: phone + email inline + copyright line
+import ContactForm from '../home/ContactForm.astro';
+import { contact, site } from '../../config';
 ---
-<footer class="bg-bg border-t border-white/10 px-small md:px-large py-section-medium">
-  <div class="max-w-site-xlarge mx-auto grid gap-large md:grid-cols-3">
-    <div>
-      <Logo class="h-8 w-auto text-white mb-medium" />
-      <p class="font-body text-stone-200">{site.tagline}</p>
-    </div>
+<footer id="contact" class="bg-bg border-t border-white/10">
+  {/* Top section */}
+  <div class="px-small md:px-large py-section-large">
+    <div class="mx-auto max-w-site-xlarge">
+      <div class="flex flex-col gap-large lg:grid lg:grid-cols-2 lg:gap-xlarge">
+        {/* Left: heading + svg + paragraph */}
+        <div class="flex flex-col">
+          <div class="flex items-start gap-medium">
+            <h2
+              class="font-heading text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-[1.05] font-black capitalize text-white"
+            >
+              Let&rsquo;s work together
+            </h2>
+            <img
+              src="/assets/footer/footer.svg"
+              alt=""
+              loading="lazy"
+              class="h-12 w-12 md:h-16 md:w-16 shrink-0"
+            />
+          </div>
+          <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-stone-200 leading-relaxed">
+            I love meeting new people and hearing about interesting problems.
+            Drop me a line.
+          </p>
+        </div>
 
-    <div>
-      <h3 class="font-heading text-lg text-white mb-small">Navigate</h3>
-      <ul class="flex flex-col gap-xsmall font-body text-stone-200">
-        {navLinks.map((link) => (
-          <li><a href={link.href} class="hover:text-mint-200">{link.label}</a></li>
-        ))}
-      </ul>
-    </div>
-
-    <div>
-      <h3 class="font-heading text-lg text-white mb-small">Contact</h3>
-      <ul class="flex flex-col gap-xsmall font-body text-stone-200">
-        <li><a href={`mailto:${contact.email}`} class="hover:text-mint-200">{contact.email}</a></li>
-        <li><a href={`tel:${contact.phone.replace(/\s+/g, '')}`} class="hover:text-mint-200">{contact.phone}</a></li>
-        {social.linkedin && (
-          <li><a href={social.linkedin} target="_blank" rel="noopener" class="hover:text-mint-200">LinkedIn</a></li>
-        )}
-      </ul>
+        {/* Right: form */}
+        <div class="w-full">
+          <ContactForm />
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Slot for ContactForm, wired in Phase 2 -->
-  <div class="max-w-site-xlarge mx-auto mt-section-medium">
-    <slot name="contact-form" />
+  {/* Bottom section */}
+  <div class="border-t border-white/10 px-small md:px-large py-medium">
+    <div
+      class="mx-auto flex max-w-site-xlarge flex-col gap-small md:flex-row md:items-center md:justify-between"
+    >
+      <div class="flex flex-wrap items-center gap-small text-white">
+        <span class="font-body text-sm">Ways to contact me:</span>
+        <a
+          href={`tel:${contact.phone.replace(/\s+/g, '')}`}
+          class="inline-flex items-center gap-xsmall font-body text-sm hover:text-yellow-500"
+        >
+          <img
+            src="/assets/footer/Mobile-phone.svg"
+            alt=""
+            width="20"
+            height="20"
+            loading="lazy"
+            class="h-5 w-5"
+          />
+          {contact.phone}
+        </a>
+        <span class="h-4 w-px bg-white/30" aria-hidden="true"></span>
+        <a
+          href={`mailto:${contact.email}`}
+          class="inline-flex items-center gap-xsmall font-body text-sm hover:text-yellow-500"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1.59375 4.5C1.59375 4.22386 1.81761 4 2.09375 4H17.901C18.1772 4 18.401 4.22386 18.401 4.5V15.5052C18.401 15.7814 18.1772 16.0052 17.901 16.0052H2.09375C1.81761 16.0052 1.59375 15.7813 1.59375 15.5052V4.5Z"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+            <path
+              d="M2.19922 6.25098L10.0026 11.2031L17.806 6.25098"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </svg>
+          {contact.email}
+        </a>
+      </div>
+      <p class="font-body text-xs text-stone-400">
+        All rights reserved to {site.name} {new Date().getFullYear()}
+      </p>
+    </div>
   </div>
-
-  <p class="max-w-site-xlarge mx-auto mt-section-medium text-center font-body text-sm text-stone-400">
-    © {new Date().getFullYear()} {site.name}
-  </p>
 </footer>

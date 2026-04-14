@@ -1,0 +1,122 @@
+---
+// Contact form — mirrors live Webflow `#email-form` in footer_top-content.
+// Fields and copy are copied LITERALLY from live:
+//   1. "Hey, I'm"              -> name (text, required)
+//   2. "Please get back to me via" -> email (text, required)  [live uses type="text"]
+//   3. "I'm reaching out about" -> select with 4 options (First/Second/Third)
+//   4. Submit button "Send it" + arrow icon
+//
+// Phase 2: UI only. No real backend wired yet — form submits to "#" and logs
+// the payload to console. Phase 5 deploy task will pick a handler (Formspree,
+// Netlify Forms, mailto, etc.) based on the hosting target.
+---
+<form
+  id="email-form"
+  name="email-form"
+  action="#"
+  method="get"
+  data-contact-form
+  class="flex flex-col gap-small"
+>
+  {/* Field 1: Name */}
+  <div class="flex flex-col gap-xxsmall">
+    <label for="contact-name" class="font-body text-sm text-stone-200">
+      Hey, I&rsquo;m
+    </label>
+    <input
+      type="text"
+      id="contact-name"
+      name="name"
+      placeholder="Your name"
+      required
+      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white placeholder:text-stone-400 focus:border-yellow-500 focus:outline-none"
+    />
+  </div>
+
+  {/* Field 2: Email (live uses type="text") */}
+  <div class="flex flex-col gap-xxsmall">
+    <label for="contact-email" class="font-body text-sm text-stone-200">
+      Please get back to me via
+    </label>
+    <input
+      type="text"
+      id="contact-email"
+      name="email"
+      placeholder="Your email"
+      required
+      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white placeholder:text-stone-400 focus:border-yellow-500 focus:outline-none"
+    />
+  </div>
+
+  {/* Field 3: Select */}
+  <div class="flex flex-col gap-xxsmall">
+    <label for="contact-reason" class="font-body text-sm text-stone-200">
+      I&rsquo;m reaching out about
+    </label>
+    <select
+      id="contact-reason"
+      name="reason"
+      required
+      class="w-full rounded-md border border-white/20 bg-black/40 px-medium py-small font-body text-base text-white focus:border-yellow-500 focus:outline-none"
+    >
+      <option value="placeholder">Please select</option>
+      <option value="First">First choice</option>
+      <option value="Second">Second choice</option>
+      <option value="Third">Third choice</option>
+    </select>
+  </div>
+
+  {/* Submit */}
+  <div class="mt-small">
+    <button
+      type="submit"
+      class="inline-flex items-center gap-small rounded-full bg-yellow-500 px-large py-small font-heading text-base text-bg transition-colors hover:bg-yellow-600"
+    >
+      Send it
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M0.8125 8H15.1875"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+        <path
+          d="M8.47949 14.7077L15.1878 7.99935L8.47949 1.29102"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </svg>
+    </button>
+  </div>
+
+  {/* Success / error states — hidden until a real backend is wired in Phase 5 */}
+  <p data-form-success class="hidden font-body text-sm text-mint-200">
+    Thank you! Your submission has been received!
+  </p>
+  <p data-form-error class="hidden font-body text-sm text-red-400">
+    Oops! Something went wrong while submitting the form.
+  </p>
+</form>
+
+<script>
+  // TODO(Phase 5): replace console.log stub with a real form handler
+  // (Formspree / Netlify Forms / mailto) based on deploy target.
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    // eslint-disable-next-line no-console
+    console.log('[ContactForm] stub submit — payload:', Object.fromEntries(data));
+    form.querySelector<HTMLElement>('[data-form-success]')?.classList.remove('hidden');
+  });
+</script>
