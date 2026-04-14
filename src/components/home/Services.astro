@@ -1,0 +1,92 @@
+---
+import ServiceCard from './ServiceCard.astro';
+
+// Content hardcoded inline — these are not config, they're content, and there are only 4.
+const services = [
+  {
+    icon: '/assets/services/icon-1.svg',
+    heading: 'Turning ideas into MLP/MVP',
+    description:
+      'Turning early ideas into a clear direction through fast problem framing and early validation.',
+    tags: [
+      { label: 'Personas synthesis', color: 'mint-200' },
+      { label: 'Journey mapping', color: 'blue-200' },
+      { label: 'Competitive analysis', color: 'mint-100' },
+    ],
+  },
+  {
+    icon: '/assets/services/icon-2.svg',
+    heading: 'Plug and play design leadership',
+    description:
+      'Sliding into your workflow fast, absorbing context, filling gaps, and moving work forward with minimal guidance.',
+    tags: [
+      { label: 'User stories', color: 'yellow-300' },
+      { label: 'Async collaboration', color: 'orange-200' },
+      { label: 'Dev handoff & QA', color: 'yellow-600' },
+    ],
+  },
+  {
+    icon: '/assets/services/icon-3.svg',
+    heading: 'Visual design with purpose',
+    description:
+      "Creating clean, modern UI that supports your product's story and makes every screen feel intentional.",
+    tags: [
+      { label: 'Responsive patterns', color: 'purple-200' },
+      { label: 'Component design', color: 'purple-400' },
+      { label: 'Scalable typography', color: 'pink-300' },
+    ],
+  },
+  {
+    icon: '/assets/services/icon-4.svg',
+    // NOTE: "scales" (sic) matches the live site copy verbatim.
+    heading: 'Design systems that scales',
+    description:
+      'Building or reorganizing a design system that reduces chaos, speeds up work, and keeps everything consistent.',
+    tags: [
+      { label: 'Automated design tokens', color: 'gray-200' },
+      { label: 'Seamless documentation', color: 'blue-400' },
+      { label: 'Component libraries', color: 'gray-400' },
+    ],
+  },
+];
+---
+<section id="services" class="bg-bg px-small md:px-large py-section-large">
+  <div class="max-w-site-xlarge mx-auto">
+    <!-- Section header: label line + H2 + "See all services" secondary button -->
+    <header>
+      <div class="flex flex-row items-center gap-medium">
+        <div class="flex flex-1 items-center gap-medium">
+          <p class="whitespace-nowrap text-sm tracking-wide text-white/80">My services</p>
+          <div class="h-px flex-1 bg-white/80" aria-hidden="true" />
+        </div>
+        <a
+          href="#"
+          class="hidden md:inline-flex items-center bg-black px-medium py-xsmall text-sm text-white transition-colors hover:bg-white hover:text-black"
+        >
+          See all services
+        </a>
+      </div>
+
+      <div class="h-medium" aria-hidden="true" />
+
+      <h2 class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.2] font-black">
+        What I do best
+      </h2>
+    </header>
+
+    <!-- spacer-large -->
+    <div class="h-large" aria-hidden="true" />
+
+    <!-- Responsive grid. Carousel deferred to Phase 4 polish. -->
+    <div class="grid grid-cols-1 gap-large md:grid-cols-2 xl:grid-cols-4">
+      {services.map((svc) => (
+        <ServiceCard
+          icon={svc.icon}
+          heading={svc.heading}
+          description={svc.description}
+          tags={svc.tags}
+        />
+      ))}
+    </div>
+  </div>
+</section>

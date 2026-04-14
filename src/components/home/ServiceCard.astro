@@ -1,0 +1,109 @@
+---
+// Single service card. Matches the live site's .service_card: 1px white border,
+// asymmetric rounded corners (96/96/32/32), column flex with spacer-driven rhythm,
+// and a row of solid-color pill tags at the bottom.
+export interface Tag {
+  label: string;
+  color: string; // e.g. 'mint-200' — must exist as a key in TAG_STYLES
+}
+
+export interface Props {
+  icon: string;
+  heading: string;
+  description: string;
+  tags: Tag[];
+  href?: string;
+}
+
+// Static literal class strings so Tailwind 4's JIT picks them up.
+// Each pill is a solid tint background with black text (matches live site).
+const TAG_STYLES: Record<string, string> = {
+  'mint-100': 'bg-mint-100 text-black',
+  'mint-200': 'bg-mint-200 text-black',
+  'blue-200': 'bg-blue-200 text-black',
+  'blue-400': 'bg-blue-400 text-black',
+  'yellow-300': 'bg-yellow-300 text-black',
+  'yellow-600': 'bg-yellow-600 text-black',
+  'orange-200': 'bg-orange-200 text-black',
+  'purple-200': 'bg-purple-200 text-black',
+  'purple-400': 'bg-purple-400 text-black',
+  'pink-300': 'bg-pink-300 text-black',
+  'gray-200': 'bg-gray-200 text-black',
+  'gray-400': 'bg-gray-400 text-black',
+};
+
+const { icon, heading, description, tags, href = '#' } = Astro.props;
+---
+<article
+  class="service-card flex h-full flex-col items-start border border-white/90 bg-bg p-medium md:p-large"
+>
+  <!-- Top row: icon + "More info" link -->
+  <div class="flex w-full items-center justify-between gap-xsmall">
+    <img
+      src={icon}
+      alt=""
+      loading="lazy"
+      class="h-16 w-16 md:h-20 md:w-20 xl:h-[6.25rem] xl:w-[6.25rem]"
+    />
+    <a
+      href={href}
+      class="group inline-flex items-center gap-xxsmall text-sm font-light text-white/80 transition-colors hover:text-white"
+    >
+      <span>More info</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+        class="transition-transform group-hover:translate-x-0.5"
+      >
+        <g clip-path="url(#svc-arrow)">
+          <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M8.47949 14.7077L15.1878 7.99935L8.47949 1.29102" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+        <defs>
+          <clipPath id="svc-arrow">
+            <rect width="16" height="16" fill="currentColor" />
+          </clipPath>
+        </defs>
+      </svg>
+    </a>
+  </div>
+
+  <!-- spacer-2-5 (~2.5rem) -->
+  <div class="h-medium md:h-[2.5rem]" aria-hidden="true" />
+
+  <h3 class="font-heading text-[2rem] leading-[1.2] font-normal xl:text-[2.5rem]">
+    {heading}
+  </h3>
+
+  <!-- spacer-xxsmall -->
+  <div class="h-xxsmall" aria-hidden="true" />
+
+  <p class="text-base text-white/80">{description}</p>
+
+  <!-- spacer-medium; mt-auto so tags pin to card bottom -->
+  <div class="mt-auto h-medium" aria-hidden="true" />
+
+  <ul class="flex w-full flex-wrap gap-xxsmall">
+    {tags.map((tag) => (
+      <li
+        class:list={[
+          'rounded-full px-xxsmall py-tiny text-sm',
+          TAG_STYLES[tag.color] ?? 'bg-white text-black',
+        ]}
+      >
+        {tag.label}
+      </li>
+    ))}
+  </ul>
+</article>
+
+<style>
+  /* Asymmetric corner radius matches live .service_card (96/96/32/32). */
+  .service-card {
+    border-radius: 96px 96px 32px 32px;
+  }
+</style>
