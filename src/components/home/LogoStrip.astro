@@ -1,0 +1,32 @@
+---
+// Static partner logo grid. Marquee animation deferred to a later polish pass.
+const logos = [
+  { src: '/assets/logos/Partner-logos.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-1.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-2.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-3.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-4.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-5.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-6.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-7.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-9.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-10.svg', alt: 'Partner' },
+  { src: '/assets/logos/Partner-logos-11.svg', alt: 'Partner' },
+];
+---
+<section id="logos" class="bg-bg border-y border-white/10 px-small md:px-large py-section-small">
+  <div class="max-w-site-xlarge mx-auto">
+    <ul class="flex flex-wrap items-center justify-center gap-x-xlarge gap-y-large">
+      {logos.map((logo) => (
+        <li class="flex items-center justify-center">
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            class="max-h-10 md:max-h-14 w-auto opacity-80 hover:opacity-100 transition-opacity"
+            loading="lazy"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
