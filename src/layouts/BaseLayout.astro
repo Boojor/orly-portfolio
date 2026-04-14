@@ -1,12 +1,20 @@
 ---
 import '../styles/global.css';
+import { site } from '../config';
 
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Orly Boojor — Product Designer' } = Astro.props;
+const {
+  title,
+  description = 'Orly Boojor — Product Designer. Portfolio of product design work across fintech and logistics.',
+  ogImage = '/assets/og-default.jpg',
+} = Astro.props;
+
+const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -14,12 +22,35 @@ const { title, description = 'Orly Boojor — Product Designer' } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{title}</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/webclip.png" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Adobe Typekit -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
     <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <link rel="stylesheet" href="https://use.typekit.net/nod3oqm.css" />
+
+    <title>{fullTitle}</title>
   </head>
   <body>
-    <slot />
+    <slot name="nav" />
+    <main>
+      <slot />
+    </main>
+    <slot name="footer" />
   </body>
 </html>
