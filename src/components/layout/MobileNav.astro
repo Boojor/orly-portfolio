@@ -1,0 +1,47 @@
+---
+import { navLinks } from '../../config';
+import MenuIcon from './MenuIcon.astro';
+---
+<div data-mobile-nav class="fixed inset-0 z-[60] bg-bg hidden flex-col items-center justify-center" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <button
+    data-mobile-close
+    aria-label="Close menu"
+    class="absolute top-medium right-medium text-white"
+  >
+    <MenuIcon open={true} />
+  </button>
+  <ul class="flex flex-col items-center gap-large font-heading text-4xl text-white">
+    {navLinks.map((link) => (
+      <li>
+        <a href={link.href} data-mobile-link class="hover:text-mint-200 transition-colors">
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  const drawer = document.querySelector<HTMLElement>('[data-mobile-nav]');
+  const openButtons = document.querySelectorAll<HTMLElement>('[data-mobile-toggle]');
+  const closeButton = document.querySelector<HTMLElement>('[data-mobile-close]');
+  const links = document.querySelectorAll<HTMLElement>('[data-mobile-link]');
+
+  function open() {
+    drawer?.classList.remove('hidden');
+    drawer?.classList.add('flex');
+    openButtons.forEach((b) => b.setAttribute('aria-expanded', 'true'));
+  }
+  function close() {
+    drawer?.classList.add('hidden');
+    drawer?.classList.remove('flex');
+    openButtons.forEach((b) => b.setAttribute('aria-expanded', 'false'));
+  }
+
+  openButtons.forEach((b) => b.addEventListener('click', open));
+  closeButton?.addEventListener('click', close);
+  links.forEach((link) => link.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+</script>
