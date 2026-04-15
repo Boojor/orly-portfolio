@@ -40,7 +40,7 @@ const metrics = [
   { value: '93%', label: 'Clients Returning for More' },
 ];
 ---
-<section class="relative isolate min-h-screen overflow-hidden">
+<section class="relative isolate overflow-hidden">
   <ScrollNavSwapper />
 
   {/* Decorative background image — absolutely positioned behind content.
@@ -57,7 +57,7 @@ const metrics = [
   {/* Readability overlay so the headline always clears the background. */}
   <div class="pointer-events-none absolute inset-0 z-[1] bg-bg/70"></div>
 
-  <div class="relative z-10 mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-huge pb-xhuge">
+  <div class="relative z-10 mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-[8rem] lg:pt-[9rem] pb-0">
     <div class="grid grid-cols-1 gap-large md:grid-cols-[minmax(0,1fr)_minmax(0,360px)] md:gap-xlarge lg:grid-cols-[minmax(0,1.1fr)_minmax(0,380px)_auto] lg:gap-xlarge items-center">
       {/* Column 1 — headline + sub + CTA */}
       <div class="flex flex-col items-start gap-small">
