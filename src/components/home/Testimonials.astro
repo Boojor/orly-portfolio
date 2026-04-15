@@ -138,30 +138,34 @@ const bgSrcset = [
         </div>
       </div>
 
-      {/* Slide 1: 2 cards */}
-      <div class="mt-large grid grid-cols-1 gap-large md:grid-cols-2 md:gap-xlarge">
+      {/* Slide 1: 2 cards. Mobile: horizontal scroll-snap carousel.
+          Tablet+: 2-col grid. Full Swiper with pagination deferred to
+          Phase 4. */}
+      <div class="mt-large flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:snap-none md:gap-xlarge md:overflow-visible md:pb-0">
         {slide1.map((t) => (
-          <article
-            class="testimonial-card flex items-start gap-medium border border-white bg-white/5"
-          >
-            <div class="flex-1">
-              <p
-                class="font-heading text-xl md:text-2xl font-light leading-[1.35] text-white"
-              >
-                {t.quote}
-              </p>
-              <div class="mt-medium">
-                <p class="font-body text-sm font-medium text-white">{t.name}</p>
-                <p class="font-body text-sm text-stone-300">{t.role}</p>
+          <div class="shrink-0 basis-[90%] snap-start md:basis-auto md:shrink">
+            <article
+              class="testimonial-card flex items-start gap-medium border border-white bg-white/5 h-full"
+            >
+              <div class="flex-1">
+                <p
+                  class="font-heading text-xl md:text-2xl font-light leading-[1.35] text-white"
+                >
+                  {t.quote}
+                </p>
+                <div class="mt-medium">
+                  <p class="font-body text-sm font-medium text-white">{t.name}</p>
+                  <p class="font-body text-sm text-stone-300">{t.role}</p>
+                </div>
               </div>
-            </div>
-            <img
-              src={avatar}
-              alt=""
-              loading="lazy"
-              class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
-            />
-          </article>
+              <img
+                src={avatar}
+                alt=""
+                loading="lazy"
+                class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
+              />
+            </article>
+          </div>
         ))}
       </div>
     </div>
