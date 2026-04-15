@@ -2,12 +2,14 @@
 import Logo from './Logo.astro';
 import { navLinks } from '../../config';
 ---
-<!-- Absolute variant: transparent, overlaid on hero -->
+<!-- Absolute variant: transparent, overlaid on hero. Padding and logo
+     size match live Webflow .navbar_absolute { padding: 1rem 5% } and
+     .navbar_logo-link { width: 66px } (60px at tablet). -->
 <nav
   data-nav="absolute"
-  class="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-small md:px-large py-medium"
+  class="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-[5%] py-[1rem]"
 >
-  <Logo class="h-8 w-auto text-white" />
+  <Logo class="w-[60px] md:w-[66px] h-auto text-white" />
   <ul class="hidden md:flex items-center gap-large font-body text-white">
     {navLinks.map((link) => (
       <li>
@@ -30,12 +32,13 @@ import { navLinks } from '../../config';
   </button>
 </nav>
 
-<!-- Fixed variant: solid, appears on scroll. Hidden by default; swapper toggles. -->
+<!-- Fixed variant: solid, appears on scroll. Hidden by default; swapper toggles.
+     Sticky logo is smaller per live .navbar_logo-link.sticky (30px mobile, 42px tablet+). -->
 <nav
   data-nav="fixed"
-  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 items-center justify-between px-small md:px-large py-medium"
+  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 items-center justify-between px-[5%] py-[0.75rem]"
 >
-  <Logo class="h-8 w-auto text-white" />
+  <Logo class="w-[30px] md:w-[42px] h-auto text-white" />
   <ul class="hidden md:flex items-center gap-large font-body text-white">
     {navLinks.map((link) => (
       <li>
