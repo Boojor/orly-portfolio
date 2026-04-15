@@ -23,10 +23,13 @@ const liveHtmlPath = path.resolve(
 const liveUrl = `file://${liveHtmlPath}`;
 const localUrl = 'http://localhost:4321/';
 
+// Five breakpoints matching the user's QA reference in zz_Design QA/
 const sizes = [
-  { name: 'mobile', width: 390, height: 844 },
-  { name: 'tablet', width: 1024, height: 1366 },
-  { name: 'desktop', width: 1440, height: 900 },
+  { name: '375', width: 375, height: 812 },
+  { name: '768', width: 768, height: 1024 },
+  { name: '1024', width: 1024, height: 1366 },
+  { name: '1440', width: 1440, height: 900 },
+  { name: '1920', width: 1920, height: 1080 },
 ];
 
 test.describe('pair-review screenshots', () => {

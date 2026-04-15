@@ -103,4 +103,15 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Hero background image — literal port of live Webflow .bg-image.
+     Don't add mask, fade, or height overrides; the live site uses
+     exactly these 5 properties at every breakpoint. */
+  .bg-image {
+    z-index: -1;
+    object-fit: cover;
+    min-height: 1270px;
+    position: absolute;
+    inset: 0% 0% auto;
+  }
 }

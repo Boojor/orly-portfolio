@@ -48,20 +48,20 @@ const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
   </head>
   <body>
     <slot name="nav" />
-    {/* Global hero background image — matches live Webflow .bg-image:
-        sibling of main, absolutely positioned from the top, fixed
-        min-height: 1270px, extends beyond the hero section into the
-        content area below. No darkening overlay — the source image
-        is designed with dark zones for text contrast. */}
+    {/* Global hero background image — matches live Webflow .bg-image
+        literally:
+          z-index: -1;
+          object-fit: cover;
+          min-height: 1270px;
+          position: absolute;
+          inset: 0% 0% auto;
+        Sibling of .main-wrapper in live, placed at body level here. */}
     <img
       src="/assets/hero/hero-bg.webp"
       srcset="/assets/hero/hero-bg-p-500.webp 500w, /assets/hero/hero-bg-p-800.webp 800w, /assets/hero/hero-bg-p-1080.webp 1080w, /assets/hero/hero-bg-p-1600.webp 1600w, /assets/hero/hero-bg-p-2000.webp 2000w, /assets/hero/hero-bg-p-2600.webp 2600w, /assets/hero/hero-bg-p-3200.webp 3200w"
       sizes="100vw"
       alt=""
-      aria-hidden="true"
-      loading="eager"
-      fetchpriority="high"
-      class="pointer-events-none absolute top-0 left-0 right-0 z-[-1] min-h-[1270px] w-full object-cover object-top"
+      class="bg-image"
     />
     <main>
       <slot />

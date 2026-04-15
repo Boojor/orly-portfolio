@@ -48,21 +48,28 @@ const metrics = [
      No overlay — the source image's dark left side carries the
      headline's text contrast. */}
 
-  <div class="relative mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-[8rem] lg:pt-[9rem] pb-0">
-    <div class="grid grid-cols-1 gap-large md:grid-cols-[minmax(0,1fr)_minmax(0,360px)] md:gap-xlarge lg:grid-cols-[minmax(0,1.1fr)_minmax(0,380px)_auto] lg:gap-xlarge items-center">
-      {/* Column 1 — headline + sub + CTA */}
-      <div class="flex flex-col items-start gap-small">
+  {/* Padding-global (5%) + container-large max-width 97.5rem to match
+      live .padding-global + .container-large. Live hero uses tablet
+      pt: 8rem, desktop pt: 9rem. */}
+  <div class="relative mx-auto w-full max-w-[97.5rem] px-[5%] pt-[8rem] lg:pt-[9rem] pb-0">
+    {/* .hero_layout: base 3 equal columns with 1rem gap, tablet drops
+        to 2 cols (metrics hidden), mobile collapses to 1 col.
+        Matches live grid literally. */}
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+      {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
+          uses 1.5rem gap between children. */}
+      <div class="flex flex-col items-start gap-[1.5rem]">
         <HeroSplitText
           words={headlineWords}
           highlightIndex={highlightIndex}
           marks={marks}
         />
 
-        <p class="max-w-site-medium font-body text-lg md:text-xl text-stone-200 leading-relaxed">
+        <p class="font-body text-lg md:text-xl text-stone-200 leading-relaxed">
           {subcopy}
         </p>
 
-        <div class="mt-xsmall">
+        <div>
           {/* .button base from live: bg-yellow-500, white text, 16px radius,
               1rem 2.5rem padding, 1.125rem 700 weight */}
           <a
@@ -74,22 +81,22 @@ const metrics = [
         </div>
       </div>
 
-      {/* Column 2 — portrait. On mobile we let the portrait dominate
-          (full container width, matching live where the photo is a hero
-          feature). On tablet+ it's constrained so the 3-col layout
-          balances. */}
-      <div class="relative w-full">
+      {/* Column 2 — portrait. Live .hero_visual: width 100%,
+          min-height 31.25rem (500px), position relative. .image-hero:
+          absolute fill, object-contain. */}
+      <div class="relative w-full min-h-[31.25rem]">
         <img
           src="/assets/hero/portrait.webp"
           alt="Portrait of Orly Boojor"
           loading="eager"
           fetchpriority="high"
-          class="mx-auto w-full max-w-[520px] md:max-w-[380px] lg:max-w-[420px] h-auto object-contain"
+          class="absolute inset-0 h-full w-full object-contain"
         />
       </div>
 
-      {/* Column 3 — metrics stack + vertical label. Hidden below lg to
-         match the live site where the metrics column drops on tablet. */}
+      {/* Column 3 — metrics stack + vertical label. Hidden below lg
+         (≤991px) to match live's `.hero_metrics-wrapper { display:
+         none }` at max-width: 991px. */}
       <div class="hidden lg:flex items-stretch gap-large">
         <HeroMetrics metrics={metrics} />
         <VerticalLabel />
