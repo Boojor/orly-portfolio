@@ -142,7 +142,7 @@ const bgSrcset = [
       <div class="mt-large grid grid-cols-1 gap-large md:grid-cols-2 md:gap-xlarge">
         {slide1.map((t) => (
           <article
-            class="flex items-start gap-medium rounded-2xl border border-white/10 bg-white/5 p-large backdrop-blur-sm"
+            class="testimonial-card flex items-start gap-medium border border-white bg-white/5"
           >
             <div class="flex-1">
               <p
@@ -159,7 +159,7 @@ const bgSrcset = [
               src={avatar}
               alt=""
               loading="lazy"
-              class="h-16 w-16 shrink-0 rounded-full object-cover md:h-20 md:w-20"
+              class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
             />
           </article>
         ))}
@@ -167,3 +167,28 @@ const bgSrcset = [
     </div>
   </div>
 </section>
+
+<style>
+  /* Mobile (default): radius 96/96/16/16, column layout, smaller padding.
+     Matches live .testimonial_card at max-width: 767px. */
+  .testimonial-card {
+    border-radius: 96px 96px 16px 16px;
+    padding: 1.5rem;
+    flex-direction: column;
+  }
+  /* Tablet keeps mobile radius, scales padding */
+  @media (min-width: 768px) {
+    .testimonial-card {
+      padding: 2rem;
+    }
+  }
+  /* Desktop: asymmetric radius, row layout, full padding.
+     Matches live .testimonial_card at min-width: 992px. */
+  @media (min-width: 992px) {
+    .testimonial-card {
+      border-radius: 40px 96px 96px 40px;
+      padding: 3rem;
+      flex-direction: row;
+    }
+  }
+</style>
