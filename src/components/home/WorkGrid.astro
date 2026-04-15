@@ -1,25 +1,78 @@
 ---
-// "My Work" section — 6-cell grid mirroring the live Webflow site exactly:
+// "My Work" section — mirrors live Webflow exactly:
+//
+// Mobile (< md): text block first, then horizontal scroll-snap carousel
+//   of 5 tiles (matches live Swiper showing 1 tile with peek of next).
+//
+// Desktop (md+): 6-cell grid
 //   [cinch tile]         [text block]
 //   [fbx-checkout tile]  [placeholder tile href="#"]
 //   [placeholder tile]   [fbx-partnerships tile]
-// All tiles on live use the same generic `Project-thumbnail.webp` and the
-// same "DIVE IN" hover overlay — real links and placeholder links alike.
+//
+// All tiles on live use the same generic `Project-thumbnail.webp` and
+// the same "DIVE IN" hover overlay — real links and placeholder links
+// alike.
 import WorkTile from './WorkTile.astro';
 
 const thumbnail = '/assets/work/Project-thumbnail.webp';
 const srcset =
   '/assets/work/Project-thumbnail-p-500.webp 500w, /assets/work/Project-thumbnail.webp 624w';
+
+// Tiles in desktop grid order — row-major, left-to-right, top-to-bottom.
+const tiles = [
+  { href: '/work/cinch-logistics', alt: 'Cinch Logistics case study' },
+  { href: '/work/fundbox-pay-checkout', alt: 'Fundbox Pay Checkout case study' },
+  { href: '#', alt: '' },
+  { href: '#', alt: '' },
+  { href: '/work/fundbox-partnerships', alt: 'Fundbox Partnerships case study' },
+];
 ---
 <section id="my-work" class="bg-bg px-small md:px-large py-section-large">
   <div class="mx-auto max-w-site-xlarge">
-    <div class="flex flex-col gap-[1.5rem] md:grid md:grid-cols-2 md:gap-x-[2rem] md:gap-y-[3rem] lg:gap-y-[3rem]">
+    {/* Mobile: text block first, then horizontal carousel */}
+    <div class="flex flex-col gap-large md:hidden">
+      <div class="flex flex-col items-start">
+        <h2 class="font-heading text-[2.25rem] leading-[1.15] font-black">
+          Examples of My Work
+        </h2>
+        <p class="mt-medium max-w-site-medium font-body text-base text-stone-200 leading-relaxed">
+          Working across industries keeps my thinking fresh and my skills
+          sharp. But I&rsquo;m especially drawn to complex B2B products where
+          the layers, decisions, and details turn the work into something
+          deeply rewarding.
+        </p>
+        <a
+          href="#"
+          class="mt-medium inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-yellow-500 px-[2.5rem] py-[1rem] font-heading text-lg font-bold text-white transition-colors hover:bg-yellow-600 hover:border-yellow-600"
+        >
+          See all work
+        </a>
+      </div>
+
+      <div
+        class="flex snap-x snap-mandatory gap-small overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {tiles.map((t) => (
+          <div class="shrink-0 basis-[90%] snap-start">
+            <WorkTile
+              href={t.href}
+              thumbnail={thumbnail}
+              srcset={srcset}
+              alt={t.alt}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Desktop: 6-cell 2-col grid matching live layout */}
+    <div class="hidden md:grid md:grid-cols-2 md:gap-x-[2rem] md:gap-y-[3rem]">
       {/* 1. Cinch tile */}
       <WorkTile
-        href="/work/cinch-logistics"
+        href={tiles[0].href}
         thumbnail={thumbnail}
         srcset={srcset}
-        alt=""
+        alt={tiles[0].alt}
       />
 
       {/* 2. Text block */}
@@ -45,7 +98,6 @@ const srcset =
             the layers, decisions, and details turn the work into something
             deeply rewarding.
           </p>
-          {/* .button base — bg-yellow-500, white text, 16px radius */}
           <a
             href="#"
             class="mt-medium inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-yellow-500 px-[2.5rem] py-[1rem] font-heading text-lg font-bold text-white transition-colors hover:bg-yellow-600 hover:border-yellow-600"
@@ -57,24 +109,34 @@ const srcset =
 
       {/* 3. Fundbox Pay Checkout tile */}
       <WorkTile
-        href="/work/fundbox-pay-checkout"
+        href={tiles[1].href}
         thumbnail={thumbnail}
         srcset={srcset}
-        alt=""
+        alt={tiles[1].alt}
       />
 
-      {/* 4. Placeholder tile — matches live href="#" */}
-      <WorkTile href="#" thumbnail={thumbnail} srcset={srcset} alt="" />
+      {/* 4. Placeholder tile */}
+      <WorkTile
+        href={tiles[2].href}
+        thumbnail={thumbnail}
+        srcset={srcset}
+        alt={tiles[2].alt}
+      />
 
-      {/* 5. Placeholder tile — matches live href="#" */}
-      <WorkTile href="#" thumbnail={thumbnail} srcset={srcset} alt="" />
+      {/* 5. Placeholder tile */}
+      <WorkTile
+        href={tiles[3].href}
+        thumbnail={thumbnail}
+        srcset={srcset}
+        alt={tiles[3].alt}
+      />
 
       {/* 6. Fundbox Partnerships tile */}
       <WorkTile
-        href="/work/fundbox-partnerships"
+        href={tiles[4].href}
         thumbnail={thumbnail}
         srcset={srcset}
-        alt=""
+        alt={tiles[4].alt}
       />
     </div>
   </div>

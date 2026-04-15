@@ -80,8 +80,8 @@ const services = [
     <div class="h-large" aria-hidden="true" />
 
     {/* Mobile: horizontal scroll-snap carousel (matches live's Swiper).
-        Tablet+: 2-col grid. Desktop xl: 4-col grid. Full Swiper animation
-        with pagination dots deferred to Phase 4. */}
+        Tablet+: 2-col grid. Desktop lg+: 4-col grid. Full Swiper animation
+        deferred to Phase 4. */}
     <div class="flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-4">
       {services.map((svc) => (
         <div class="shrink-0 basis-[85%] snap-start md:basis-auto md:shrink">
@@ -92,6 +92,20 @@ const services = [
             tags={svc.tags}
           />
         </div>
+      ))}
+    </div>
+
+    {/* Pagination dots — static visual parity with live
+        .services-slider_bullet_item. Yellow ring, transparent fill,
+        first dot active (filled yellow). */}
+    <div class="mt-medium flex items-center gap-[0.5rem]" aria-hidden="true">
+      {[0, 1, 2, 3].map((i) => (
+        <span
+          class:list={[
+            'inline-block aspect-square rounded-full border border-yellow-500 w-[0.625rem] md:w-4',
+            i === 0 ? 'bg-yellow-500' : 'bg-transparent',
+          ]}
+        />
       ))}
     </div>
   </div>
