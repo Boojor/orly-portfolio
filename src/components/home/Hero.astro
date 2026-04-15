@@ -40,24 +40,15 @@ const metrics = [
   { value: '93%', label: 'Clients Returning for More' },
 ];
 ---
-<section class="relative isolate overflow-hidden">
+<section class="relative overflow-hidden">
   <ScrollNavSwapper />
 
-  {/* Decorative background image — absolutely positioned behind content.
-     Section is `isolate` so the image's z-index is scoped to the hero and
-     can't bleed under the page background. */}
-  <img
-    src="/assets/hero/hero-bg.webp"
-    srcset="/assets/hero/hero-bg-p-500.webp 500w, /assets/hero/hero-bg-p-800.webp 800w, /assets/hero/hero-bg-p-1080.webp 1080w, /assets/hero/hero-bg-p-1600.webp 1600w, /assets/hero/hero-bg-p-2000.webp 2000w, /assets/hero/hero-bg-p-2600.webp 2600w, /assets/hero/hero-bg-p-3200.webp 3200w"
-    sizes="100vw"
-    alt=""
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-  />
-  {/* Readability overlay so the headline always clears the background. */}
-  <div class="pointer-events-none absolute inset-0 z-[1] bg-bg/70"></div>
+  {/* Background image is rendered at body level in BaseLayout.astro
+     (matches live .bg-image which is a sibling of main-wrapper).
+     No overlay — the source image's dark left side carries the
+     headline's text contrast. */}
 
-  <div class="relative z-10 mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-[8rem] lg:pt-[9rem] pb-0">
+  <div class="relative mx-auto w-full max-w-site-xxlarge px-small md:px-large pt-[8rem] lg:pt-[9rem] pb-0">
     <div class="grid grid-cols-1 gap-large md:grid-cols-[minmax(0,1fr)_minmax(0,360px)] md:gap-xlarge lg:grid-cols-[minmax(0,1.1fr)_minmax(0,380px)_auto] lg:gap-xlarge items-center">
       {/* Column 1 — headline + sub + CTA */}
       <div class="flex flex-col items-start gap-small">
