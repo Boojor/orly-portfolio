@@ -63,13 +63,38 @@ npx playwright test tests/pair-review.spec.ts --project chromium-desktop
 
 For every drift-fix batch:
 
-1. Regenerate pair-review screenshots
-2. Visually compare `local-{bp}.png` vs `live-{bp}.png` side by side
-3. **But don't trust screenshots for diagnosis** — they compress and
-   can hide or invent differences. Use a diagnostic script under
-   `scripts/parity-diff-*.mjs` for any ambiguous drift.
-4. Update `../zz_Design QA/audit-report.md` after the batch
-5. Commit
+1. Regenerate pair-review screenshots:
+   `npx playwright test tests/pair-review.spec.ts --project chromium-desktop --grep "{bp}"`
+2. **Run the heatmap pixel diff at the affected breakpoint(s)**:
+   `node scripts/visual-diff.mjs 1440 1200` (crop height 1200px ≈ hero area)
+   Outputs to `screenshots/pair-review/`:
+     - `diff-{bp}-heatmap.png` — red pixels = differences, grey = matches
+     - `diff-{bp}-side-by-side.png` — local left / live right
+     - `diff-{bp}-stats.txt` — one-line % difference
+3. **Measure DOM** with `scripts/hero-cols.mjs`, `scripts/bg-image-diff.mjs`,
+   or write a new one-off for the affected section. Never trust a
+   screenshot-only verdict.
+4. **"Fixed" requires ALL three passes**: measurements match, 12/12
+   tests green, heatmap clean in the drift area. One out of three is
+   not fixed. If I claim fixed without all three, treat it as suspect.
+5. Update `../zz_Design QA/audit-report.md` after the batch
+6. Commit
+
+## Diagnostic scripts (gitignored under `scripts/`)
+
+| Script | Purpose |
+|---|---|
+| `visual-diff.mjs {bp} {cropH}` | Pixel heatmap diff of `local-{bp}.png` vs `live-{bp}.png` |
+| `hero-cols.mjs` | Measures hero grid columns at 1440 + 1920 |
+| `bg-image-diff.mjs` | Walks hero → logos → services heights at 992-1280 |
+| `hero-subcopy.mjs` | Measures hero `<p>` + button + wrapper at 1024 + 1440 |
+| `hero-width.mjs` | Confirms hero stretches full viewport minus 5% padding |
+
+Project-specific wiring for any new script:
+- Live URL: `file://` + `path.resolve('../../orly-website.webflow/index.html')`
+- Local URL: `http://localhost:4321/`
+- Network idle hangs on `file://` — use `.catch(() => page.goto(liveUrl))`
+  and `await page.waitForTimeout(1500)` for Webflow/Swiper JS to settle
 
 ## Diagnostic scripts
 
