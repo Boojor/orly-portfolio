@@ -48,11 +48,13 @@ const metrics = [
      No overlay — the source image's dark left side carries the
      headline's text contrast. */}
 
-  {/* Padding-global (5%) + container-large max-width 97.5rem to match
-      live .padding-global + .container-large. Live hero uses tablet
-      pt: 8rem, desktop pt: 9rem. Desktop=992+ overrides live in
+  {/* Live nesting: .padding-global { padding: 0 5% } wraps
+      .container-large { max-width: 97.5rem; margin: 0 auto }.
+      Padding is on OUTER so 5% is relative to viewport, not the
+      capped container. Desktop=992+ padding-top override lives in
       global.css under @layer utilities (data-hero-padding). */}
-  <div data-hero-padding class="relative mx-auto w-full max-w-[97.5rem] px-[5%] pt-[8rem] pb-[20px]">
+  <div class="px-[5%]">
+  <div data-hero-padding class="relative mx-auto w-full max-w-[97.5rem] pt-[8rem] pb-[20px]">
     {/* .hero_layout: base 3 equal columns with 1rem gap, tablet drops
         to 2 cols (metrics hidden), mobile collapses to 1 col. The
         `desktop=992+` rule lives in global.css under @layer utilities
@@ -112,5 +114,6 @@ const metrics = [
         <HeroMetrics metrics={metrics} />
       </div>
     </div>
+  </div>
   </div>
 </section>
