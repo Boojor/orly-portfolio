@@ -48,13 +48,18 @@ const metrics = [
      No overlay — the source image's dark left side carries the
      headline's text contrast. */}
 
-  {/* Live nesting: .padding-global { padding: 0 5% } wraps
-      .container-large { max-width: 97.5rem; margin: 0 auto }.
-      Padding is on OUTER so 5% is relative to viewport, not the
-      capped container. Desktop=992+ padding-top override lives in
-      global.css under @layer utilities (data-hero-padding). */}
+  {/* Hero fills the full viewport width (minus 5% padding). At
+      ultra-wide viewports (>1560px) the 97.5rem container cap live
+      uses creates an awkward empty gap on the right where the
+      portrait and metrics don't reach. Dropping the cap lets the
+      3 grid columns spread equally across the full content width
+      at all breakpoints, which looks better at wide screens and
+      identical at <=1560px viewports.
+
+      Desktop=992+ padding-top override lives in global.css under
+      @layer utilities (data-hero-padding). */}
   <div class="px-[5%]">
-  <div data-hero-padding class="relative mx-auto w-full max-w-[97.5rem] pt-[8rem] pb-[20px]">
+  <div data-hero-padding class="relative w-full pt-[8rem] pb-[20px]">
     {/* .hero_layout: base 3 equal columns with 1rem gap, tablet drops
         to 2 cols (metrics hidden), mobile collapses to 1 col. The
         `desktop=992+` rule lives in global.css under @layer utilities
