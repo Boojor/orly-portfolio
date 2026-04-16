@@ -77,63 +77,37 @@ const bgSrcset = [
             What my team has to say
           </h2>
 
-          {/* Prev/Next buttons — visual parity only (non-functional; swiper deferred) */}
-          <div class="flex gap-small" aria-hidden="true">
-            <button
-              type="button"
-              disabled
-              class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-transparent bg-white/10 text-white transition-opacity disabled:opacity-50"
-              aria-label="Previous testimonial (disabled)"
+          {/* Prev/Next buttons — visual parity only (non-functional;
+              swiper deferred to Phase 4).
+              Live .slider-button:
+                border: 1px solid transparent
+                background-color: #0000001a (black 10%)
+                color: white
+                border-radius: 999px
+                padding: 1rem 2.5rem
+                display: flex; justify-content: center; align-items: center
+              Live .team-slider_btn_layout: gap 0.5rem, flex-wrap */}
+          <div class="flex gap-[0.5rem]" aria-hidden="true">
+            <a
+              class="inline-flex items-center justify-center rounded-full border border-transparent bg-[#0000001a] px-[2.5rem] py-[1rem] text-white opacity-50"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                class="rotate-180"
-              >
-                <path
-                  d="M0.8125 8H15.1875"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-                <path
-                  d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </button>
-            <button
-              type="button"
-              disabled
-              class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-transparent bg-white/10 text-white transition-opacity disabled:opacity-50"
-              aria-label="Next testimonial (disabled)"
+              <div class="flex h-4 w-4 items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" class="rotate-180">
+                  <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+            </a>
+            <a
+              class="inline-flex items-center justify-center rounded-full border border-transparent bg-[#0000001a] px-[2.5rem] py-[1rem] text-white"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M0.8125 8H15.1875"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-                <path
-                  d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </button>
+              <div class="flex h-4 w-4 items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
+                  <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </div>
+            </a>
           </div>
         </div>
       </div>
