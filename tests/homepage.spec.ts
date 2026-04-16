@@ -20,7 +20,7 @@ test.describe('Homepage', () => {
 
   test('footer contains contact email', async ({ page }) => {
     await page.goto('/');
-    const email = page.getByText('boojor.orly@gmail.com');
+    const email = page.locator('#contact').getByRole('link', { name: 'boojor.orly@gmail.com' });
     await expect(email).toBeVisible();
   });
 

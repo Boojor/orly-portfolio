@@ -1,53 +1,125 @@
 ---
 import Logo from './Logo.astro';
-import { navLinks } from '../../config';
+import { navLinks, contact, social } from '../../config';
 ---
-<!-- Absolute variant: transparent, overlaid on hero. Padding and logo
-     size match live Webflow .navbar_absolute { padding: 1rem 5% } and
-     .navbar_logo-link { width: 66px } (60px at tablet). -->
+{/* Absolute variant: transparent, overlaid on hero. Literal port of
+    live .navbar_absolute + .navbar-content + .navbar_menu + .nav_actions.
+    Padding: 1rem 5%. Logo: 66px desktop, 60px tablet. */}
 <nav
   data-nav="absolute"
   class="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-[5%] py-[1rem]"
 >
-  <Logo class="w-[60px] md:w-[66px] h-auto text-white" />
-  <ul class="hidden md:flex items-center gap-large font-body text-white">
-    {navLinks.map((link) => (
-      <li>
-        <a href={link.href} class="hover:text-mint-200 transition-colors">
-          {link.label}
-        </a>
-      </li>
-    ))}
-  </ul>
+  <a href="/" class="shrink-0">
+    <Logo class="w-[60px] md:w-[66px] h-auto text-white" />
+  </a>
+
+  {/* Desktop nav: links + email + divider + LinkedIn.
+      Hidden below md (hamburger takes over). */}
+  <div class="hidden md:flex items-center gap-0">
+    {/* Nav text links */}
+    <ul class="flex items-center gap-large font-body text-white">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} class="hover:text-stone-200 transition-colors whitespace-nowrap">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {/* Vertical divider */}
+    <div class="mx-large h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+
+    {/* Email link with mail icon */}
+    <a
+      href={`mailto:${contact.email}`}
+      class="hidden lg:inline-flex items-center gap-[0.375rem] text-white hover:text-stone-200 transition-colors whitespace-nowrap"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M1.59375 4.5C1.59375 4.22386 1.81761 4 2.09375 4H17.901C18.1772 4 18.401 4.22386 18.401 4.5V15.5052C18.401 15.7814 18.1772 16.0052 17.901 16.0052H2.09375C1.81761 16.0052 1.59375 15.7813 1.59375 15.5052V4.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.19824 6.25098L10.0016 11.2031L17.805 6.25098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="font-body text-sm">{contact.email}</span>
+    </a>
+
+    {/* Vertical divider */}
+    <div class="mx-medium h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+
+    {/* LinkedIn icon */}
+    <a
+      href={social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden lg:inline-flex text-white hover:text-stone-200 transition-colors"
+      aria-label="LinkedIn"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M0 2.788C0 1.98.27 1.313.81.788 1.351.263 2.054 0 2.919 0c.849 0 1.537.259 2.062.776.54.533.81 1.228.81 2.085 0 .776-.262 1.422-.788 1.94C4.463 5.332 3.753 5.6 2.873 5.6h-.024c-.85 0-1.537-.267-2.062-.8C.263 4.267 0 3.596 0 2.788ZM.301 24V7.806h5.143V24H.301ZM8.293 24h5.143v-9.042c0-.566.062-1.003.186-1.31.216-.55.544-1.014.984-1.394.44-.38.992-.57 1.656-.57 1.73 0 2.595 1.22 2.595 3.661V24H24v-9.285c0-2.392-.54-4.206-1.622-5.443C21.297 8.036 19.869 7.418 18.093 7.418c-1.993 0-3.545.897-4.657 2.691v.049h-.023l.023-.049V7.806H8.293c.031.517.046 2.125.046 4.824 0 2.699-.015 6.489-.046 11.37Z"></path>
+      </svg>
+    </a>
+  </div>
+
+  {/* Hamburger button (mobile) */}
   <button
     data-mobile-toggle
     class="md:hidden text-white"
     aria-label="Open menu"
     aria-expanded="false"
   >
-    <!-- MenuIcon will be imported in Task 1.6 -->
     <span class="block w-6 h-0.5 bg-white mb-1"></span>
     <span class="block w-6 h-0.5 bg-white mb-1"></span>
     <span class="block w-6 h-0.5 bg-white"></span>
   </button>
 </nav>
 
-<!-- Fixed variant: solid, appears on scroll. Hidden by default; swapper toggles.
-     Sticky logo is smaller per live .navbar_logo-link.sticky (30px mobile, 42px tablet+). -->
+{/* Fixed variant: solid, appears on scroll. Same links + actions. */}
 <nav
   data-nav="fixed"
   class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 items-center justify-between px-[5%] py-[0.75rem]"
 >
-  <Logo class="w-[30px] md:w-[42px] h-auto text-white" />
-  <ul class="hidden md:flex items-center gap-large font-body text-white">
-    {navLinks.map((link) => (
-      <li>
-        <a href={link.href} class="hover:text-mint-200 transition-colors">
-          {link.label}
-        </a>
-      </li>
-    ))}
-  </ul>
+  <a href="/" class="shrink-0">
+    <Logo class="w-[30px] md:w-[42px] h-auto text-white" />
+  </a>
+
+  <div class="hidden md:flex items-center gap-0">
+    <ul class="flex items-center gap-large font-body text-white">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href} class="hover:text-stone-200 transition-colors whitespace-nowrap">
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="mx-large h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+
+    <a
+      href={`mailto:${contact.email}`}
+      class="hidden lg:inline-flex items-center gap-[0.375rem] text-white hover:text-stone-200 transition-colors whitespace-nowrap"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M1.59375 4.5C1.59375 4.22386 1.81761 4 2.09375 4H17.901C18.1772 4 18.401 4.22386 18.401 4.5V15.5052C18.401 15.7814 18.1772 16.0052 17.901 16.0052H2.09375C1.81761 16.0052 1.59375 15.7813 1.59375 15.5052V4.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M2.19824 6.25098L10.0016 11.2031L17.805 6.25098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span class="font-body text-sm">{contact.email}</span>
+    </a>
+
+    <div class="mx-medium h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+
+    <a
+      href={social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="hidden lg:inline-flex text-white hover:text-stone-200 transition-colors"
+      aria-label="LinkedIn"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M0 2.788C0 1.98.27 1.313.81.788 1.351.263 2.054 0 2.919 0c.849 0 1.537.259 2.062.776.54.533.81 1.228.81 2.085 0 .776-.262 1.422-.788 1.94C4.463 5.332 3.753 5.6 2.873 5.6h-.024c-.85 0-1.537-.267-2.062-.8C.263 4.267 0 3.596 0 2.788ZM.301 24V7.806h5.143V24H.301ZM8.293 24h5.143v-9.042c0-.566.062-1.003.186-1.31.216-.55.544-1.014.984-1.394.44-.38.992-.57 1.656-.57 1.73 0 2.595 1.22 2.595 3.661V24H24v-9.285c0-2.392-.54-4.206-1.622-5.443C21.297 8.036 19.869 7.418 18.093 7.418c-1.993 0-3.545.897-4.657 2.691v.049h-.023l.023-.049V7.806H8.293c.031.517.046 2.125.046 4.824 0 2.699-.015 6.489-.046 11.37Z"></path>
+      </svg>
+    </a>
+  </div>
+
   <button
     data-mobile-toggle
     class="md:hidden text-white"

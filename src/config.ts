@@ -17,10 +17,12 @@ export const social = {
   // Add more as needed
 };
 
+// Matches live Webflow nav links exactly (order + labels + hrefs).
 export const navLinks = [
   { label: 'Services', href: '/#services' },
-  { label: 'My Work', href: '/#my-work' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'My work', href: '/#my-work' },
+  { label: 'About me', href: '#' },
+  { label: 'Contact me', href: '#contact' },
 ];
 
 export interface WorkItem {
