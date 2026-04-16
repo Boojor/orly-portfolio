@@ -112,36 +112,50 @@ const bgSrcset = [
         </div>
       </div>
 
-      {/* Slide 1: 2 cards stacked vertically (full-width each).
-          Mobile: horizontal scroll-snap carousel (1 card visible).
-          Tablet+: vertical stack matching live Swiper slide layout
-          (.swiper-slide contains 2 full-width cards stacked).
-          Full Swiper with pagination deferred to Phase 4. */}
-      <div class="mt-large flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-col md:snap-none md:gap-xlarge md:overflow-visible md:pb-0">
+      {/* Cards container.
+          Desktop (992+): vertical stack, full-width cards, 2rem gap.
+          Mobile: vertical stack too (each card full-width, matching
+          live's Swiper which shows 1 card at a time — overflow is
+          handled by pagination dots, not horizontal scroll, since
+          these tall cards don't scroll well at mobile). */}
+      <div class="testimonial-cards mt-large flex flex-col gap-[2rem]">
         {slide1.map((t) => (
-          <div class="shrink-0 basis-[90%] snap-start md:basis-auto md:shrink md:w-full">
-            <article
-              class="testimonial-card flex items-start gap-medium border border-white h-full"
-            >
-              <div class="flex-1">
-                <p
-                  class="font-heading text-xl md:text-2xl font-light leading-[1.35] text-white"
-                >
-                  {t.quote}
-                </p>
-                <div class="mt-medium">
-                  <p class="font-body text-sm font-medium text-white">{t.name}</p>
-                  <p class="font-body text-sm text-stone-300">{t.role}</p>
-                </div>
+          <article
+            class="testimonial-card flex items-start gap-medium border border-white"
+          >
+            <div class="flex-1">
+              <p
+                class="font-heading text-xl md:text-2xl font-light leading-[1.35] text-white"
+              >
+                {t.quote}
+              </p>
+              <div class="mt-medium">
+                <p class="font-body text-sm font-medium text-white">{t.name}</p>
+                <p class="font-body text-sm text-stone-300">{t.role}</p>
               </div>
-              <img
-                src={avatar}
-                alt=""
-                loading="lazy"
-                class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
-              />
-            </article>
-          </div>
+            </div>
+            <img
+              src={avatar}
+              alt=""
+              loading="lazy"
+              class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
+            />
+          </article>
+        ))}
+      </div>
+
+      {/* Pagination dots — matches live .team-slider_bullet_item:
+          border: 0.09rem solid currentColor, border-radius: 100vw,
+          width: 1rem, aspect-ratio: 1. Active dot filled with
+          currentColor. */}
+      <div class="mt-medium flex items-center gap-[0.5rem]" aria-hidden="true">
+        {[0, 1].map((i) => (
+          <span
+            class:list={[
+              'inline-block aspect-square rounded-full border border-current w-4',
+              i === 0 ? 'bg-current' : 'bg-transparent',
+            ]}
+          />
         ))}
       </div>
     </div>
