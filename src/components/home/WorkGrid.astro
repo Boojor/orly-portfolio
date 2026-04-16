@@ -28,47 +28,15 @@ const tiles = [
 ];
 ---
 {/* Live: .padding-global { padding: 0 5% } + .container-large
-    { max-width: 97.5rem } + .padding-section-large { padding: 4rem 0 } */}
+    { max-width: 97.5rem } + .padding-section-large { padding: 4rem 0 }.
+    Single .work_layout grid with 6 items (5 tiles + 1 text-contents
+    wrapper at position 2) that reflows across breakpoints:
+      Mobile (≤767px): flex column, all stacked, tiles aspect-square max-w 44rem
+      Tablet (768-991): 2-col grid, tiles aspect-square max-w 25rem
+      Desktop (992+):   2-col grid, tiles min-h 30rem (non-square) */}
 <section id="my-work" class="px-[5%] py-section-large">
   <div class="mx-auto max-w-[97.5rem]">
-    {/* Mobile: text block first, then horizontal carousel */}
-    <div class="flex flex-col gap-large md:hidden">
-      <div class="flex flex-col items-start">
-        <h2 class="font-heading text-[2.25rem] leading-[1.15] font-black">
-          Examples of My Work
-        </h2>
-        <p class="mt-medium max-w-site-medium font-body text-base text-stone-200 leading-relaxed">
-          Working across industries keeps my thinking fresh and my skills
-          sharp. But I&rsquo;m especially drawn to complex B2B products where
-          the layers, decisions, and details turn the work into something
-          deeply rewarding.
-        </p>
-        <a
-          href="#"
-          class="mt-medium inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-yellow-500 px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-yellow-600 hover:border-yellow-600"
-        >
-          See all work
-        </a>
-      </div>
-
-      <div
-        class="flex snap-x snap-mandatory gap-small overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {tiles.map((t) => (
-          <div class="shrink-0 basis-[90%] snap-start">
-            <WorkTile
-              href={t.href}
-              thumbnail={thumbnail}
-              srcset={srcset}
-              alt={t.alt}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* Desktop: 6-cell 2-col grid matching live layout */}
-    <div class="hidden md:grid md:grid-cols-2 md:gap-x-[2rem] md:gap-y-[3rem]">
+    <div data-work-layout class="grid grid-cols-1 md:grid-cols-2 gap-x-[2rem] gap-y-[1.5rem] md:gap-y-[4rem] min-[992px]:gap-y-[3rem]">
       {/* 1. Cinch tile */}
       <WorkTile
         href={tiles[0].href}
@@ -77,7 +45,9 @@ const tiles = [
         alt={tiles[0].alt}
       />
 
-      {/* 2. Text block */}
+      {/* 2. Text block — stays at grid position 2 at all breakpoints.
+          At mobile it slots between tile 1 and tile 2 in the vertical
+          stack, matching live's flex-column order. */}
       <div class="flex items-center justify-between gap-medium md:gap-large">
         {/* Vertical label — literal port of live `.vertical-label`:
             z-index: 1, gap: 1rem, flex-col, justify-center,
