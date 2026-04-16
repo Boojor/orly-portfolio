@@ -115,11 +115,13 @@ const metrics = [
          to match live's `.hero_metrics-wrapper { display: none }` at
          max-width: 991px. Visibility controlled by data-hero-metrics-col
          in global.css @layer utilities. */}
-      {/* Col 3 children: metrics stack on the left, vertical label
-          pinned to the right edge of the column. justify-between +
-          no gap → label touches col3's right edge (matches live
-          where .vertical-label--hero sits at col3.right=1368). */}
-      <div data-hero-metrics-col class="hidden items-stretch justify-between">
+      {/* Literal port of live .hero_metrics-wrapper:
+          flex-row, items-center (vertical center), justify-end
+          (right-align), gap 3.5rem. Children: metrics stack on
+          left, vertical label on right. Col height is stretched
+          (by grid items-stretch) so items-center centers content
+          vertically within the hero's full height. */}
+      <div data-hero-metrics-col class="hidden items-center justify-end gap-[3.5rem]">
         <HeroMetrics metrics={metrics} />
         <VerticalLabel />
       </div>
