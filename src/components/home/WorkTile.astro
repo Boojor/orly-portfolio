@@ -12,9 +12,12 @@ interface Props {
 
 const { href, thumbnail, srcset, alt } = Astro.props;
 ---
+{/* Live .work_visuals: border-radius 16px, width 100%, min-height
+    30rem, position relative, overflow hidden. No max-width, no
+    aspect-square, no background-color. */}
 <a
   href={href}
-  class="group relative block w-full overflow-hidden rounded-2xl bg-stone-900 min-h-[15rem] md:min-h-[19.25rem] md:aspect-square md:max-w-[25rem] md:self-center lg:min-h-[30rem] lg:aspect-auto lg:max-w-none"
+  class="group relative block w-full overflow-hidden rounded-2xl min-h-[30rem]"
 >
   <img
     src={thumbnail}
