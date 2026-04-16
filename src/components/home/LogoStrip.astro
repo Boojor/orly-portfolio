@@ -14,32 +14,27 @@ const logos = [
   { src: '/assets/logos/Partner-logos-11.svg', alt: 'Partner' },
 ];
 ---
-{/* Vertically center the logo strip between hero bottom and services
-    top. No overflow-hidden — logos extend full width and will become
-    a continuous marquee in Phase 4. For now they scroll naturally
-    via the <ul>'s overflow-x-auto with hidden scrollbar. */}
+{/* Logo strip: edge-to-edge, no container cap. Logos are rendered
+    TWICE so they visually fill the viewport at wide widths (the
+    second set flows off-screen and will be used as the seamless
+    wrap-around for the Phase 4 marquee animation). overflow-hidden
+    clips cleanly at the viewport edges so no logo looks cut off. */}
 <section
   id="logos"
-  class="pt-[1.5rem] pb-[1rem]"
+  class="pt-[1.5rem] pb-[1rem] overflow-hidden"
 >
-  <div class="max-w-site-xxlarge mx-auto">
-    {/* Single-row horizontal track — matches live Webflow's marquee layout
-        statically. On narrow screens the row scrolls horizontally; on wide
-        screens it centers. Phase 4 will convert this to an auto-scrolling
-        marquee. */}
-    <ul
-      class="flex flex-nowrap items-center gap-xlarge md:gap-xxlarge overflow-x-auto px-small md:px-large [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    >
-      {logos.map((logo) => (
-        <li class="flex shrink-0 items-center justify-center">
-          <img
-            src={logo.src}
-            alt={logo.alt}
-            class="max-h-10 md:max-h-14 w-auto opacity-80 hover:opacity-100 transition-opacity"
-            loading="lazy"
-          />
-        </li>
-      ))}
-    </ul>
-  </div>
+  <ul
+    class="flex flex-nowrap items-center gap-xlarge md:gap-xxlarge w-max"
+  >
+    {[...logos, ...logos].map((logo) => (
+      <li class="flex shrink-0 items-center justify-center">
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          class="max-h-10 md:max-h-14 w-auto opacity-80 hover:opacity-100 transition-opacity"
+          loading="lazy"
+        />
+      </li>
+    ))}
+  </ul>
 </section>
