@@ -192,9 +192,9 @@
     [data-hero-metrics-col] {
       display: flex;
     }
-    [data-hero-metrics-stack] {
-      gap: 2rem; /* spacing-medium */
-    }
+    /* [data-hero-metrics-stack] gap is set to 3.5rem via Tailwind
+       `gap-[3.5rem]` on the element (matches live .hero_metrics
+       grid-row-gap: 3.5rem). No override here. */
     [data-hero-headline] {
       font-size: 4.5rem; /* live .hero_heading-text desktop */
       line-height: 1.2;

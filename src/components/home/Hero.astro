@@ -66,7 +66,7 @@ const metrics = [
     <div data-hero-layout class="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
       {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
           uses 1.5rem gap between children. */}
-      <div data-hero-col="1" class="order-3 md:order-none flex flex-col items-start gap-[1.5rem]">
+      <div data-hero-col="1" class="order-2 md:order-none flex flex-col items-start gap-[1.5rem]">
         <HeroSplitText
           words={headlineWords}
           highlightIndex={highlightIndex}
@@ -126,12 +126,9 @@ const metrics = [
         <VerticalLabel />
       </div>
 
-      {/* Mobile metrics — matches live's mobile order where metrics
-          appear between portrait (order-1) and headline (order-3).
-          At md+: hidden; metrics only show via col3 on desktop+. */}
-      <div class="order-2 md:hidden">
-        <HeroMetrics metrics={metrics} />
-      </div>
+      {/* Note: live hides .hero_metrics-wrapper entirely at ≤991px
+          (tablet + mobile). KPIs only appear at desktop (992+) via
+          [data-hero-metrics-col] in global.css @layer utilities. */}
     </div>
   </div>
   </div>
