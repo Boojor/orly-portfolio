@@ -133,6 +133,41 @@
    attributes wired in Hero.astro). Live Webflow's tablet→desktop
    transition is at exactly 992px. */
 @layer utilities {
+  /* Nav link pill — literal port of live .navbar_link:
+       border: 1px solid transparent
+       border-radius: 999px
+       padding: 0.5rem 1rem
+       transition: all 0.3s
+     Hover / active (.is-active): yellow border + yellow text.
+     Scroll-spy adds .is-active to the link whose section is in view. */
+  .nav-link {
+    display: inline-block;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+  }
+  .nav-link:hover,
+  .nav-link.is-active {
+    border-color: var(--color-yellow-500);
+    color: var(--color-yellow-500);
+  }
+
+  /* Fixed nav transition — fades down from above instead of abrupt
+     appear. nav-scroll-swap.ts toggles .nav-fixed--shown. */
+  .nav-fixed {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .nav-fixed.nav-fixed--shown {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
   /* Work tiles (.work_visuals literal port) — responsive sizing.
      Rules in @layer utilities so they override Tailwind's md:/lg:
      at the 992px breakpoint correctly. */

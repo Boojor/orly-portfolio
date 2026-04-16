@@ -25,7 +25,7 @@ import { navLinks, contact, social } from '../../config';
     <ul class="flex items-center gap-large font-body text-white">
       {navLinks.map((link) => (
         <li>
-          <a href={link.href} class="hover:text-stone-200 transition-colors whitespace-nowrap">
+          <a href={link.href} data-nav-link={link.href.replace('/#', '#')} class="nav-link whitespace-nowrap">
             {link.label}
           </a>
         </li>
@@ -78,12 +78,14 @@ import { navLinks, contact, social } from '../../config';
   </div>
 </nav>
 
-{/* Fixed variant: solid, appears on scroll. Same structure as
-    absolute. `hidden` by default → nav-scroll-swap.ts toggles to
-    `block` when scrolled past the sentinel (inner div does flex). */}
+{/* Fixed variant — literal port of live .navbar_fixed:
+    background-color: var(--bg-color) (solid #171717, NO blur, NO border),
+    padding: 0.5rem 5%. Transition: fade + slide in from top.
+    nav-scroll-swap.ts toggles `nav-fixed--shown` class instead of
+    `hidden` so the transition can animate. */}
 <nav
   data-nav="fixed"
-  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 px-[5%] py-[0.75rem]"
+  class="nav-fixed fixed top-0 left-0 right-0 z-50 bg-bg px-[5%] py-[0.5rem]"
 >
   <div class="flex items-center justify-between">
   <Logo class="shrink-0 w-[30px] md:w-[42px] h-auto text-white" />
@@ -92,7 +94,7 @@ import { navLinks, contact, social } from '../../config';
     <ul class="flex items-center gap-large font-body text-white">
       {navLinks.map((link) => (
         <li>
-          <a href={link.href} class="hover:text-stone-200 transition-colors whitespace-nowrap">
+          <a href={link.href} data-nav-link={link.href.replace('/#', '#')} class="nav-link whitespace-nowrap">
             {link.label}
           </a>
         </li>
