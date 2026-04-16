@@ -15,11 +15,12 @@ const logos = [
 ];
 ---
 {/* Vertically center the logo strip between hero bottom and services
-    top. Equal padding above/below so logos sit in the middle of the
-    gap between "Book a consult" and "My services" header. */}
+    top. No overflow-hidden — logos extend full width and will become
+    a continuous marquee in Phase 4. For now they scroll naturally
+    via the <ul>'s overflow-x-auto with hidden scrollbar. */}
 <section
   id="logos"
-  class="py-[3rem] overflow-hidden"
+  class="py-[3rem]"
 >
   <div class="max-w-site-xxlarge mx-auto">
     {/* Single-row horizontal track — matches live Webflow's marquee layout
