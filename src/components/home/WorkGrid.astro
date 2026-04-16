@@ -79,15 +79,19 @@ const tiles = [
 
       {/* 2. Text block */}
       <div class="flex items-center justify-between gap-medium md:gap-large">
-        {/* Vertical label — mirrors live `.vertical-label` */}
-        <div class="hidden md:flex flex-col items-center gap-small min-h-[14rem] opacity-70">
-          <div class="h-8 w-px bg-white/30" aria-hidden="true"></div>
+        {/* Vertical label — literal port of live `.vertical-label`:
+            z-index: 1, gap: 1rem, flex-col, justify-center,
+            align-self: stretch, align-items: center, width: 1.5rem,
+            overflow: visible. NO opacity (hero variant has 0.2, work
+            section does NOT). Lines and text are solid white. */}
+        <div class="hidden md:flex flex-col items-center justify-center self-stretch gap-[1rem] w-[1.5rem] overflow-visible">
+          <div class="w-px flex-1 bg-white" aria-hidden="true"></div>
           <p
-            class="font-body text-xs text-stone-200 uppercase tracking-widest [writing-mode:vertical-rl] rotate-180 whitespace-nowrap"
+            class="font-body text-xs text-white uppercase tracking-widest [writing-mode:vertical-rl] whitespace-nowrap"
           >
             The Designer Effect
           </p>
-          <div class="h-8 w-px bg-white/30 flex-1" aria-hidden="true"></div>
+          <div class="w-px flex-1 bg-white" aria-hidden="true"></div>
         </div>
 
         <div class="flex flex-col items-start">

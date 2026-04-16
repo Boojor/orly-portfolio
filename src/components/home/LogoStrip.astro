@@ -14,9 +14,12 @@ const logos = [
   { src: '/assets/logos/Partner-logos-11.svg', alt: 'Partner' },
 ];
 ---
+{/* Vertically center the logo strip between hero bottom and services
+    top. Equal padding above/below so logos sit in the middle of the
+    gap between "Book a consult" and "My services" header. */}
 <section
   id="logos"
-  class="py-section-small overflow-hidden"
+  class="py-[3rem] overflow-hidden"
 >
   <div class="max-w-site-xxlarge mx-auto">
     {/* Single-row horizontal track — matches live Webflow's marquee layout
