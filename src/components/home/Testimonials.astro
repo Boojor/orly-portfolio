@@ -138,12 +138,14 @@ const bgSrcset = [
         </div>
       </div>
 
-      {/* Slide 1: 2 cards. Mobile: horizontal scroll-snap carousel.
-          Tablet+: 2-col grid. Full Swiper with pagination deferred to
-          Phase 4. */}
-      <div class="mt-large flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:grid-cols-2 md:snap-none md:gap-xlarge md:overflow-visible md:pb-0">
+      {/* Slide 1: 2 cards stacked vertically (full-width each).
+          Mobile: horizontal scroll-snap carousel (1 card visible).
+          Tablet+: vertical stack matching live Swiper slide layout
+          (.swiper-slide contains 2 full-width cards stacked).
+          Full Swiper with pagination deferred to Phase 4. */}
+      <div class="mt-large flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-col md:snap-none md:gap-xlarge md:overflow-visible md:pb-0">
         {slide1.map((t) => (
-          <div class="shrink-0 basis-[90%] snap-start md:basis-auto md:shrink">
+          <div class="shrink-0 basis-[90%] snap-start md:basis-auto md:shrink md:w-full">
             <article
               class="testimonial-card flex items-start gap-medium border border-white h-full"
             >
