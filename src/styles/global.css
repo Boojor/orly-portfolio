@@ -133,6 +133,30 @@
    attributes wired in Hero.astro). Live Webflow's tablet→desktop
    transition is at exactly 992px. */
 @layer utilities {
+  /* Nav logo (absolute variant) — literal live sizing at each
+     breakpoint. Rules live here (not Tailwind arbitrary variants)
+     so they cascade AFTER any `md:`/`lg:` class on the same
+     element. Live measurements: 375→42, 768→51, 992→62,
+     1440→63 (~66). */
+  .nav-logo-absolute {
+    width: 42px;
+  }
+  @media (width >= 768px) {
+    .nav-logo-absolute {
+      width: 51px;
+    }
+  }
+  @media (width >= 992px) {
+    .nav-logo-absolute {
+      width: 62px;
+    }
+  }
+  @media (width >= 1440px) {
+    .nav-logo-absolute {
+      width: 66px;
+    }
+  }
+
   @media (width >= 992px) {
     [data-hero-layout] {
       grid-template-columns: repeat(3, minmax(0, 1fr));

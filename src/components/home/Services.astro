@@ -96,14 +96,15 @@ const services = [
       ))}
     </div>
 
-    {/* Pagination dots — static visual parity with live
-        .services-slider_bullet_item. Yellow ring, transparent fill,
-        first dot active (filled yellow). */}
-    <div class="mt-medium flex items-center gap-[0.5rem]" aria-hidden="true">
+    {/* Pagination dots — only visible at mobile where the carousel
+        shows 1 card at a time and swipe gesture is needed. At md+
+        all 4 cards are in the grid so dots are redundant. Matches
+        live .services-slider_bullet_item styling. */}
+    <div class="mt-medium flex items-center gap-[0.5rem] md:hidden" aria-hidden="true">
       {[0, 1, 2, 3].map((i) => (
         <span
           class:list={[
-            'inline-block aspect-square rounded-full border border-yellow-500 w-[0.625rem] md:w-4',
+            'inline-block aspect-square rounded-full border border-yellow-500 w-[0.625rem]',
             i === 0 ? 'bg-yellow-500' : 'bg-transparent',
           ]}
         />

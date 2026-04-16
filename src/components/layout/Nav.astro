@@ -10,10 +10,13 @@ import { navLinks, contact, social } from '../../config';
   data-nav="absolute"
   class="absolute top-0 left-0 right-0 z-40 px-[5%] py-[1rem]"
 >
-  <div class="mx-auto max-w-[97.5rem] flex items-center justify-between">
-  <a href="/" class="shrink-0">
-    <Logo class="w-[60px] md:w-[66px] h-auto text-white" />
-  </a>
+  <div class="flex items-center justify-between">
+  {/* Logo sizing is handled via data-nav-logo in global.css under
+      @layer utilities because Tailwind 4's cascade order makes `md:`
+      win over `min-[992px]:` at 992-1023 viewport. Plain CSS rules
+      in @layer utilities land after all Tailwind utilities, fixing
+      the order. Matches live: 42/51/62/66 at 375/768/992/1440. */}
+  <Logo class="nav-logo-absolute shrink-0 h-auto text-white" />
 
   {/* Desktop nav: links + email + divider + LinkedIn.
       Hidden below md (hamburger takes over). */}
@@ -82,10 +85,8 @@ import { navLinks, contact, social } from '../../config';
   data-nav="fixed"
   class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 px-[5%] py-[0.75rem]"
 >
-  <div class="mx-auto max-w-[97.5rem] flex items-center justify-between">
-  <a href="/" class="shrink-0">
-    <Logo class="w-[30px] md:w-[42px] h-auto text-white" />
-  </a>
+  <div class="flex items-center justify-between">
+  <Logo class="shrink-0 w-[30px] md:w-[42px] h-auto text-white" />
 
   <div class="hidden md:flex items-center gap-0">
     <ul class="flex items-center gap-large font-body text-white">

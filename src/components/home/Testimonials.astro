@@ -113,15 +113,15 @@ const bgSrcset = [
       </div>
 
       {/* Cards container.
-          Desktop (992+): vertical stack, full-width cards, 2rem gap.
-          Mobile: vertical stack too (each card full-width, matching
-          live's Swiper which shows 1 card at a time — overflow is
-          handled by pagination dots, not horizontal scroll, since
-          these tall cards don't scroll well at mobile). */}
-      <div class="testimonial-cards mt-large flex flex-col gap-[2rem]">
+          Mobile (<768): horizontal scroll-snap carousel, one card
+          visible, swipe to navigate (matches live's Swiper behavior).
+          md+: vertical stack (matches live's .swiper-slide containing
+          2 full-width cards stacked). */}
+      <div class="testimonial-cards mt-large flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-col md:snap-none md:gap-[2rem] md:overflow-visible md:pb-0">
         {slide1.map((t) => (
+          <div class="shrink-0 basis-[90%] snap-start md:basis-auto md:shrink md:w-full">
           <article
-            class="testimonial-card flex items-start gap-medium border border-white"
+            class="testimonial-card flex items-start gap-medium border border-white h-full"
           >
             <div class="flex-1">
               <p
@@ -141,14 +141,15 @@ const bgSrcset = [
               class="h-24 w-24 shrink-0 rounded-full object-cover md:h-[9.5rem] md:w-[9.5rem]"
             />
           </article>
+          </div>
         ))}
       </div>
 
-      {/* Pagination dots — matches live .team-slider_bullet_item:
-          border: 0.09rem solid currentColor, border-radius: 100vw,
-          width: 1rem, aspect-ratio: 1. Active dot filled with
-          currentColor. */}
-      <div class="mt-medium flex items-center gap-[0.5rem]" aria-hidden="true">
+      {/* Pagination dots — only visible at mobile where the carousel
+          shows 1 card at a time (Phase 4 will wire Swiper). At md+
+          both cards are stacked and fully visible so dots are
+          redundant. Matches live .team-slider_bullet_item styling. */}
+      <div class="mt-medium flex items-center gap-[0.5rem] md:hidden" aria-hidden="true">
         {[0, 1].map((i) => (
           <span
             class:list={[
