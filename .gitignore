@@ -32,8 +32,9 @@ playwright/.cache/
 screenshots/
 
 # one-off diagnostic scripts (local-only, written per drift-fix batch
-# to measure DOM differences between local and live — see CLAUDE.md)
-scripts/
+# to measure DOM differences between local and live — see CLAUDE.md).
+# Only the top-level /scripts dir, not src/scripts (which holds client JS).
+/scripts/
 
 # local preview launch config
 .claude/

@@ -2,14 +2,15 @@
 import Logo from './Logo.astro';
 import { navLinks, contact, social } from '../../config';
 ---
-{/* Absolute variant: transparent, overlaid on hero. Full-width +
-    5% horizontal padding + flex justify-between pushes logo to the
-    left edge and nav+actions group to the right edge. No max-width
-    cap so nav columns align with the viewport-filling hero grid. */}
+{/* Absolute variant: transparent, overlaid on hero. Literal port of
+    live: outer padding 0 5%, inner max-w-[97.5rem] mx-auto so nav
+    content caps at 1560px at wide viewports — matching hero and
+    sections. */}
 <nav
   data-nav="absolute"
-  class="absolute top-0 left-0 right-0 z-40 flex items-center justify-between px-[5%] py-[1rem]"
+  class="absolute top-0 left-0 right-0 z-40 px-[5%] py-[1rem]"
 >
+  <div class="mx-auto max-w-[97.5rem] flex items-center justify-between">
   <a href="/" class="shrink-0">
     <Logo class="w-[60px] md:w-[66px] h-auto text-white" />
   </a>
@@ -71,15 +72,17 @@ import { navLinks, contact, social } from '../../config';
     <span class="block w-6 h-0.5 bg-white mb-1"></span>
     <span class="block w-6 h-0.5 bg-white"></span>
   </button>
+  </div>
 </nav>
 
 {/* Fixed variant: solid, appears on scroll. Same structure as
     absolute. `hidden` by default → nav-scroll-swap.ts toggles to
-    `flex` when scrolled past the sentinel. */}
+    `block` when scrolled past the sentinel (inner div does flex). */}
 <nav
   data-nav="fixed"
-  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 items-center justify-between px-[5%] py-[0.75rem]"
+  class="fixed top-0 left-0 right-0 z-50 hidden bg-bg/95 backdrop-blur border-b border-white/10 px-[5%] py-[0.75rem]"
 >
+  <div class="mx-auto max-w-[97.5rem] flex items-center justify-between">
   <a href="/" class="shrink-0">
     <Logo class="w-[30px] md:w-[42px] h-auto text-white" />
   </a>
@@ -133,4 +136,5 @@ import { navLinks, contact, social } from '../../config';
     <span class="block w-6 h-0.5 bg-white mb-1"></span>
     <span class="block w-6 h-0.5 bg-white"></span>
   </button>
+  </div>
 </nav>

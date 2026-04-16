@@ -48,18 +48,16 @@ const metrics = [
      No overlay — the source image's dark left side carries the
      headline's text contrast. */}
 
-  {/* Hero fills the full viewport width (minus 5% padding). At
-      ultra-wide viewports (>1560px) the 97.5rem container cap live
-      uses creates an awkward empty gap on the right where the
-      portrait and metrics don't reach. Dropping the cap lets the
-      3 grid columns spread equally across the full content width
-      at all breakpoints, which looks better at wide screens and
-      identical at <=1560px viewports.
+  {/* Live nesting: .padding-global { padding: 0 5% } wraps
+      .container-large { max-width: 97.5rem; margin: 0 auto }.
+      Below 1560px viewport: content fills 90% of viewport (5% gutters).
+      At ≥1560px: content capped at 1560px, centered, with remaining
+      space as gutters. Literal port of live.
 
       Desktop=992+ padding-top override lives in global.css under
       @layer utilities (data-hero-padding). */}
   <div class="px-[5%]">
-  <div data-hero-padding class="relative w-full pt-[8rem] pb-[20px]">
+  <div data-hero-padding class="relative mx-auto w-full max-w-[97.5rem] pt-[8rem] pb-[20px]">
     {/* .hero_layout: base 3 equal columns with 1rem gap, tablet drops
         to 2 cols (metrics hidden), mobile collapses to 1 col. The
         `desktop=992+` rule lives in global.css under @layer utilities
@@ -68,7 +66,7 @@ const metrics = [
     <div data-hero-layout class="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
       {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
           uses 1.5rem gap between children. */}
-      <div data-hero-col="1" class="flex flex-col items-start gap-[1.5rem]">
+      <div data-hero-col="1" class="order-3 md:order-none flex flex-col items-start gap-[1.5rem]">
         <HeroSplitText
           words={headlineWords}
           highlightIndex={highlightIndex}
@@ -99,13 +97,17 @@ const metrics = [
       {/* Column 2 — portrait. Live .hero_visual: width 100%,
           min-height 31.25rem (500px), position relative. .image-hero:
           absolute fill, object-contain. */}
-      <div data-hero-col="2" class="relative w-full min-h-[31.25rem]">
+      {/* Mobile (≤767px): portrait is relative-positioned (natural
+          size). Tablet+: absolute-fill inside a 500px min-height
+          container. Matches live: .hero_visual { min-height: auto }
+          and .image-hero { position: relative } at ≤767px. */}
+      <div data-hero-col="2" class="order-1 md:order-none relative w-full md:min-h-[31.25rem] mb-[1rem] md:mb-0">
         <img
           src="/assets/hero/portrait.webp"
           alt="Portrait of Orly Boojor"
           loading="eager"
           fetchpriority="high"
-          class="absolute inset-0 h-full w-full object-contain"
+          class="relative md:absolute md:inset-0 h-auto md:h-full w-full object-contain"
         />
       </div>
 
@@ -122,9 +124,10 @@ const metrics = [
         <VerticalLabel />
       </div>
 
-      {/* Mobile metrics (shown only on smallest screens, matching the
-         live site which drops metrics on tablet via `display: none`). */}
-      <div class="md:hidden">
+      {/* Mobile metrics — matches live's mobile order where metrics
+          appear between portrait (order-1) and headline (order-3).
+          At md+: hidden; metrics only show via col3 on desktop+. */}
+      <div class="order-2 md:hidden">
         <HeroMetrics metrics={metrics} />
       </div>
     </div>

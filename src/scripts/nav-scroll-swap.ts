@@ -19,12 +19,13 @@ export function initNavScrollSwap(): void {
         // Hero visible → show absolute, hide fixed
         absoluteNav.classList.remove('hidden');
         fixedNav.classList.add('hidden');
-        fixedNav.classList.remove('flex');
       } else {
-        // Scrolled past hero → hide absolute, show fixed
+        // Scrolled past hero → hide absolute, show fixed. Inner div
+        // already has flex justify-between; outer nav just needs its
+        // `hidden` (display: none) removed so default `block` display
+        // takes effect.
         absoluteNav.classList.add('hidden');
         fixedNav.classList.remove('hidden');
-        fixedNav.classList.add('flex');
       }
     },
     { threshold: 0 }
