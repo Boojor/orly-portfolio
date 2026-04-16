@@ -50,12 +50,15 @@ const metrics = [
 
   {/* Padding-global (5%) + container-large max-width 97.5rem to match
       live .padding-global + .container-large. Live hero uses tablet
-      pt: 8rem, desktop pt: 9rem. */}
-  <div class="relative mx-auto w-full max-w-[97.5rem] px-[5%] pt-[8rem] lg:pt-[9rem] pb-0">
+      pt: 8rem, desktop pt: 9rem. Desktop=992+ overrides live in
+      global.css under @layer utilities (data-hero-padding). */}
+  <div data-hero-padding class="relative mx-auto w-full max-w-[97.5rem] px-[5%] pt-[8rem] pb-0">
     {/* .hero_layout: base 3 equal columns with 1rem gap, tablet drops
-        to 2 cols (metrics hidden), mobile collapses to 1 col.
-        Matches live grid literally. */}
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+        to 2 cols (metrics hidden), mobile collapses to 1 col. The
+        `desktop=992+` rule lives in global.css under @layer utilities
+        (data-hero-layout) — see comments there for why arbitrary
+        Tailwind breakpoints don't work for this. */}
+    <div data-hero-layout class="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
       {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
           uses 1.5rem gap between children. */}
       <div class="flex flex-col items-start gap-[1.5rem]">
@@ -94,10 +97,11 @@ const metrics = [
         />
       </div>
 
-      {/* Column 3 — metrics stack + vertical label. Hidden below lg
-         (≤991px) to match live's `.hero_metrics-wrapper { display:
-         none }` at max-width: 991px. */}
-      <div class="hidden lg:flex items-stretch gap-large">
+      {/* Column 3 — metrics stack + vertical label. Hidden below 992
+         to match live's `.hero_metrics-wrapper { display: none }` at
+         max-width: 991px. Visibility controlled by data-hero-metrics-col
+         in global.css @layer utilities. */}
+      <div data-hero-metrics-col class="hidden items-stretch gap-large">
         <HeroMetrics metrics={metrics} />
         <VerticalLabel />
       </div>

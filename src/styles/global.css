@@ -115,3 +115,40 @@
     inset: 0% 0% auto;
   }
 }
+
+/* Hero responsive layout overrides at Webflow's 992px desktop
+   breakpoint. These live in @layer utilities so they come AFTER
+   Tailwind's default `md:`/`lg:` utilities in the cascade, beating
+   `md:grid-cols-2` at 992-1023 viewport.
+
+   Why not override --breakpoint-lg or use min-[992px]: arbitrary?
+   Tailwind 4 places custom/arbitrary breakpoint utilities BEFORE
+   default named ones in source order, so `md:grid-cols-2` (at line
+   ~1273) always wins over a custom 992px rule (at line ~1141) at
+   1024+ viewport because they have the same specificity and md is
+   later. Plain CSS in @layer utilities lands AFTER all Tailwind
+   utilities in the cascade and reliably wins.
+
+   These selectors target Hero.astro markers (the `data-hero-*`
+   attributes wired in Hero.astro). Live Webflow's tablet→desktop
+   transition is at exactly 992px. */
+@layer utilities {
+  @media (width >= 992px) {
+    [data-hero-layout] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    [data-hero-padding] {
+      padding-top: 9rem;
+    }
+    [data-hero-metrics-col] {
+      display: flex;
+    }
+    [data-hero-metrics-stack] {
+      gap: 2rem; /* spacing-medium */
+    }
+    [data-hero-headline] {
+      font-size: 4.5rem; /* live .hero_heading-text desktop */
+      line-height: 1.2;
+    }
+  }
+}

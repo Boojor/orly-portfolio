@@ -30,3 +30,10 @@ playwright/.cache/
 
 # pair-review screenshots (local-only, visual diffing vs live Webflow)
 screenshots/
+
+# one-off diagnostic scripts (local-only, written per drift-fix batch
+# to measure DOM differences between local and live — see CLAUDE.md)
+scripts/
+
+# local preview launch config
+.claude/
