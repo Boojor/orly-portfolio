@@ -68,7 +68,7 @@ const metrics = [
     <div data-hero-layout class="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
       {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
           uses 1.5rem gap between children. */}
-      <div class="flex flex-col items-start gap-[1.5rem]">
+      <div data-hero-col="1" class="flex flex-col items-start gap-[1.5rem]">
         <HeroSplitText
           words={headlineWords}
           highlightIndex={highlightIndex}
@@ -99,7 +99,7 @@ const metrics = [
       {/* Column 2 — portrait. Live .hero_visual: width 100%,
           min-height 31.25rem (500px), position relative. .image-hero:
           absolute fill, object-contain. */}
-      <div class="relative w-full min-h-[31.25rem]">
+      <div data-hero-col="2" class="relative w-full min-h-[31.25rem]">
         <img
           src="/assets/hero/portrait.webp"
           alt="Portrait of Orly Boojor"
@@ -113,7 +113,11 @@ const metrics = [
          to match live's `.hero_metrics-wrapper { display: none }` at
          max-width: 991px. Visibility controlled by data-hero-metrics-col
          in global.css @layer utilities. */}
-      <div data-hero-metrics-col class="hidden items-stretch gap-large">
+      {/* Col 3 children: metrics stack on the left, vertical label
+          pinned to the right edge of the column. justify-between +
+          no gap → label touches col3's right edge (matches live
+          where .vertical-label--hero sits at col3.right=1368). */}
+      <div data-hero-metrics-col class="hidden items-stretch justify-between">
         <HeroMetrics metrics={metrics} />
         <VerticalLabel />
       </div>
