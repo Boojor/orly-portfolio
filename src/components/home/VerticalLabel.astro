@@ -4,9 +4,16 @@
 // thin vertical line, then rotated uppercase text. Hidden below md to
 // match the live site (which drops the entire metrics column on tablet).
 ---
-<div class="hidden md:flex flex-col items-center gap-small opacity-20 min-h-[18rem]">
+{/* Literal port of live .vertical-label--hero:
+    align-self: stretch, flex-col, justify-center, items-center,
+    w-[1.5rem], opacity: 0.2, gap: 1rem.
+    Children: heart icon at top, .line (flex:1, 1px wide) fills
+    remaining vertical space, rotated text at bottom. Because the
+    parent col has height=100% of hero, the line stretches to fill
+    all available space between icon and text. */}
+<div class="hidden md:flex flex-col items-center justify-center self-stretch gap-[1rem] w-[1.5rem] opacity-20">
   <svg
-    class="h-4 w-4 text-yellow-500"
+    class="h-4 w-4 text-yellow-500 shrink-0"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -19,9 +26,9 @@
       stroke-linejoin="round"
     />
   </svg>
-  <div class="w-px flex-1 bg-white/30"></div>
+  <div class="w-px flex-1 bg-white self-stretch mx-auto"></div>
   <p
-    class="font-body text-xs text-stone-200 uppercase tracking-widest [writing-mode:vertical-rl] rotate-180 whitespace-nowrap"
+    class="font-body text-xs text-stone-200 uppercase tracking-widest [writing-mode:vertical-rl] rotate-180 whitespace-nowrap shrink-0"
   >
     I don&rsquo;t need my hand held &mdash; I hold yours.
   </p>

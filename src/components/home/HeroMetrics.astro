@@ -20,7 +20,7 @@ const { metrics } = Astro.props;
 <div data-hero-metrics-stack class="flex flex-col justify-center items-end w-full h-full gap-[3.5rem]">
   {
     metrics.map((m) => (
-      <div class="flex flex-col items-end justify-center border-t border-white/15 pt-small w-full text-right">
+      <div class="flex flex-col items-end justify-center w-full text-right">
         <span class="font-heading text-[3rem] text-white leading-none">
           {m.value}
         </span>
