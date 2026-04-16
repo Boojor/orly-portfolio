@@ -75,7 +75,12 @@ const metrics = [
           marks={marks}
         />
 
-        <p class="font-body text-lg md:text-xl text-stone-200 leading-relaxed">
+        {/* Live's hero subcopy <p> uses global p styles (no class):
+            font-size: 1rem (16px), line-height: 1.4 (22.4px).
+            Previously text-lg/md:text-xl + leading-relaxed made the
+            paragraph 25% larger + 16% looser, which wrapped more
+            lines and blew up the column by ~84px. Literal port. */}
+        <p class="font-body text-base leading-[1.4] text-stone-200">
           {subcopy}
         </p>
 
