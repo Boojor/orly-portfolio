@@ -179,13 +179,15 @@ const bgSrcset = [
 </section>
 
 <style>
-  /* Literal port of live .testimonial_card.
-     Base (mobile ≤767): flex column, padding 1.5rem, gap 1.5rem,
-     radius 96/96/16/16, items-start.
-     Tablet (768-991): padding 2rem, radius stays 96/96/16/16 (live
-     keeps mobile radius on tablet), layout stays column.
-     Desktop (≥992): padding 3rem, gap 4rem, radius 40/96/96/40,
-     layout flex-row, items-center, justify-between. */
+  /* Literal port of live .testimonial_card. Layout differs by BP:
+       mobile ≤767:  column, padding 1.5rem, gap 1.5rem, items-start
+       tablet 768-991: ROW (!), padding 3rem, gap 4rem, items-center
+       desktop ≥992: ROW, padding 3rem, gap 4rem, items-center
+     Radius:
+       mobile + tablet (≤991): 96px 96px 16px 16px
+       desktop (≥992): 40px 96px 96px 40px
+     All variants: display flex, justify-content space-between,
+     border 1px solid white (set via Tailwind). */
   .testimonial-card {
     display: flex;
     flex-direction: column;
@@ -197,15 +199,14 @@ const bgSrcset = [
   }
   @media (min-width: 768px) {
     .testimonial-card {
-      padding: 2rem;
-    }
-  }
-  @media (min-width: 992px) {
-    .testimonial-card {
       flex-direction: row;
       align-items: center;
       gap: 4rem;
       padding: 3rem;
+    }
+  }
+  @media (min-width: 992px) {
+    .testimonial-card {
       border-radius: 40px 96px 96px 40px;
     }
   }
