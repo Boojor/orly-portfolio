@@ -1,35 +1,20 @@
 ---
-import HeroSplitText from './HeroSplitText.astro';
 import HeroMetrics from './HeroMetrics.astro';
 import VerticalLabel from './VerticalLabel.astro';
 import ScrollNavSwapper from '../layout/ScrollNavSwapper.astro';
 
-// Headline structure mirrors the live Webflow markup — four decorated
-// "figure", "it", "out", "later" words flow inside the larger sentence.
-// "I turn" is split into two tokens so per-word animation stays clean.
-const headlineWords = [
-  'I',
-  'turn',
-  'figure',
-  'it',
-  'out',
-  'later',
-  'into',
-  'shipped',
-  'product',
-];
-const highlightIndex = [2, 3, 4, 5];
-const marks: (string | null)[] = [
-  null,
-  null,
-  '/assets/hero/mark-figure.svg',
-  '/assets/hero/mark-it.svg',
-  '/assets/hero/mark-out.svg',
-  null,
-  null,
-  null,
-  null,
-];
+// Headline mirrors live Webflow's `.hero_heading-text` structure literally:
+//
+//   I turn  <span class="first">figure</span> <span class="second">it</span>
+//   <span class="third">out</span> <span class="is-color">later </span>into
+//   shipped product
+//
+// Key property: "I turn" and "into shipped product" are plain text nodes
+// directly under the <h1>, not per-word spans. Each decorated word is a
+// single <span> with a background-image mark; "later" is highlighted
+// yellow (`is-color`). This keeps the sentence DOM-readable as one phrase.
+// See section-audit.mjs: prior per-word split fragmented the own-text into
+// "turn/into/shipped/product" and failed parity.
 
 const subcopy =
   "I dig into the business mess, figure out what actually drives value, and design experiences that deliver. Less stakeholder theater, more product in users' hands.";
@@ -67,11 +52,29 @@ const metrics = [
       {/* Column 1 — headline + sub + CTA. Live .hero_heading-wrapper
           uses 1.5rem gap between children. */}
       <div data-hero-col="1" class="order-2 md:order-none flex flex-col items-start gap-[1.5rem]">
-        <HeroSplitText
-          words={headlineWords}
-          highlightIndex={highlightIndex}
-          marks={marks}
-        />
+        {/* Literal port of live .hero_heading-text markup: text nodes
+            flow through the sentence, decorated words are inline spans.
+            Font-size and line-height match live; desktop override lives
+            in global.css (@layer utilities, [data-hero-headline]). */}
+        <h1
+          data-hero-headline
+          class="font-heading font-light text-white leading-[1.2] text-[2.5rem] sm:text-[2.5rem] md:text-[3.25rem]"
+        >
+          I turn{' '}
+          <span
+            class="bg-no-repeat bg-right pr-[3rem] text-yellow-500"
+            style="background-image: url('/assets/hero/mark-figure.svg'); background-size: 32px 32px;"
+          >figure</span>{' '}
+          <span
+            class="bg-no-repeat bg-right pr-[3rem] text-yellow-500"
+            style="background-image: url('/assets/hero/mark-it.svg'); background-size: 32px 32px;"
+          >it</span>{' '}
+          <span
+            class="bg-no-repeat bg-right pr-[3rem] text-yellow-500"
+            style="background-image: url('/assets/hero/mark-out.svg'); background-size: 32px 32px;"
+          >out</span>{' '}
+          <span class="text-yellow-500">later </span>into shipped product
+        </h1>
 
         {/* Live's hero subcopy <p> uses global p styles (no class):
             font-size: 1rem (16px), line-height: 1.4 (22.4px).
@@ -103,7 +106,7 @@ const metrics = [
           and .image-hero { position: relative } at ≤767px. */}
       <div data-hero-col="2" class="order-1 md:order-none relative w-full md:min-h-[31.25rem] mb-[1rem] md:mb-0">
         <img
-          src="/assets/hero/portrait.webp"
+          src="/assets/hero/Photo.webp"
           alt="Portrait of Orly Boojor"
           loading="eager"
           fetchpriority="high"

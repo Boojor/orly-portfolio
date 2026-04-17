@@ -53,7 +53,6 @@ orly-portfolio/
 │   ├── components/
 │   │   ├── home/
 │   │   │   ├── Hero.astro
-│   │   │   ├── HeroSplitText.astro    # per-word headline renderer
 │   │   │   ├── HeroMetrics.astro
 │   │   │   ├── VerticalLabel.astro    # rotated "The Designer Effect" label
 │   │   │   ├── LogoStrip.astro
