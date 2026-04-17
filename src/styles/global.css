@@ -133,6 +133,41 @@
    attributes wired in Hero.astro). Live Webflow's tablet→desktop
    transition is at exactly 992px. */
 @layer utilities {
+  /* Infinite-carousel clones — carousel-behavior.ts inserts one clone of
+     the last slide at the start and one clone of the first slide at the
+     end so swiping past either edge wraps seamlessly. Clones are needed
+     on mobile (horizontal scroll) but would become extra items in the
+     grid/stack at md+ for Services and Testimonials, so hide them at
+     ≥768px. */
+  [data-carousel-clone] {
+    display: none;
+  }
+  @media (width < 768px) {
+    [data-carousel-clone] {
+      display: flex;
+    }
+  }
+
+  /* Logo strip marquee — continuous horizontal ticker. LogoStrip.astro
+     renders the logo set twice back-to-back ([...logos, ...logos]);
+     translating the entire list by -50% over the duration creates a
+     seamless infinite loop when combined with `linear` timing. Duration
+     is tuned for "not too fast" (≈45s per cycle). Respects
+     prefers-reduced-motion by disabling the animation. */
+  @keyframes logo-ticker {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  [data-logo-ticker] {
+    animation: logo-ticker 45s linear infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-logo-ticker] {
+      animation: none;
+    }
+  }
+
   /* Testimonial quote — literal port of live .heading-style-h4:
        mobile ≤767: 1.5rem / line-height 1.4
        tablet 768-991: 1.75rem / line-height 1.2
@@ -263,6 +298,24 @@
     [data-hero-headline] {
       font-size: 4.5rem; /* live .hero_heading-text desktop */
       line-height: 1.2;
+    }
+  }
+
+  /* Services pagination dots — match live Swiper bullet count per BP.
+     Slide widths switch at 767/991 (Webflow breakpoints), so visible
+     bullets follow: 4 / 3 / 1. Dot size switches at 992: 10px → 16px. */
+  @media (width >= 768px) {
+    [data-carousel-dots="services"] [data-dot-index="3"] {
+      display: none;
+    }
+  }
+  @media (width >= 992px) {
+    [data-carousel-dots="services"] [data-dot-index="1"],
+    [data-carousel-dots="services"] [data-dot-index="2"] {
+      display: none;
+    }
+    [data-carousel-dots="services"] [data-dot-index="0"] {
+      width: 1rem;
     }
   }
 }

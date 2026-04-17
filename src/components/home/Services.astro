@@ -4,7 +4,7 @@ import ServiceCard from './ServiceCard.astro';
 // Content hardcoded inline — these are not config, they're content, and there are only 4.
 const services = [
   {
-    icon: '/assets/services/icon-1.svg',
+    icon: '/assets/services/Icon_service-1.svg',
     heading: 'Turning ideas into MLP/MVP',
     description:
       'Turning early ideas into a clear direction through fast problem framing and early validation.',
@@ -15,7 +15,7 @@ const services = [
     ],
   },
   {
-    icon: '/assets/services/icon-2.svg',
+    icon: '/assets/services/Icon_service-2.svg',
     heading: 'Plug and play design leadership',
     description:
       'Sliding into your workflow fast, absorbing context, filling gaps, and moving work forward with minimal guidance.',
@@ -26,7 +26,7 @@ const services = [
     ],
   },
   {
-    icon: '/assets/services/icon-3.svg',
+    icon: '/assets/services/Icon_service-3.svg',
     heading: 'Visual design with purpose',
     description:
       "Creating clean, modern UI that supports your product's story and makes every screen feel intentional.",
@@ -37,7 +37,7 @@ const services = [
     ],
   },
   {
-    icon: '/assets/services/icon-4.svg',
+    icon: '/assets/services/Icon_service-4.svg',
     // NOTE: "scales" (sic) matches the live site copy verbatim.
     heading: 'Design systems that scales',
     description:
@@ -83,9 +83,12 @@ const services = [
     {/* Mobile: horizontal scroll-snap carousel (matches live's Swiper).
         Tablet+: 2-col grid. Desktop lg+: 4-col grid. Full Swiper animation
         deferred to Phase 4. */}
-    <div class="flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-4">
+    <div
+      data-carousel="services"
+      class="flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-4"
+    >
       {services.map((svc) => (
-        <div class="shrink-0 basis-full snap-start md:basis-auto md:shrink">
+        <div data-carousel-slide class="shrink-0 basis-full snap-start md:basis-auto md:shrink">
           <ServiceCard
             icon={svc.icon}
             heading={svc.heading}
@@ -96,19 +99,45 @@ const services = [
       ))}
     </div>
 
-    {/* Pagination dots — only visible at mobile where the carousel
-        shows 1 card at a time and swipe gesture is needed. At md+
-        all 4 cards are in the grid so dots are redundant. Matches
-        live .services-slider_bullet_item styling. */}
-    <div class="mt-medium flex items-center gap-[0.5rem] md:hidden" aria-hidden="true">
+    {/* Pagination dots — matches live Swiper's bullet output at every
+        breakpoint. Swiper uses slidesPerView:"auto" and the slide width
+        changes by media query, so the visible bullet count is:
+          - <768 (100% slide width): 4 dots
+          - 768-991 (50% slide width): 3 dots (4 − 2 + 1)
+          - ≥992 (25% slide width, all visible): 1 dot (swiper-pagination-lock)
+        Dot size also switches at 992: 0.625rem → 1rem. Render all 4 dots
+        in markup and hide the extras per BP via @layer utilities rules
+        keyed on [data-dot-index] (see global.css). Plain CSS — Tailwind's
+        `lg:` is 1024 and would drift the 992-1023 window. */}
+    <div
+      data-carousel-dots="services"
+      class="mt-medium flex items-center justify-center gap-[0.5rem]"
+    >
       {[0, 1, 2, 3].map((i) => (
-        <span
+        <button
+          type="button"
+          data-carousel-dot={i}
+          data-dot-index={i}
+          aria-label={`Go to slide ${i + 1}`}
           class:list={[
-            'inline-block aspect-square rounded-full border border-yellow-500 w-[0.625rem]',
+            'inline-block aspect-square rounded-full border border-yellow-500 w-[0.625rem] p-0 cursor-pointer transition-colors',
             i === 0 ? 'bg-yellow-500' : 'bg-transparent',
           ]}
         />
       ))}
+    </div>
+
+    {/* Mobile-only bottom "See all services" button — ports live's
+        `<div class="show-mobile-landscape"><div class="button-group is-center">`
+        which renders the button centered below the carousel at ≤767px.
+        Live CSS: button-group is-center → justify-content: center. */}
+    <div class="mt-large flex justify-center md:hidden">
+      <a
+        href="#"
+        class="inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-black px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-white hover:text-black"
+      >
+        See all services
+      </a>
     </div>
   </div>
 </section>
