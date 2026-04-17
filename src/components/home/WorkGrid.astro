@@ -45,10 +45,11 @@ const tiles = [
         alt={tiles[0].alt}
       />
 
-      {/* 2. Text block — stays at grid position 2 at all breakpoints.
-          At mobile it slots between tile 1 and tile 2 in the vertical
-          stack, matching live's flex-column order. */}
-      <div class="flex items-center justify-between gap-medium md:gap-large">
+      {/* 2. Text block — grid position 2 at tablet+. At mobile
+          (≤767px) live uses `order: -9999` to float it to the TOP
+          of the stack (before all tiles). Ported via `order-first
+          md:order-none`. */}
+      <div class="order-first md:order-none flex items-center justify-between gap-medium md:gap-large">
         {/* Vertical label — literal port of live `.vertical-label`:
             z-index: 1, gap: 1rem, flex-col, justify-center,
             align-self: stretch, align-items: center, width: 1.5rem,
