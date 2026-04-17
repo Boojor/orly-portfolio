@@ -92,12 +92,15 @@ const tiles = [
         alt={tiles[1].alt}
       />
 
-      {/* 4. Placeholder tile */}
+      {/* 4. Placeholder tile — live's first `href="#"` tile has the
+          `.project-overlay` block duplicated inside the `<a>` (Webflow
+          authoring accident). Ported verbatim via `duplicateOverlay`. */}
       <WorkTile
         href={tiles[2].href}
         thumbnail={thumbnail}
         srcset={srcset}
         alt={tiles[2].alt}
+        duplicateOverlay
       />
 
       {/* 5. Placeholder tile */}

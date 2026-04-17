@@ -3,14 +3,20 @@
 // `.project-hover` from the live Webflow site exactly. Every tile on live uses
 // the same generic `Project-thumbnail.webp` regardless of whether the link is
 // real or `href="#"`, and every overlay says "DIVE IN".
+//
+// `duplicateOverlay` ports a Webflow authoring accident on live's first
+// `href="#"` tile, which contains the `.project-overlay` block twice in a row
+// inside the same `<a>`. Preserved verbatim per the no-invention rule (same
+// policy that keeps "Design systems that scales" as-is).
 interface Props {
   href: string;
   thumbnail: string;
   srcset?: string;
   alt: string;
+  duplicateOverlay?: boolean;
 }
 
-const { href, thumbnail, srcset, alt } = Astro.props;
+const { href, thumbnail, srcset, alt, duplicateOverlay = false } = Astro.props;
 ---
 {/* Live .work_visuals literal port via `work-tile` class in
     global.css @layer utilities (rules there override Tailwind's
@@ -40,4 +46,15 @@ const { href, thumbnail, srcset, alt } = Astro.props;
       DIVE IN
     </div>
   </div>
+  {duplicateOverlay && (
+    <div
+      class="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+    >
+      <div
+        class="rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl"
+      >
+        DIVE IN
+      </div>
+    </div>
+  )}
 </a>
