@@ -166,14 +166,13 @@
     color: var(--color-yellow-500);
   }
 
-  /* Fixed nav: initial state hidden above viewport. GSAP (in
-     nav-scroll-swap.ts) animates autoAlpha + yPercent on scroll
-     with a short delay and power2 ease for a smooth slide-in.
-     visibility: hidden here prevents FOUC before GSAP runs. */
+  /* Fixed nav: initial state hidden via opacity + visibility only.
+     Do NOT declare transform here — GSAP owns the transform and
+     would otherwise stack its translate on top of ours, leaving
+     the nav stuck off-screen after tweening to yPercent:0. */
   .nav-fixed {
     visibility: hidden;
     opacity: 0;
-    transform: translateY(-100%);
   }
 
   /* Work tiles (.work_visuals literal port) — responsive sizing.

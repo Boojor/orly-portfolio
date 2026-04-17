@@ -118,22 +118,38 @@ export function initNavScrollSwap(): void {
   const updateActive = () => {
     rafScheduled = false;
 
-    // Pick the section whose MIDPOINT is closest to the viewport's
-    // activation line (1/3 from top). This is the standard scroll-
-    // spy heuristic and handles short last sections correctly
-    // (e.g. a short footer whose top never crosses the usual ≤line
-    // threshold — its midpoint will still be closest to center when
-    // the user is scrolled into it).
+    // Pick the section that has already crossed the activation line
+    // (1/3 from viewport top) — i.e. section.top ≤ activationLine.
+    // Among those, choose the one with the largest top (most recent
+    // crossing). If no section has crossed yet (user is in the hero
+    // above all tracked sections), return null → no highlight.
+    // Exception: when near page bottom, activate the last section
+    // whose top has entered the viewport, since short sections
+    // can't scroll far enough to put their top at 0.
     const activationLine = window.innerHeight / 3;
+    const nearBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 50;
+
     let best: Element | null = null;
-    let bestDist = Infinity;
-    for (const section of uniqueSections) {
-      const r = section.getBoundingClientRect();
-      const midpoint = r.top + r.height / 2;
-      const dist = Math.abs(midpoint - activationLine);
-      if (dist < bestDist) {
-        best = section;
-        bestDist = dist;
+    if (nearBottom) {
+      // Activate the last section in document order that's at least
+      // partially in the viewport.
+      const sortedByDocOrder = uniqueSections
+        .map((s) => ({ s, absTop: s.getBoundingClientRect().top + window.scrollY }))
+        .sort((a, b) => a.absTop - b.absTop);
+      for (const { s } of sortedByDocOrder) {
+        const r = s.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) best = s;
+      }
+    } else {
+      let bestTop = -Infinity;
+      for (const section of uniqueSections) {
+        const top = section.getBoundingClientRect().top;
+        if (top <= activationLine && top > bestTop) {
+          best = section;
+          bestTop = top;
+        }
       }
     }
     if (best === lastActive) return;
