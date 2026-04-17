@@ -133,6 +133,18 @@
    attributes wired in Hero.astro). Live Webflow's tablet→desktop
    transition is at exactly 992px. */
 @layer utilities {
+  /* Nav logo (fixed/sticky variant) — literal live sizing:
+       base:           30px (mobile + desktop ≥992)
+       tablet (768-991): 42px */
+  .nav-logo-sticky {
+    width: 30px;
+  }
+  @media (width >= 768px) and (width <= 991px) {
+    .nav-logo-sticky {
+      width: 42px;
+    }
+  }
+
   /* Nav link pill — literal port of live .navbar_link:
        border: 1px solid transparent
        border-radius: 999px
@@ -154,18 +166,14 @@
     color: var(--color-yellow-500);
   }
 
-  /* Fixed nav transition — fades down from above instead of abrupt
-     appear. nav-scroll-swap.ts toggles .nav-fixed--shown. */
+  /* Fixed nav: initial state hidden above viewport. GSAP (in
+     nav-scroll-swap.ts) animates autoAlpha + yPercent on scroll
+     with a short delay and power2 ease for a smooth slide-in.
+     visibility: hidden here prevents FOUC before GSAP runs. */
   .nav-fixed {
+    visibility: hidden;
     opacity: 0;
     transform: translateY(-100%);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  .nav-fixed.nav-fixed--shown {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
   }
 
   /* Work tiles (.work_visuals literal port) — responsive sizing.

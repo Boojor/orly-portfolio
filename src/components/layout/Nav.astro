@@ -88,7 +88,13 @@ import { navLinks, contact, social } from '../../config';
   class="nav-fixed fixed top-0 left-0 right-0 z-50 bg-bg px-[5%] py-[0.5rem]"
 >
   <div class="flex items-center justify-between">
-  <Logo class="shrink-0 w-[30px] md:w-[42px] h-auto text-white" />
+  {/* Live .navbar_logo-link.sticky sizing:
+        base:           30px (mobile + desktop)
+        tablet ≤991px:  42px
+      Desktop returns to 30px. Rules in global.css @layer utilities
+      via .nav-logo-sticky (same pattern as .nav-logo-absolute) to
+      avoid Tailwind cascade issues between md: and min-[992px]:. */}
+  <Logo class="nav-logo-sticky shrink-0 h-auto text-white" />
 
   <div class="hidden md:flex items-center gap-0">
     <ul class="flex items-center gap-large font-body text-white">
