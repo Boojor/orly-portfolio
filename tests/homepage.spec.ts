@@ -4,7 +4,14 @@ test.describe('Homepage', () => {
   test('loads without console errors', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (msg) => {
-      if (msg.type() === 'error') errors.push(msg.text());
+      if (msg.type() !== 'error') return;
+      const text = msg.text();
+      // Ignore Vite dev-server artifacts: when the optimizer is
+      // re-bundling a dep (e.g. GSAP) on a cold request it returns
+      // 504 Outdated Optimize Dep. This is a dev-only race, not a
+      // real bug — the resource loads fine on the automatic retry.
+      if (text.includes('504 (Outdated Optimize Dep)')) return;
+      errors.push(text);
     });
 
     await page.goto('/');

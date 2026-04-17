@@ -133,6 +133,29 @@
    attributes wired in Hero.astro). Live Webflow's tablet→desktop
    transition is at exactly 992px. */
 @layer utilities {
+  /* Testimonial quote — literal port of live .heading-style-h4:
+       mobile ≤767: 1.5rem / line-height 1.4
+       tablet 768-991: 1.75rem / line-height 1.2
+       desktop ≥992: 2rem / line-height 1.2
+     Rules here so the min-[992px] step beats Tailwind's md: in
+     source order. */
+  .testimonial-quote {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  @media (width >= 768px) {
+    .testimonial-quote {
+      font-size: 1.75rem;
+      line-height: 1.2;
+    }
+  }
+  @media (width >= 992px) {
+    .testimonial-quote {
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+  }
+
   /* Nav logo (fixed/sticky variant) — literal live sizing:
        base:           30px (mobile + desktop ≥992)
        tablet (768-991): 42px */
