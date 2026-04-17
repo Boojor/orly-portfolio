@@ -84,8 +84,11 @@ const { icon, heading, description, tags, href = '#' } = Astro.props;
 
   <p class="text-base text-white/80">{description}</p>
 
-  <!-- spacer-medium; mt-auto so tags pin to card bottom -->
-  <div class="mt-auto h-medium" aria-hidden="true" />
+  <!-- spacer-medium — fixed 2rem gap, NOT mt-auto. Live .service_card
+       uses `justify-content: flex-start` so content sits at the top of
+       the card; shorter descriptions leave empty space below the tags,
+       they don't stretch the gap between description and tags. -->
+  <div class="h-medium" aria-hidden="true" />
 
   <ul class="flex w-full flex-wrap gap-xxsmall">
     {tags.map((tag) => (
