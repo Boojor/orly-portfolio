@@ -89,6 +89,15 @@ For every drift-fix batch:
 | `bg-image-diff.mjs` | Walks hero → logos → services heights at 992-1280 |
 | `hero-subcopy.mjs` | Measures hero `<p>` + button + wrapper at 1024 + 1440 |
 | `hero-width.mjs` | Confirms hero stretches full viewport minus 5% padding |
+| `kpi-positions.mjs` | KPI card top/bottom/right + font size at 1024/1440/1920 |
+| `kpi-visibility.mjs` | Asserts KPI `display: none` at mobile/tablet, `flex` at ≥992 |
+| `logo-measure.mjs` | Nav logo w/h/top/left at all 5 breakpoints, local vs live |
+| `worktiles.mjs` | Asserts 5 work tiles render with correct dimensions per BP |
+| `live-tiles.mjs` | Same for live reference — use to confirm target values |
+| `fixed-nav-heatmap.mjs {bp}` | Scrolls past hero, screenshots + diffs top 120px |
+| `nav-full-verify.mjs` | Rigorous check: height + opacity-over-time + scroll-spy |
+| `nav-state-check.mjs` | Samples fixed-nav opacity/visibility/transform at scroll states |
+| `scroll-spy-debug.mjs` | Scrolls to each section, reads `.is-active` nav links |
 
 Project-specific wiring for any new script:
 - Live URL: `file://` + `path.resolve('../../orly-website.webflow/index.html')`
@@ -137,6 +146,41 @@ Key project-specific wiring for scripts:
 - **Anchor test threshold is `topPx < 500`.** Tight enough to catch
   broken `scroll-padding-top`, loose enough that a 330px footer top
   still passes. Don't tighten without checking all anchors.
+- **GSAP installed (^3.15.0) for JS-driven transitions** — currently
+  used by `src/scripts/nav-scroll-swap.ts` for the fixed-nav slide
+  in/out. Pre-bundled via `optimizeDeps.include: ['gsap']` in
+  `astro.config.mjs` so Playwright cold-starts don't hit Vite's
+  504 Outdated Dep response.
+- **GSAP transforms and CSS transforms don't mix.** If GSAP
+  animates `yPercent`/`x`/`y`, the element's CSS must NOT have a
+  `transform:` rule — they stack, leaving residual translate after
+  the tween. For initial "hidden above" state, use CSS `opacity: 0;
+  visibility: hidden;` only; let `gsap.set({ yPercent: -100 })`
+  handle the transform.
+- **Scroll-spy uses top-crossing, not midpoint-closest.**
+  `src/scripts/nav-scroll-swap.ts` picks the section whose
+  `getBoundingClientRect().top` is ≤ `innerHeight/3` and closest to
+  it. Returns null (no highlight) when no section has crossed —
+  matches user intuition at page top where hero is visible. A
+  `nearBottom` branch (within 50px of page bottom) activates the
+  last in-viewport section for short footers that can't scroll to
+  top:0. Skips placeholder `href="#"` links to avoid the
+  `querySelector('#')` syntax error.
+- **Verify animations by sampling opacity over time, not start/end.**
+  `scripts/nav-state-check.mjs` samples computed opacity at 8+
+  timestamps across the transition (50ms, 100ms, 150ms, 200ms, ...)
+  to prove the delay + ease curve — not just that it starts at 0
+  and ends at 1. Two data points can't distinguish instant from
+  eased.
+- **Responsive rules that need to beat Tailwind's `md:`/`lg:`** live
+  in `src/styles/global.css` under `@layer utilities` with a
+  `data-*` or semantic class selector. Tailwind 4 outputs custom /
+  arbitrary breakpoint variants BEFORE default named ones in
+  source, so `min-[992px]:grid-cols-3` loses to `md:grid-cols-2` at
+  1024. Plain CSS in `@layer utilities` lands after all Tailwind
+  utilities and reliably wins. See `.nav-logo-absolute`,
+  `.nav-logo-sticky`, `.work-tile`, `[data-hero-*]` rules for
+  examples.
 
 ## Commit message shape for parity fixes
 
