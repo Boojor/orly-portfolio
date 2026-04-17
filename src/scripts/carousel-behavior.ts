@@ -136,6 +136,46 @@ function installWrapTeleport(c: Carousel) {
 
 // Prev/next buttons — scroll by one slide width. If we overshoot into clone
 // territory the wrap-teleport handler silently puts us on the real slide.
+//
+// Manual rAF tween for scrollLeft. We don't use `scroll-behavior: smooth`
+// because Chrome suppresses programmatic smooth scroll on
+// `scroll-snap-type: mandatory` containers (the call returns without
+// moving). Disabling snap-type during the tween and easing the value by
+// hand is reliable across browsers. Snap-type is restored at the end so
+// native swipe behavior resumes.
+function smoothScrollTo(c: Carousel, left: number, duration = 400) {
+  const start = c.track.scrollLeft;
+  const delta = left - start;
+  if (Math.abs(delta) < 1) return;
+  c.track.style.scrollSnapType = 'none';
+  c.track.style.scrollBehavior = 'auto';
+
+  // Fallback for environments where rAF is throttled (e.g. hidden tabs or
+  // Playwright-controlled previews with `document.hidden === true`): if the
+  // tween doesn't complete within the expected window, snap to the
+  // destination so the interaction doesn't appear broken.
+  const fallback = window.setTimeout(() => {
+    c.track.scrollLeft = left;
+    c.track.style.scrollSnapType = '';
+    c.track.style.scrollBehavior = '';
+  }, duration + 200);
+
+  const t0 = performance.now();
+  const ease = (t: number) => 1 - Math.pow(1 - t, 3); // easeOutCubic
+  function frame(now: number) {
+    const t = Math.min(1, (now - t0) / duration);
+    c.track.scrollLeft = start + delta * ease(t);
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      clearTimeout(fallback);
+      c.track.style.scrollSnapType = '';
+      c.track.style.scrollBehavior = '';
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
 function goRelative(c: Carousel, delta: number) {
   if (!isHorizontal(c)) return;
   const current = indexFromScroll(c);
@@ -144,16 +184,16 @@ function goRelative(c: Carousel, delta: number) {
 
   let target: HTMLElement | null = null;
   if (targetIdx < 0) {
-    // Scroll into the last-clone (which is `previousElementSibling` of first real).
+    // Scroll into the last-clone (`previousElementSibling` of first real).
     target = c.slides[0].previousElementSibling as HTMLElement | null;
   } else if (targetIdx >= slideCount) {
-    // Scroll into the first-clone (which is `nextElementSibling` of last real).
+    // Scroll into the first-clone (`nextElementSibling` of last real).
     target = c.slides[slideCount - 1].nextElementSibling as HTMLElement | null;
   } else {
     target = c.slides[targetIdx];
   }
   if (!target) return;
-  c.track.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+  smoothScrollTo(c, target.offsetLeft);
 }
 
 function wireArrows(c: Carousel) {
@@ -180,7 +220,7 @@ function wireDots(c: Carousel) {
       if (!isHorizontal(c)) return; // md+ grid: dots are decorative
       const slide = c.slides[i];
       if (!slide) return;
-      c.track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
+      smoothScrollTo(c, slide.offsetLeft);
     });
   });
 }
@@ -206,9 +246,13 @@ function wireMouseDrag(c: Carousel) {
 
   c.track.addEventListener('mousedown', (e) => {
     if (e.button !== 0) return;
-    const target = e.target as HTMLElement;
-    if (target.closest('a, button')) return;
     if (!isHorizontal(c)) return;
+    // Don't skip interactive children — cards are full of links/buttons and
+    // users naturally start drags from them. The DRAG_THRESHOLD below
+    // distinguishes a real drag from a click; if the user doesn't move past
+    // it the child's own click handler runs normally. If they do drag,
+    // `moved=true` and the capture-phase click handler cancels the stray
+    // child click at the end.
     isDown = true;
     moved = false;
     startX = e.pageX;
@@ -237,10 +281,9 @@ function wireMouseDrag(c: Carousel) {
     c.track.style.userSelect = '';
     if (moved) {
       requestAnimationFrame(() => {
-        c.track.style.scrollSnapType = '';
         const idx = indexFromScroll(c);
         const slide = c.slides[idx];
-        if (slide) c.track.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
+        if (slide) smoothScrollTo(c, slide.offsetLeft);
       });
     }
   }

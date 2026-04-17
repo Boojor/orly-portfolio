@@ -53,10 +53,10 @@ const tiles = [
         {/* Vertical label — literal port of live `.vertical-label`:
             z-index: 1, gap: 1rem, flex-col, justify-center,
             align-self: stretch, align-items: center, width: 1.5rem,
-            overflow: visible. NO opacity (hero variant has 0.2, work
-            section does NOT). Lines and text are solid white. */}
-        <div class="hidden md:flex flex-col items-center justify-center self-stretch gap-[1rem] w-[1.5rem] overflow-visible">
-          <div class="w-px flex-1 bg-white" aria-hidden="true"></div>
+            overflow: visible. Live markup order: <p> first, then a
+            single <div class="line"> below (flex:1 so it fills the
+            remaining vertical space). Solid white, no opacity. */}
+        <div class="flex flex-col items-center justify-center self-stretch gap-[1rem] w-[1.5rem] shrink-0 overflow-visible">
           <p
             class="font-body text-xs text-white uppercase tracking-widest [writing-mode:vertical-rl] whitespace-nowrap"
           >

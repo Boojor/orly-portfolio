@@ -83,9 +83,14 @@ const services = [
     {/* Mobile: horizontal scroll-snap carousel (matches live's Swiper).
         Tablet+: 2-col grid. Desktop lg+: 4-col grid. Full Swiper animation
         deferred to Phase 4. */}
+    {/* Gap is `gap-small` (1.5rem = 24px) to match live Webflow's layout:
+        live uses `.services-slider_cms_item { padding: 0 .75rem }` which
+        gives an effective 24px between adjacent cards. Previously we
+        used `gap-large` (48px) which made cards visibly thinner — local
+        306→288px at 1440 per scripts/services-card-diff.mjs. */}
     <div
       data-carousel="services"
-      class="flex snap-x snap-mandatory gap-large overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-4"
+      class="flex snap-x snap-mandatory gap-small overflow-x-auto pb-small [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-4"
     >
       {services.map((svc) => (
         <div data-carousel-slide class="shrink-0 basis-full snap-start md:basis-auto md:shrink">

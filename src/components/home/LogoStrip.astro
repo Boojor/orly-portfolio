@@ -14,16 +14,18 @@ const logos = [
   { src: '/assets/logos/Partner-logos-11.svg', alt: 'Partner' },
 ];
 ---
-{/* Logo strip: edge-to-edge, no container cap. Logos are rendered
-    TWICE so they visually fill the viewport at wide widths (the
-    second set flows off-screen and will be used as the seamless
-    wrap-around for the Phase 4 marquee animation). overflow-hidden
-    clips cleanly at the viewport edges so no logo looks cut off. */}
+{/* Logo strip: edge-to-edge, no container cap, animated as a continuous
+    horizontal ticker. Logos render TWICE back-to-back; the `logo-ticker`
+    keyframe (in global.css) translates the list from 0 to -50% which
+    lines up the second copy exactly where the first started — a
+    seamless infinite loop. `linear` timing keeps pace constant; 45s
+    per cycle feels unhurried. overflow-hidden clips at viewport edges. */}
 <section
   id="logos"
   class="pt-[1.5rem] pb-[1rem] overflow-hidden"
 >
   <ul
+    data-logo-ticker
     class="flex flex-nowrap items-center gap-xlarge md:gap-xxlarge w-max"
   >
     {[...logos, ...logos].map((logo) => (

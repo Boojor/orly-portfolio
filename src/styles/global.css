@@ -148,6 +148,7 @@
     }
   }
 
+
   /* Logo strip marquee — continuous horizontal ticker. LogoStrip.astro
      renders the logo set twice back-to-back ([...logos, ...logos]);
      translating the entire list by -50% over the duration creates a
@@ -301,21 +302,31 @@
     }
   }
 
-  /* Services pagination dots — match live Swiper bullet count per BP.
-     Slide widths switch at 767/991 (Webflow breakpoints), so visible
-     bullets follow: 4 / 3 / 1. Dot size switches at 992: 10px → 16px. */
-  @media (width >= 768px) {
-    [data-carousel-dots="services"] [data-dot-index="3"] {
-      display: none;
+  /* Service card padding + heading size — literal port of live's inline
+     `@media (max-width: 1200px)` override embedded in index.html (not in
+     its main CSS file). Cascade:
+       viewport ≤ 1200px  → padding 2rem, heading 2rem
+       viewport ≥ 1201px  → padding 3.5rem 2.5rem, heading 2.5rem
+     Past me had `p-medium md:p-large` (32 then 48) which was too big at
+     tablet/1024. Live is 32 up to 1200, then jumps to 56/40. */
+  @media (width >= 1201px) {
+    .service-card {
+      padding: 3.5rem 2.5rem;
+    }
+    .service-card-heading {
+      font-size: 2.5rem;
     }
   }
-  @media (width >= 992px) {
-    [data-carousel-dots="services"] [data-dot-index="1"],
-    [data-carousel-dots="services"] [data-dot-index="2"] {
+
+  /* Services pagination dots — hide ALL of them at ≥768px.
+     Rationale: at tablet our layout becomes a 2-col grid and at desktop
+     a 4-col grid; every card is visible without scrolling, so dots are
+     pure noise. Intentional divergence from live Swiper's "show 3 / 1
+     bullet locks" behavior. See memory:
+     feedback_pagination_only_when_needed.md. */
+  @media (width >= 768px) {
+    [data-carousel-dots="services"] {
       display: none;
-    }
-    [data-carousel-dots="services"] [data-dot-index="0"] {
-      width: 1rem;
     }
   }
 }

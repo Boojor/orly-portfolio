@@ -35,7 +35,7 @@ const TAG_STYLES: Record<string, string> = {
 const { icon, heading, description, tags, href = '#' } = Astro.props;
 ---
 <article
-  class="service-card flex h-full flex-col items-start border border-white/90 bg-bg p-medium md:p-large"
+  class="service-card flex h-full flex-col items-start border border-white/90 bg-bg p-medium"
 >
   <!-- Top row: icon + "More info" link -->
   <div class="flex w-full items-center justify-between gap-xsmall">
@@ -75,7 +75,7 @@ const { icon, heading, description, tags, href = '#' } = Astro.props;
   <!-- spacer-2-5 (~2.5rem) -->
   <div class="h-medium md:h-[2.5rem]" aria-hidden="true" />
 
-  <h3 class="font-heading text-[2rem] leading-[1.2] font-normal xl:text-[2.5rem]">
+  <h3 class="service-card-heading font-heading text-[2rem] leading-[1.2] font-normal">
     {heading}
   </h3>
 

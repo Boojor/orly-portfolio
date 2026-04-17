@@ -74,9 +74,18 @@ For every drift-fix batch:
 3. **Measure DOM** with `scripts/hero-cols.mjs`, `scripts/bg-image-diff.mjs`,
    or write a new one-off for the affected section. Never trust a
    screenshot-only verdict.
-4. **"Fixed" requires ALL three passes**: measurements match, 12/12
-   tests green, heatmap clean in the drift area. One out of three is
-   not fixed. If I claim fixed without all three, treat it as suspect.
+4. **Run the section-audit for the touched section(s)**:
+   `node scripts/section-audit.mjs 375 768 1440`. This enumerates
+   visible elements in live vs local per section (text nodes,
+   anchor/button labels, image basenames) and reports signatures live
+   has that local is missing. Catches missing components that heatmap
+   absorbs into ambient drift and that DOM measurements don't query
+   because they only look at what the user named. Required before
+   declaring "fixed."
+5. **"Fixed" requires ALL FOUR passes**: measurements match, tests
+   green, heatmap clean in the drift area, AND section-audit clean
+   for the touched section(s). One out of four is not fixed. If I
+   claim fixed without all four, treat it as suspect.
 5. Update `../zz_Design QA/audit-report.md` after the batch
 6. Commit
 
@@ -98,6 +107,7 @@ For every drift-fix batch:
 | `nav-full-verify.mjs` | Rigorous check: height + opacity-over-time + scroll-spy |
 | `nav-state-check.mjs` | Samples fixed-nav opacity/visibility/transform at scroll states |
 | `scroll-spy-debug.mjs` | Scrolls to each section, reads `.is-active` nav links |
+| `section-audit.mjs {bp...}` | **Gate #4**: enumerates visible elements in live vs local per section, fails on missing live-only signatures. Run before declaring any section-level fix "fixed". |
 
 Project-specific wiring for any new script:
 - Live URL: `file://` + `path.resolve('../../orly-website.webflow/index.html')`
