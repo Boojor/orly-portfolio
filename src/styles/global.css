@@ -785,6 +785,21 @@
     padding-top: 4.5rem;
   }
 
+  .spacer-huge {
+    width: 100%;
+    padding-top: 6rem;
+  }
+
+  .spacer-xhuge {
+    width: 100%;
+    padding-top: 7rem;
+  }
+
+  .spacer-xxhuge {
+    width: 100%;
+    padding-top: 10rem;
+  }
+
   .spacer-xxlarge {
     width: 100%;
     padding-top: 5rem;
@@ -1827,6 +1842,19 @@
     background-color: var(--color-navy-dark);
     z-index: 1;
   }
+  /* .problem_diagram in Fundbox context needs min-height 600px (live rule)
+     to anchor the illustration.svg at its intended size. Scoped to
+     .fundux_problem_component so Cinch's .problem_component sizing
+     (max-width 38rem) is preserved. */
+  .fundux_problem_component .problem_diagram {
+    min-height: 600px;
+    max-width: none;
+  }
+  @media (width <=991px) {
+    .fundux_problem_component .problem_diagram {
+      min-height: auto;
+    }
+  }
   .fundux_problem_component {
     grid-column-gap: 3.5rem;
     grid-row-gap: 3.5rem;
@@ -2212,6 +2240,41 @@
     grid-auto-columns: 1fr;
     width: 100%;
     display: grid;
+    /* Cells hug natural content height instead of stretching to the
+       tallest cell in their row — matches live's masonry-look. */
+    align-items: start;
+  }
+  /* Webflow masonry-style row spans: each grid child spans a different
+     row count so columns interleave heights (safe-card → dark card,
+     writer image → rich-text card, etc). Literal port of the per-node
+     CSS rules in
+     ../orly-website.webflow/css/orly-website.webflow.css (7725-7743).
+     Applied via nth-child so we don't need the Webflow-generated
+     w-node-* IDs. */
+  .grid-images > :nth-child(1) { grid-area: span 2 / span 1 / span 2 / span 1; }
+  .grid-images > :nth-child(2) { grid-area: span 3 / span 1 / span 3 / span 1; }
+  .grid-images > :nth-child(3) { grid-area: span 4 / span 1 / span 4 / span 1; }
+  .grid-images > :nth-child(4) { grid-area: span 4 / span 1 / span 4 / span 1; }
+  .grid-images > :nth-child(5) { grid-area: span 3 / span 1 / span 3 / span 1; }
+  .grid-images > :nth-child(6) { grid-area: span 2 / span 1 / span 2 / span 1; }
+  @media (width <=991px) {
+    /* Tablet reorder: spans change + order swaps matching
+       ../orly-website.webflow/css/orly-website.webflow.css 7799-7826. */
+    .grid-images > :nth-child(1) { order: 1; grid-area: span 2 / span 1 / span 2 / span 1; }
+    .grid-images > :nth-child(2) { order: 2; grid-area: span 2 / span 1 / span 2 / span 1; }
+    .grid-images > :nth-child(3) { order: 6; grid-area: span 2 / span 1 / span 2 / span 1; }
+    .grid-images > :nth-child(4) { order: 3; grid-row: span 3 / span 3; }
+    .grid-images > :nth-child(5) { order: 4; grid-area: span 3 / span 1 / span 3 / span 1; }
+    .grid-images > :nth-child(6) { order: 5; grid-row: span 2 / span 2; }
+  }
+  @media (width <=767px) {
+    /* Mobile collapses most spans back to 1 (flex column anyway, spans
+       stop mattering) per live 7833-7836. */
+    .grid-images > :nth-child(2),
+    .grid-images > :nth-child(4),
+    .grid-images > :nth-child(5) {
+      grid-row: span 1 / span 1;
+    }
   }
   @media (width <=991px) {
     .grid-images {
@@ -2824,12 +2887,15 @@
     overflow: hidden;
   }
 
+  /* Base .image-cover matches live: cover-fit filling its container,
+     but NOT position:absolute — that's the `.contain-absolute` variant
+     (see @layer utilities). Absolute-fill parents like
+     `.background-image-wrapper` already provide the positioning
+     context, so the img just stretches inside via w/h 100%. */
   .image-cover {
     object-fit: cover;
     width: 100%;
     height: 100%;
-    position: absolute;
-    inset: 0%;
   }
 
   /* Background images in the Insight + Visual-system sections: per QA
