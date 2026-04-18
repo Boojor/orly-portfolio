@@ -2431,6 +2431,7 @@
   }
   .image-cover.contain {
     object-fit: contain;
+    position: static;
   }
   .image-cover.contain-absolute {
     position: absolute;
@@ -2887,15 +2888,16 @@
     overflow: hidden;
   }
 
-  /* Base .image-cover matches live: cover-fit filling its container,
-     but NOT position:absolute — that's the `.contain-absolute` variant
-     (see @layer utilities). Absolute-fill parents like
-     `.background-image-wrapper` already provide the positioning
-     context, so the img just stretches inside via w/h 100%. */
+  /* Literal port of live's .image-cover: absolute-fill the nearest
+     positioned ancestor. Modifiers override as needed:
+       • .image-cover.contain  → position: static (natural flow)
+       • .image-cover.contain-absolute → absolute + contain fit */
   .image-cover {
     object-fit: cover;
     width: 100%;
     height: 100%;
+    position: absolute;
+    inset: 0%;
   }
 
   /* Background images in the Insight + Visual-system sections: per QA
