@@ -281,6 +281,47 @@ npx playwright test        # smoke tests
 
 ---
 
+## Design system (`/design-system`)
+
+Live, in-repo design system documentation at
+[`/design-system`](http://localhost:4321/design-system) (also deployed —
+`noindex`'d so it won't show up in search).
+
+`src/pages/design-system.astro` imports the **real** shared primitives
+— `Button`, `Heading`, `Eyebrow`, `Icon`, `FormField` — so what you
+see there is literally what ships on the site. No duplicated markup,
+no drift risk. Token values in the tables are read from live CSS
+variables at render time.
+
+Sections: Colors · Typography (incl. `--text-*` + `--leading-*`
+tokens) · Spacing & Containers · Border Radius · Button · Heading
+(6 variants) · Eyebrow · Icon · FormField · Hero mark.
+
+**Shared primitives live under `src/components/ui/`:**
+
+| Component | Purpose |
+|---|---|
+| `Button.astro` | Every CTA — 6 variants × optional arrow × `as` override |
+| `Heading.astro` | Every heading — `as` × `size` × `leading` × `weight` |
+| `Eyebrow.astro` | Uppercase section label |
+| `Icon.astro` | SVG registry (mail / linkedin / arrow-right / chevron-down) |
+| `FormField.astro` | Label + input-or-select row used by ContactForm |
+| `SectionWrapper.astro` | `px-[5%]` + `max-w-[97.5rem]` section shell |
+
+**Token source of truth:** `src/styles/global.css` `@theme` block.
+Edit a token there and both the `<Heading>` component on home AND the
+`.heading-style-*` / `.text-size-*` CSS classes used on case-study
+pages update in one place. Same for colors, spacing, radii, and the
+shared `--space-section-inset` / `--container-site-xxxlarge`.
+
+> **Note on Storybook:** an earlier revision used Storybook for
+> component docs. It was removed because `@storybook/html-vite`
+> required duplicating each component's markup as HTML strings inside
+> `.stories.ts` — a drift risk. The `/design-system` Astro page
+> replaces it with zero-drift, real-component rendering.
+
+---
+
 ## What's next
 
 ### Phase 3 — case studies

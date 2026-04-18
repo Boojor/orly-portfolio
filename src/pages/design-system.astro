@@ -334,15 +334,19 @@ const containerTokens = [
            ============================================================ -->
       <section id="formfield" style="margin-bottom:5rem;">
         <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">FormField</h2>
-        <p style="opacity:0.7; margin-bottom:2rem;">Label + input/select row used by ContactForm. Three fields + dark variant.</p>
+        <p style="opacity:0.7; margin-bottom:2rem;">
+          Label + input (or select) row used by ContactForm. Three meaningful variants:
+          text input (light), select (light), text input (dark).
+          The live form instantiates this component three times with different
+          label copy — those aren't separate variants.
+        </p>
         <div style="display:grid; grid-template-columns:1fr; gap:1rem;">
           <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
+            <div style="font-size:0.75rem; font-family:ui-monospace, monospace; color:#171717cc; margin-bottom:0.5rem;">type="text" · light footer</div>
             <FormField label="Hey, I&rsquo;m" id="ds-name" name="name" type="text" placeholder="Your name" />
           </div>
           <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
-            <FormField label="Please get back to me via" id="ds-email" name="email" type="text" placeholder="Your email" labelNowrap />
-          </div>
-          <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
+            <div style="font-size:0.75rem; font-family:ui-monospace, monospace; color:#171717cc; margin-bottom:0.5rem;">type="select" · light footer · labelNowrap</div>
             <FormField
               label="I&rsquo;m reaching out about"
               id="ds-reason"
@@ -357,6 +361,7 @@ const containerTokens = [
             />
           </div>
           <div style="background:#171717; padding:2rem; border-radius:0.5rem;">
+            <div style="font-size:0.75rem; font-family:ui-monospace, monospace; color:#ffffffcc; margin-bottom:0.5rem;">type="text" · isDark (case-study footer)</div>
             <FormField label="Hey, I&rsquo;m" id="ds-name-dark" name="name" type="text" placeholder="Your name" isDark />
           </div>
         </div>
