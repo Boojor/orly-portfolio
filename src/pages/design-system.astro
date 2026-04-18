@@ -1,0 +1,473 @@
+---
+// /design-system — the living design system page. Imports every shared
+// primitive from `src/components/ui/*` so what's rendered here is
+// always exactly what ships on the site. No duplicated markup, no
+// drift — edit a component and this page updates automatically.
+
+import '../styles/global.css';
+import Button from '../components/ui/Button.astro';
+import Heading from '../components/ui/Heading.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import Icon from '../components/ui/Icon.astro';
+import FormField from '../components/ui/FormField.astro';
+
+// Token tables are hand-maintained metadata — they describe what the
+// value IS, which a live component render can't. Token VALUES are read
+// from CSS at runtime so they can't drift out of sync.
+const colorGroups = [
+  {
+    title: 'Backgrounds',
+    tokens: ['--color-bg', '--color-bg-light'],
+  },
+  {
+    title: 'Neutrals',
+    tokens: [
+      '--color-stone-200',
+      '--color-stone-400',
+      '--color-neutral-500',
+      '--color-gray-200',
+      '--color-gray-400',
+      '--color-gray-800',
+      '--color-gray-900',
+    ],
+  },
+  {
+    title: 'Brand — core',
+    tokens: ['--color-yellow-300', '--color-yellow-500', '--color-yellow-600'],
+  },
+  {
+    title: 'Brand — case-study purple ramp',
+    tokens: [
+      '--color-brand-purple-100',
+      '--color-brand-purple-300',
+      '--color-brand-purple-400',
+      '--color-brand-purple-500',
+      '--color-brand-purple-700',
+      '--color-brand-purple-900',
+      '--color-purple-jam',
+      '--color-persian-indigo',
+    ],
+  },
+  {
+    title: 'Accent pastels',
+    tokens: [
+      '--color-mint-100',
+      '--color-mint-200',
+      '--color-blue-200',
+      '--color-blue-400',
+      '--color-purple-200',
+      '--color-purple-400',
+      '--color-purple-600',
+      '--color-orange-200',
+      '--color-pink-300',
+    ],
+  },
+  {
+    title: 'Overlays',
+    tokens: ['--color-overlay-black-10', '--color-overlay-white-13', '--color-overlay-dark-30'],
+  },
+];
+
+const textTokens = [
+  { token: '--text-h4-mobile', usage: 'case-study H4 at ≤767' },
+  { token: '--text-cs-h2-project-mobile', usage: 'case-study H2.project-page at ≤767' },
+  { token: '--text-h4-tablet', usage: 'case-study H4 at 768–991' },
+  { token: '--text-h3', usage: 'ServiceCard H3 (also = --text-h4-desktop)' },
+  { token: '--text-h2-mobile', usage: 'section H2 at ≤767' },
+  { token: '--text-h1-mobile', usage: 'Hero H1 ≤767, Footer H2 ≤767' },
+  { token: '--text-h2-tablet', usage: 'section H2 at 768–991' },
+  { token: '--text-metric', usage: 'HeroMetrics number' },
+  { token: '--text-h1-desktop', usage: 'Hero H1 at ≥768 (also --text-h1-tablet)' },
+  { token: '--text-h2-desktop', usage: 'section H2 at ≥1280' },
+  { token: '--text-cs-h1-desktop', usage: 'case-study H1 at ≥992' },
+  { token: '--text-h2-footer-desktop', usage: 'Footer H2 at ≥1280' },
+];
+
+const leadingTokens = [
+  { token: '--leading-display', value: '1.05', usage: 'Footer H2' },
+  { token: '--leading-heading-tight', value: '1.15', usage: 'WorkGrid / Testimonials H2' },
+  { token: '--leading-heading', value: '1.2', usage: 'Hero H1, Services H2, ServiceCard' },
+  { token: '--leading-body', value: '1.4', usage: 'Button copy, case-study H4 mobile' },
+];
+
+const spacingTokens = [
+  ['--spacing-tiny', '0.25rem / 4px'],
+  ['--spacing-xxsmall', '0.5rem / 8px'],
+  ['--spacing-xsmall', '1rem / 16px'],
+  ['--spacing-small', '1.5rem / 24px'],
+  ['--spacing-medium', '2rem / 32px'],
+  ['--spacing-large', '3rem / 48px'],
+  ['--spacing-xlarge', '4rem / 64px'],
+  ['--spacing-xxlarge', '5rem / 80px'],
+  ['--spacing-huge', '6rem / 96px'],
+  ['--spacing-xhuge', '7rem / 112px'],
+  ['--spacing-xxhuge', '10rem / 160px'],
+];
+
+const sectionPadTokens = [
+  ['--spacing-section-small', '3rem'],
+  ['--spacing-section-medium', '5rem'],
+  ['--spacing-section-large', '4rem'],
+  ['--spacing-section-huge', '5.5rem'],
+];
+
+const radiusTokens = [
+  ['--radius-2xl', '1rem / 16px', 'Button, WorkTile, 9× CSS rules'],
+  ['--radius-3xl', '1.5rem / 24px', 'Testimonial card mobile fallback'],
+  ['--radius-card-lg', '2.5rem / 40px', 'Testimonial card left corners at ≥992'],
+  ['--radius-pill-xl', '6rem / 96px', 'Testimonial/principle card pill corners'],
+];
+
+const containerTokens = [
+  ['--container-site-medium', '48rem'],
+  ['--container-site-large', '64rem'],
+  ['--container-site-xlarge', '80rem'],
+  ['--container-site-xxlarge', '96rem'],
+  ['--container-site-xxxlarge', '97.5rem / 1560px — primary content cap'],
+];
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Design System — Orly Boojor</title>
+  </head>
+  <body class="min-h-screen" style="background:#0f0f0f; color:#fff; font-family:var(--font-body);">
+    <header style="position:sticky; top:0; z-index:10; background:#0f0f0fcc; backdrop-filter:blur(8px); padding:1.5rem 5%; border-bottom:1px solid #ffffff1a;">
+      <h1 class="font-heading font-black" style="font-size:1.5rem;">Orly Boojor — Design System</h1>
+      <p class="font-body" style="font-size:0.875rem; opacity:0.7; margin-top:0.25rem;">
+        Every shared primitive, token, and component variant. Imports the real components — what you see here is what ships.
+      </p>
+      <nav style="margin-top:0.75rem; display:flex; gap:1rem; font-size:0.875rem; flex-wrap:wrap;">
+        <a href="#colors" style="color:#d1a451;">Colors</a>
+        <a href="#typography" style="color:#d1a451;">Typography</a>
+        <a href="#spacing" style="color:#d1a451;">Spacing</a>
+        <a href="#radius" style="color:#d1a451;">Radius</a>
+        <a href="#button" style="color:#d1a451;">Button</a>
+        <a href="#heading" style="color:#d1a451;">Heading</a>
+        <a href="#eyebrow" style="color:#d1a451;">Eyebrow</a>
+        <a href="#icon" style="color:#d1a451;">Icon</a>
+        <a href="#formfield" style="color:#d1a451;">FormField</a>
+        <a href="#hero-mark" style="color:#d1a451;">Hero mark</a>
+      </nav>
+    </header>
+
+    <main style="padding:3rem 5%; max-width:1400px; margin:0 auto;">
+
+      <!-- ============================================================
+           COLORS
+           ============================================================ -->
+      <section id="colors" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Colors</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">
+          Every token defined in <code>global.css</code> <code>@theme</code>. Swatch colors are pulled from the live CSS variable at render time — they can't drift.
+        </p>
+        {colorGroups.map((g) => (
+          <div style="margin-bottom:2.5rem;">
+            <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">
+              {g.title}
+            </h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:1rem;">
+              {g.tokens.map((t) => (
+                <div style="border:1px solid #ffffff1a; border-radius:0.5rem; overflow:hidden;">
+                  <div
+                    class="ds-swatch"
+                    data-token={t}
+                    style={`background: var(${t}); aspect-ratio: 16/9;`}
+                    aria-hidden="true"
+                  ></div>
+                  <div style="padding:0.75rem; font-size:0.75rem; font-family:ui-monospace, monospace;">
+                    <div>{t}</div>
+                    <div class="ds-value" data-for={t} style="opacity:0.55; margin-top:0.25rem;">—</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <!-- ============================================================
+           TYPOGRAPHY
+           ============================================================ -->
+      <section id="typography" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Typography</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">
+          One scale drives home <code>&lt;Heading&gt;</code> component + case-study <code>.heading-style-h*</code> + <code>.text-size-*</code> CSS classes.
+        </p>
+
+        <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">Size tokens (—text-*)</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:0.875rem; margin-bottom:2.5rem;">
+          <thead>
+            <tr style="text-align:left; border-bottom:1px solid #ffffff33;">
+              <th style="padding:0.5rem 0.75rem;">Token</th>
+              <th style="padding:0.5rem 0.75rem;">Value</th>
+              <th style="padding:0.5rem 0.75rem;">Used by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {textTokens.map((t) => (
+              <tr style="border-bottom:1px solid #ffffff14;">
+                <td style="padding:0.5rem 0.75rem; font-family:ui-monospace, monospace;">{t.token}</td>
+                <td class="ds-value" data-for={t.token} style="padding:0.5rem 0.75rem; opacity:0.7;">—</td>
+                <td style="padding:0.5rem 0.75rem; opacity:0.7;">{t.usage}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">Line-height tokens</h3>
+        <table style="width:100%; border-collapse:collapse; font-size:0.875rem; margin-bottom:2.5rem;">
+          <thead>
+            <tr style="text-align:left; border-bottom:1px solid #ffffff33;">
+              <th style="padding:0.5rem 0.75rem;">Token</th>
+              <th style="padding:0.5rem 0.75rem;">Value</th>
+              <th style="padding:0.5rem 0.75rem;">Used by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {leadingTokens.map((t) => (
+              <tr style="border-bottom:1px solid #ffffff14;">
+                <td style="padding:0.5rem 0.75rem; font-family:ui-monospace, monospace;">{t.token}</td>
+                <td style="padding:0.5rem 0.75rem; opacity:0.7;">{t.value}</td>
+                <td style="padding:0.5rem 0.75rem; opacity:0.7;">{t.usage}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============================================================
+           HEADING COMPONENT
+           ============================================================ -->
+      <section id="heading" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Heading</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;"><code>src/components/ui/Heading.astro</code> — semantic <code>as</code> × <code>size</code> × <code>leading</code> × <code>weight</code>.</p>
+
+        <div style="display:flex; flex-direction:column; gap:2rem;">
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="hero" leading="heading" weight="light"</div>
+            <Heading as="h1" size="hero" leading="heading" weight="light">I turn figure it out later into shipped product</Heading>
+          </div>
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="section" leading="heading" weight="black"</div>
+            <Heading as="h2" size="section" leading="heading" weight="black">What I do best</Heading>
+          </div>
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="section" leading="tight" weight="black"</div>
+            <Heading as="h2" size="section" leading="tight" weight="black">Examples of My Work</Heading>
+          </div>
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="display" leading="display" weight="black"</div>
+            <Heading as="h2" size="display" leading="display" weight="black" class="capitalize">Let&rsquo;s work together</Heading>
+          </div>
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="card" leading="heading" weight="normal"</div>
+            <Heading as="h3" size="card" leading="heading" weight="normal">Turning ideas into MLP/MVP</Heading>
+          </div>
+          <div>
+            <div style="font-size:0.75rem; opacity:0.6; font-family:ui-monospace, monospace; margin-bottom:0.5rem;">size="metric" leading="none" weight="normal"</div>
+            <Heading as="span" size="metric" leading="none" weight="normal">15+</Heading>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           EYEBROW
+           ============================================================ -->
+      <section id="eyebrow" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Eyebrow</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;"><code>font-body text-xs uppercase tracking-widest</code>.</p>
+        <div style="padding:2rem; background:linear-gradient(180deg,#2a1d3a,#171717); border-radius:0.5rem;">
+          <Eyebrow>Testimonials</Eyebrow>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           BUTTON
+           ============================================================ -->
+      <section id="button" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Button</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">Six variants. Swap <code>variant</code> + <code>arrow</code> + <code>as</code> to cover every CTA on the site.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(360px, 1fr)); gap:1rem;">
+          <div style="background:linear-gradient(180deg,#2a1d3a,#171717); padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center;">
+            <Button variant="primary" href="#">Book a consult</Button>
+          </div>
+          <div style="background:#171717; padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center;">
+            <Button variant="secondary" href="#">See all services</Button>
+          </div>
+          <div style="background:#d1a451; padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center;">
+            <Button variant="submit-dark" arrow="right" type="submit">Send it</Button>
+          </div>
+          <div style="background:#171717; padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center;">
+            <Button variant="submit-gold" arrow="right" type="submit">Send it</Button>
+          </div>
+          <div style="background:linear-gradient(180deg,#2a1d3a,#171717); padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <Button variant="arrow-circle" arrow="left" ariaLabel="Previous" />
+            <Button variant="arrow-circle" arrow="right" ariaLabel="Next" />
+          </div>
+          <div style="background:linear-gradient(180deg,#2a1d3a,#171717); padding:2rem; border-radius:0.5rem; display:flex; align-items:center; justify-content:center;">
+            <Button variant="outline-pill" as="div">DIVE IN</Button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           ICON
+           ============================================================ -->
+      <section id="icon" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Icon</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">Registry in <code>Icon.astro</code>. All icons use <code>currentColor</code>.</p>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:1rem;">
+          {(['mail', 'linkedin', 'arrow-right', 'chevron-down'] as const).map((n) => (
+            <div style="border:1px solid #ffffff1a; border-radius:0.5rem; padding:2rem; display:flex; flex-direction:column; align-items:center; gap:1rem;">
+              <Icon name={n} />
+              <code style="font-size:0.75rem; opacity:0.7;">{n}</code>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ============================================================
+           FORMFIELD
+           ============================================================ -->
+      <section id="formfield" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">FormField</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">Label + input/select row used by ContactForm. Three fields + dark variant.</p>
+        <div style="display:grid; grid-template-columns:1fr; gap:1rem;">
+          <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
+            <FormField label="Hey, I&rsquo;m" id="ds-name" name="name" type="text" placeholder="Your name" />
+          </div>
+          <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
+            <FormField label="Please get back to me via" id="ds-email" name="email" type="text" placeholder="Your email" labelNowrap />
+          </div>
+          <div style="background:#d1a451; padding:2rem; border-radius:0.5rem;">
+            <FormField
+              label="I&rsquo;m reaching out about"
+              id="ds-reason"
+              name="reason"
+              type="select"
+              labelNowrap
+              options={[
+                { value: '', label: 'Please select' },
+                { value: 'a', label: 'First choice' },
+                { value: 'b', label: 'Second choice' },
+              ]}
+            />
+          </div>
+          <div style="background:#171717; padding:2rem; border-radius:0.5rem;">
+            <FormField label="Hey, I&rsquo;m" id="ds-name-dark" name="name" type="text" placeholder="Your name" isDark />
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SPACING + CONTAINERS + SECTION PADDING
+           ============================================================ -->
+      <section id="spacing" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Spacing &amp; Containers</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">
+          Finsweet Client-First scale. Horizontal page inset:
+          <code>--space-section-inset</code> (5%), used by <code>SectionWrapper</code> and <code>.padding-global</code>.
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+          <div>
+            <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">Spacing scale</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+              <tbody>
+                {spacingTokens.map((row) => (
+                  <tr style="border-bottom:1px solid #ffffff14;">
+                    <td style="padding:0.4rem 0.75rem; font-family:ui-monospace, monospace;">{row[0]}</td>
+                    <td style="padding:0.4rem 0.75rem; opacity:0.7;">{row[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">Section padding</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:0.875rem; margin-bottom:2rem;">
+              <tbody>
+                {sectionPadTokens.map((row) => (
+                  <tr style="border-bottom:1px solid #ffffff14;">
+                    <td style="padding:0.4rem 0.75rem; font-family:ui-monospace, monospace;">{row[0]}</td>
+                    <td style="padding:0.4rem 0.75rem; opacity:0.7;">{row[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <h3 class="font-heading" style="font-size:1rem; font-weight:700; margin-bottom:1rem; opacity:0.85;">Containers</h3>
+            <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+              <tbody>
+                {containerTokens.map((row) => (
+                  <tr style="border-bottom:1px solid #ffffff14;">
+                    <td style="padding:0.4rem 0.75rem; font-family:ui-monospace, monospace;">{row[0]}</td>
+                    <td style="padding:0.4rem 0.75rem; opacity:0.7;">{row[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           RADIUS
+           ============================================================ -->
+      <section id="radius" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Border Radius</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">Tailwind defaults + 2 brand tokens for asymmetric card corners.</p>
+        <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+          <thead>
+            <tr style="text-align:left; border-bottom:1px solid #ffffff33;">
+              <th style="padding:0.5rem 0.75rem;">Token</th>
+              <th style="padding:0.5rem 0.75rem;">Value</th>
+              <th style="padding:0.5rem 0.75rem;">Used by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {radiusTokens.map((row) => (
+              <tr style="border-bottom:1px solid #ffffff14;">
+                <td style="padding:0.5rem 0.75rem; font-family:ui-monospace, monospace;">{row[0]}</td>
+                <td style="padding:0.5rem 0.75rem; opacity:0.7;">{row[1]}</td>
+                <td style="padding:0.5rem 0.75rem; opacity:0.7;">{row[2]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============================================================
+           HERO MARK
+           ============================================================ -->
+      <section id="hero-mark" style="margin-bottom:5rem;">
+        <h2 class="font-heading font-black" style="font-size:2rem; margin-bottom:0.25rem;">Hero Mark</h2>
+        <p style="opacity:0.7; margin-bottom:2rem;">
+          <code>.hero-mark</code> class + <code>--hero-mark-img</code> custom property. Each span only supplies its unique image URL.
+        </p>
+        <div style="background:#171717; padding:3rem; border-radius:0.5rem;">
+          <h3 class="font-heading font-light" style="font-size:2.5rem; line-height:1.2; color:#fff;">
+            I turn{' '}
+            <span class="hero-mark" style="--hero-mark-img: url('/assets/hero/mark-figure.svg');">figure</span>{' '}
+            <span class="hero-mark" style="--hero-mark-img: url('/assets/hero/mark-it.svg');">it</span>{' '}
+            <span class="hero-mark" style="--hero-mark-img: url('/assets/hero/mark-out.svg');">out</span>
+          </h3>
+        </div>
+      </section>
+
+    </main>
+
+    <script>
+      // Read every CSS var mentioned on the page and paint its computed
+      // value into the matching .ds-value cell. Runs after hydration so
+      // whatever the token resolves to right now is what you see.
+      const rootStyle = getComputedStyle(document.documentElement);
+      document.querySelectorAll<HTMLElement>('.ds-value').forEach((el) => {
+        const token = el.dataset.for;
+        if (!token) return;
+        el.textContent = rootStyle.getPropertyValue(token).trim() || '(unused — Tailwind tree-shook)';
+      });
+    </script>
+  </body>
+</html>
