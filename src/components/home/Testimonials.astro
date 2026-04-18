@@ -10,7 +10,9 @@
 //
 // The `bgVariant` prop swaps the home page's dark photo bg for a solid
 // purple bg used on case-study pages (per QA: "same layout as home,
-// just change bg color").
+// just change bg color"). `'none'` skips the section bg entirely so
+// the testimonials + OtherProjects can share a gradient applied by a
+// wrapping container on the Fundbox page.
 
 import Button from '../ui/Button.astro';
 import Heading from '../ui/Heading.astro';
@@ -24,11 +26,12 @@ interface Testimonial {
 }
 
 export interface Props {
-  bgVariant?: 'image' | 'purple';
+  bgVariant?: 'image' | 'purple' | 'none';
 }
 
 const { bgVariant = 'image' } = Astro.props;
 const isPurple = bgVariant === 'purple';
+const isImage = bgVariant === 'image';
 
 const slide1: Testimonial[] = [
   {
@@ -67,7 +70,7 @@ const bgSrcset = [
       image dominates the section. We let it fill + apply a gentle dark
       gradient for text legibility without hiding the image. On case
       studies the purple variant replaces the image with a solid purple. */}
-  {!isPurple && (
+  {isImage && (
     <>
       <img
         src={bgSrc}

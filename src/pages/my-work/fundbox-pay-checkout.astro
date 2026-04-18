@@ -1,0 +1,501 @@
+---
+// Case study page — literal port of
+// orly-website.webflow/my-work/fundbox-pay-checkout.html
+// Hybrid port per plan (fancy-gliding-lighthouse.md):
+//   • Cinch-shared sections (hero, case-intro, outcome, context, footer)
+//     copy the JSX wrapper from cinch-logistics.astro so every QA fix
+//     already absorbed into Cinch carries over.
+//   • Fundbox-unique sections (problem, opportunity, flow-mapping,
+//     user-testing ×2, in-context grid, lifestyle) are literal ports
+//     from the live Webflow HTML. Their CSS lives in global.css
+//     under @layer utilities and uses @theme tokens where possible.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/layout/Nav.astro';
+import MobileNav from '../../components/layout/MobileNav.astro';
+import Footer from '../../components/layout/Footer.astro';
+import ScrollNavSwapper from '../../components/layout/ScrollNavSwapper.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
+import OtherProjects from '../../components/work/OtherProjects.astro';
+
+const ASSETS = '/assets/work/fundbox-pay-checkout';
+---
+
+<BaseLayout
+  title="Fundbox Pay Checkout"
+  bodyClass="white-body"
+  showHeroBg={false}
+>
+  <Nav slot="nav" variant="light" />
+  <MobileNav />
+
+  <main>
+    {/* 1. work_hero_section — "Jump to" dropdown + full-bleed hero bg Top.webp.
+         Same structure as Cinch hero. Per live source, Jump-to dropdown
+         options are placeholder text — port literally per CLAUDE.md rule. */}
+    <ScrollNavSwapper />
+    <header class="work_hero_section" data-fundbox-section="hero">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="hero-content">
+            <img src={`${ASSETS}/FBX_PAY-logo.webp`} loading="lazy" alt="Fundbox Pay logo" />
+            <div class="work_dropdown">
+              <div class="dropdown">
+                <img src={`${ASSETS}/2222.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+                <div class="text-size-small">Jump to</div>
+                <img src={`${ASSETS}/Arrow-Dot-Down-1-Streamline-Streamline-Regular-3.0.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+                <img src={`${ASSETS}/Arrow-Thick-Down-4-Streamline-Streamline-Regular-3.0.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+              </div>
+              <div class="dropdown-text">
+                <div class="dropdown-padding">
+                  <a href="#what-is-fundbox-pay" class="section_link">What is Fundbox Pay</a>
+                  <div class="line-fill"></div>
+                  {/* Live source uses placeholder "Option 2/3/4" — preserved per no-invention rule. */}
+                  <a href="#" class="section_link">Option 2</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 3</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 4</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper">
+        <img
+          loading="eager"
+          sizes="(max-width: 2880px) 100vw, 2880px"
+          srcset={`${ASSETS}/Top-p-500.webp 500w, ${ASSETS}/Top-p-800.webp 800w, ${ASSETS}/Top-p-1080.webp 1080w, ${ASSETS}/Top-p-1600.webp 1600w, ${ASSETS}/Top-p-2000.webp 2000w, ${ASSETS}/Top-p-2600.webp 2600w, ${ASSETS}/Top.webp 2880w`}
+          src={`${ASSETS}/Top.webp`}
+          alt=""
+          class="image-cover"
+        />
+      </div>
+    </header>
+
+    {/* 2. work_case-intro_section — H1 + subtitle + meta list + tag pills */}
+    <section class="work_case-intro_section" data-fundbox-section="case-intro">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large work">
+            <div class="max-width-xlarge">
+              <h1 class="heading-style-h1">Fundbox Pay Checkout</h1>
+              <div class="spacer-xxsmall"></div>
+              <p class="heading-style-h4">Redesigned B2B financing into a native checkout flow - and doubled acquisition in 90 days.</p>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="divider-horizontal"></div>
+            <div class="spacer-large"></div>
+            <div class="case_meta">
+              <div class="case_meta-list">
+                <div class="meta-text">
+                  <p class="text-weight-bold">Product Context</p>
+                  <p>Web-app Integration</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">End Users</p>
+                  <p>SMB buyers, B2B e-comm merchants</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Project Duration</p>
+                  <p>4-6 weeks</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Industry</p>
+                  <p>Fintech · B2B Payments · E-commerce</p>
+                </div>
+              </div>
+              <div class="case_tags">
+                <div class="tag"><div class="text-truncate">UX strategy</div></div>
+                <div class="tag"><div class="text-truncate">Persona definition</div></div>
+                <div class="tag"><div class="text-truncate">Information Architecture</div></div>
+                <div class="tag"><div class="text-truncate">Journey mapping</div></div>
+                <div class="tag"><div class="text-truncate">Visual design</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. work_outcome_section — hero product image (Pic.webp) */}
+    <header class="work_outcome_section" data-fundbox-section="outcome">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-small">
+            <div class="case_media">
+              <img
+                src={`${ASSETS}/Pic.webp`}
+                loading="lazy"
+                sizes="100vw"
+                srcset={`${ASSETS}/Pic-p-500.webp 500w, ${ASSETS}/Pic-p-800.webp 800w, ${ASSETS}/Pic-p-1080.webp 1080w, ${ASSETS}/Pic.webp 1280w`}
+                alt=""
+                class="outcome-product"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 4. work_context_section (id=what-is-fundbox-pay) — H2 + 2-col narrative */}
+    <section id="what-is-fundbox-pay" class="work_context_section" data-fundbox-section="context">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="context_component">
+              <div class="case_component-info">
+                <h2 class="heading-style-h2 project-page">What is Fundbox Pay?</h2>
+                <div class="spacer-xsmall"></div>
+                <div class="p-wrapper">
+                  <p>Fundbox helps small businesses access credit. Fundbox Pay extended this to B2B transactions - vendors offer Net-60 terms, get paid immediately, buyers repay over time.<br /></p>
+                  <p>But the standalone product was breaking down. I led product design on the core team, owning end to end UX/UI and user testing alongside PM, Developers &amp; Content Strategist.</p>
+                </div>
+              </div>
+              <p class="heading-style-h4">The original flow lost more deals than it closed, 7+ handoffs, 24-hour waits, over 60% abandonment. By meeting buyers at the moment of purchase, <span class="text-weight-semibold">Fundbox Checkout captured 20% of transactions in month one and doubled new approved users within three months.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. work_problem_section — navy-dark bg, 2-col problem illustration + text */}
+    <header class="work_problem_section is-color-navy-dark text-color-white" data-fundbox-section="problem">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large large-bottom">
+            <div class="fundux_problem_component">
+              <img src={`${ASSETS}/illustration.svg`} loading="lazy" alt="" class="problem_diagram" />
+              <div class="max-width-small">
+                <h2 class="heading-style-h2 project-page">The Friction Problem</h2>
+                <div class="spacer-xsmall"></div>
+                <div class="p-wrapper">
+                  <p>Tye runs a small toy store. He&rsquo;s on his supplier&rsquo;s website, cart full of inventory for the holiday rush. He wants to finance this $5,000 purchase.<br /></p>
+                  <p>With the existing Fundbox Pay flow, he&rsquo;d receive an email invitation from his supplier. Maybe he&rsquo;d open it. If he did, he&rsquo;d land on a registration page for a platform he&rsquo;s never heard of. Fill out forms. Connect accounts. Wait 24 hours. By then, he&rsquo;s forgotten about the purchase - or found another way to pay.<br /></p>
+                  <p>Seven handoff points. Each one a chance to lose context, trust, or motivation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        src={`${ASSETS}/blur_1.webp`}
+        loading="lazy"
+        sizes="100vw"
+        srcset={`${ASSETS}/blur_1-p-500.png 500w, ${ASSETS}/blur_1-p-800.png 800w, ${ASSETS}/blur_1-p-1080.png 1080w, ${ASSETS}/blur_1-p-1600.png 1600w, ${ASSETS}/blur_1.webp 1623w`}
+        alt=""
+        class="problem_image-blur"
+      />
+    </header>
+
+    {/* 6. work_opportunity_section — navy-dark bg, text + 2 alt images
+         (show-mobile-landscape swaps which one is visible per breakpoint) */}
+    <header class="work_opportunity_section is-color-navy-dark text-color-white" data-fundbox-section="opportunity">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large large-top">
+            <div class="opportunity_component">
+              <div class="max-width-small">
+                <h2 class="heading-style-h2 project-page">The Opportunity</h2>
+                <div class="spacer-xsmall"></div>
+                <div class="p-wrapper">
+                  <p>B2B e-commerce was growing fast. Manufacturers were selling directly to retailers online, cutting out distributors. This created an opening: what if financing appeared at the payment step, alongside credit cards and PayPal?<br /></p>
+                  <p>The challenge was fitting an entire credit application - identity verification, underwriting, terms acceptance - into a moment where users are seconds from clicking &ldquo;Place Order.&rdquo;<br /></p>
+                  <p>We had six weeks to design the MVP with a first partner merchant. Constraints were tight: reuse existing components where possible, but make the experience feel native to any e-commerce site.</p>
+                </div>
+              </div>
+              <img
+                src={`${ASSETS}/illustration.png`}
+                loading="lazy"
+                sizes="100vw"
+                alt=""
+                srcset={`${ASSETS}/illustration-p-500.png 500w, ${ASSETS}/illustration.png 750w`}
+                class="problem_opportunity show-mobile-landscape"
+              />
+              <img
+                src={`${ASSETS}/Frame-1000002358-1.webp`}
+                loading="lazy"
+                sizes="100vw"
+                alt=""
+                srcset={`${ASSETS}/a3cdc0c1878a5dce4f29b4f4a7b3d555_Frame-1000002358-1-p-500.webp 500w, ${ASSETS}/a3cdc0c1878a5dce4f29b4f4a7b3d555_Frame-1000002358-1-p-800.webp 800w, ${ASSETS}/a3cdc0c1878a5dce4f29b4f4a7b3d555_Frame-1000002358-1-p-1080.png 1080w, ${ASSETS}/a3cdc0c1878a5dce4f29b4f4a7b3d555_Frame-1000002358-1-p-1600.png 1600w, ${ASSETS}/Frame-1000002358-1.webp 1616w`}
+                class="problem_opportunity hide-mobile-landscape"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper">
+        <img
+          sizes="100vw"
+          srcset={`${ASSETS}/bg-image-p-500.webp 500w, ${ASSETS}/bg-image-p-800.webp 800w, ${ASSETS}/bg-image-p-1080.webp 1080w, ${ASSETS}/bg-image-p-1600.webp 1600w, ${ASSETS}/bg-image.webp 1760w`}
+          alt=""
+          src={`${ASSETS}/bg-image.webp`}
+          loading="lazy"
+          class="image-cover"
+        />
+      </div>
+      <img
+        src={`${ASSETS}/blurShadow.webp`}
+        loading="lazy"
+        sizes="100vw"
+        srcset={`${ASSETS}/blurShadow-p-500.webp 500w, ${ASSETS}/blurShadow-p-800.webp 800w, ${ASSETS}/blurShadow-p-1080.webp 1080w, ${ASSETS}/blurShadow-p-1600.webp 1600w, ${ASSETS}/blurShadow.webp 1855w`}
+        alt=""
+        class="problem_image-shadow"
+      />
+      <img
+        src={`${ASSETS}/blur_2.webp`}
+        loading="lazy"
+        sizes="100vw"
+        srcset={`${ASSETS}/blur_2-p-500.png 500w, ${ASSETS}/blur_2-p-800.png 800w, ${ASSETS}/blur_2-p-1080.png 1080w, ${ASSETS}/blur_2.webp 1186w`}
+        alt=""
+        class="opportunity_image-blur"
+      />
+    </header>
+
+    {/* 7. work_flow-mapping_section — H2 + flowchart SVG diagram */}
+    <header class="work_flow-mapping_section" data-fundbox-section="flow-mapping">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="work_opportunity_component-diagram">
+              <div class="work_opportunity_intro">
+                <h2 class="heading-style-h2 project-page">Mapping the Territory &amp; Scoping the Build</h2>
+                <div class="spacer-xsmall"></div>
+                <p>Before designing screens, I mapped the full flow with stakeholders and engineering. This surfaced critical decision points early and became our source of truth throughout the build. The diagram became our source of truth - color-coded to show existing components we&rsquo;d reuse versus new UX work I&rsquo;d own.</p>
+              </div>
+              <div class="spacer-huge"></div>
+              <div class="work_opportunity_diagram">
+                <img src={`${ASSETS}/Flow-chart.svg`} loading="lazy" alt="" class="image-cover contain" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 8. work_user-testing_section (light bg) — Version A comparison + quote */}
+    <header class="work_user-testing_section color_background-light" data-fundbox-section="user-testing">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="work_user-testing_component">
+              <div class="contexttt-text work_user-testing_intro">
+                <div class="text-rich-text">
+                  <p>To assess credit-worthiness, users could provide data two ways:</p>
+                  <ul role="list">
+                    <li>Connect business bank account - More steps, but keeps personal and business finances separate.</li>
+                    <li>Share personal credit score - Faster, but mixes personal credit with business transactions.</li>
+                  </ul>
+                </div>
+                <p class="heading-style-h4"><span class="text-weight-bold">To settle the question, I put two versions in front of real users.</span><br />6 small business owners, 10-minute sessions on UserTesting.com</p>
+              </div>
+              <div class="work_user-testing_comparison">
+                <div class="user-testing-media-secondary">
+                  <img
+                    src={`${ASSETS}/Version-1.webp`}
+                    loading="lazy"
+                    sizes="100vw"
+                    srcset={`${ASSETS}/Version-1-p-500.webp 500w, ${ASSETS}/Version-1-p-800.webp 800w, ${ASSETS}/Version-1-p-1080.webp 1080w, ${ASSETS}/Version-1-p-1600.webp 1600w, ${ASSETS}/Version-1-p-2000.webp 2000w, ${ASSETS}/Version-1.webp 2560w`}
+                    alt="Soft-focus close-up of light purple flower petals against a pale lavender background."
+                    class="image-cover slider"
+                  />
+                </div>
+                <div class="work_user-testing-visual">
+                  <div class="user-testing-media-first mobile">
+                    <img
+                      src={`${ASSETS}/FBX-checkout-8979.webp`}
+                      loading="lazy"
+                      sizes="100vw"
+                      srcset={`${ASSETS}/36952ca791a89af88b6026e08276fdab_FBX-checkout-8979-p-500.webp 500w, ${ASSETS}/36952ca791a89af88b6026e08276fdab_FBX-checkout-8979-p-800.webp 800w, ${ASSETS}/FBX-checkout-8979.webp 1030w`}
+                      alt=""
+                      class="image-cover contain"
+                    />
+                  </div>
+                  <div class="user-testing-media-first">
+                    <img
+                      src={`${ASSETS}/FBX-checkout-8979.webp`}
+                      loading="lazy"
+                      sizes="100vw"
+                      srcset={`${ASSETS}/36952ca791a89af88b6026e08276fdab_FBX-checkout-8979-p-500.webp 500w, ${ASSETS}/36952ca791a89af88b6026e08276fdab_FBX-checkout-8979-p-800.webp 800w, ${ASSETS}/FBX-checkout-8979.webp 1030w`}
+                      alt=""
+                      class="image-cover contain-absolute"
+                    />
+                  </div>
+                </div>
+                <div class="work_user-testing_insight">
+                  <div class="work_user-testing_variant">
+                    <div class="work_user-testing_variant-text">
+                      <p class="text-weight-bold">Version A</p>
+                      <div class="spacer-xsmall"></div>
+                      <p>Bank selection prominent with list of bank logos. Credit score as a smaller secondary button pointing at a clear hierarchy of choice.</p>
+                    </div>
+                    <div class="work_user-testing_quote">
+                      <div class="line-vertical"></div>
+                      <div class="work_user-testing_quote-text">
+                        <p class="heading-style-h4">&ldquo;With the first one, I wasn&rsquo;t sure what I was choosing or why. The second one - I actually read it and knew immediately which one was me.&rdquo;</p>
+                        <p><span class="text-weight-semibold">Marcus</span>, Owner of a small landscaping company</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 9. work_in-context_section — 5-card lightbox grid */}
+    <header class="work_in-context_section" data-fundbox-section="in-context">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-huge">
+            <div class="grid-images">
+              <a href="#" class="grid-images-1-25">
+                <img src={`${ASSETS}/safeandsecure.svg`} loading="lazy" alt="" class="image-cover contain" />
+              </a>
+              <div class="grid-images-3 hide-mobile-landscape">
+                <img
+                  src={`${ASSETS}/writer.avif`}
+                  loading="lazy"
+                  sizes="100vw"
+                  srcset={`${ASSETS}/01d6242b3b1e4ec117c5b62564b97339_writer-p-500.avif 500w, ${ASSETS}/01d6242b3b1e4ec117c5b62564b97339_writer-p-800.avif 800w, ${ASSETS}/writer.avif 1668w`}
+                  alt=""
+                  class="image-cover"
+                />
+              </div>
+              <a href="#" class="grid-images-4">
+                <img src={`${ASSETS}/CHECKOUT_10.svg`} loading="lazy" alt="" class="image-cover contain" />
+              </a>
+              <div class="grid-images-4 flex-center hide-mobile-landscape">
+                <img src={`${ASSETS}/Item.svg`} loading="lazy" alt="" class="image-cover contain" />
+              </div>
+              <div class="grid-images-3 bg-color-gray100 hide-mobile-landscape">
+                <div class="rich-text-block">
+                  <p class="text-weight-semibold">Building Trust in Small Spaces</p>
+                  <p class="work_user-testing_variant-text">Unknown fintech. Bank credentials. Popup. Three trust problems at once. I designed around them:</p>
+                  <ul role="list" class="list-2">
+                    <li>Partnership footer on every screen, borrowing the merchant&rsquo;s credibility</li>
+                    <li>Security badges like Norton, McAfee, BBB</li>
+                    <li>Recovery state so a closed popup is one click to relaunch</li>
+                    <li>Visible phone number because real humans pick up</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="#" class="grid-images-1-25 bg-color-gray100">
+                <img src={`${ASSETS}/sorry.svg`} loading="lazy" alt="" class="image-cover contain" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 10. work_user-testing_iteration_section — Version B, The Terms No One Read */}
+    <header class="work_user-testing_iteration_section color_background-light" data-fundbox-section="user-testing-iteration">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="work_user-testing_component">
+              <div class="work_user-testing_intro">
+                <div class="text-rich-text">
+                  <p>After approval, the buyer confirms terms. Here&rsquo;s the complexity: Net-60 is free, then it becomes a 52-week loan with weekly fees.<br />Early repayment waives the rest.<br /><br />Signals from Sales and Customer Success told me our terms display wasn&rsquo;t landing. But pushing for a redesign got pushback: no time, no resources.<br />Instead of arguing, I tested.</p>
+                </div>
+                <h2 class="heading-style-h4">This was the most contested decision of the project. <span class="text-weight-bold">The Terms No One Read - Until They Did.</span></h2>
+              </div>
+              <div class="div-block-43-copy">
+                <div class="work_user-testing-visual">
+                  <div class="in-context-media">
+                    <img
+                      src={`${ASSETS}/33333333333333.webp`}
+                      loading="lazy"
+                      sizes="100vw"
+                      srcset={`${ASSETS}/f841dfd69f5aa8379f970d53ecc635dd_33333333333333-p-500.webp 500w, ${ASSETS}/f841dfd69f5aa8379f970d53ecc635dd_33333333333333-p-800.webp 800w, ${ASSETS}/f841dfd69f5aa8379f970d53ecc635dd_33333333333333-p-1080.webp 1080w, ${ASSETS}/33333333333333.webp 1422w`}
+                      alt=""
+                      class="image-cover contain"
+                    />
+                  </div>
+                </div>
+                <div class="work_user-testing_insight">
+                  <div class="work_user-testing_variant">
+                    <div class="work_user-testing_variant-text">
+                      <p class="text-weight-bold">Version A</p>
+                      <div class="spacer-xsmall"></div>
+                      <p>My first instinct: make it easy, tuck the full terms behind an accordion. Less intimidating. But users didn&rsquo;t feel reassured. They felt suspicious. In finance, that kills conversions.</p>
+                    </div>
+                    <div class="work_user-testing_quote">
+                      <div class="line-vertical"></div>
+                      <div class="work_user-testing_quote-text">
+                        <p class="heading-style-h4">&ldquo;I don&rsquo;t know... it feels like they&rsquo;re not telling me everything. What&rsquo;s behind that link?&rdquo;</p>
+                        <p><span class="text-weight-semibold">Dana,</span> Owner of a boutique clothing store</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 11. work_lifestyle_section — 4 product screenshots on gradient bg.
+         Live `.work_lifestyle_section { display: none }` at ≤767 so this
+         section is desktop/tablet-only. */}
+    <header class="work_lifestyle_section" data-fundbox-section="lifestyle">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-huge">
+            <div class="lifestyle_media-wrapper">
+              <div class="lifestyle-left-content">
+                <img src={`${ASSETS}/CHECKOUT_16.png`} loading="lazy" alt="" class="lifestyle-image portrait" />
+                <img src={`${ASSETS}/CHECKOUT_17.png`} loading="lazy" alt="" class="lifestyle-image square" />
+                <img src={`${ASSETS}/CHECKOUT_18.png`} loading="lazy" alt="" class="lifestyle-image square" />
+              </div>
+              <div class="right-content">
+                <img
+                  src={`${ASSETS}/CHECKOUT_15.png`}
+                  loading="lazy"
+                  sizes="100vw"
+                  srcset={`${ASSETS}/CHECKOUT_15-p-500.png 500w, ${ASSETS}/CHECKOUT_15.png 594w`}
+                  alt=""
+                  class="lifestyle-image right"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper">
+        <img
+          sizes="100vw"
+          srcset={`${ASSETS}/5de59bb6177954668f0ede84017a8be2_pozafundal-bg-1-2-p-500.png 500w, ${ASSETS}/5de59bb6177954668f0ede84017a8be2_pozafundal-bg-1-2-p-800.png 800w, ${ASSETS}/pozafundal-bg-1-2.webp 2000w`}
+          alt=""
+          src={`${ASSETS}/pozafundal-bg-1-2.webp`}
+          loading="eager"
+          class="image-cover x1-5"
+        />
+      </div>
+    </header>
+
+    {/* 12 + 13. Testimonials + Other Projects — wrapped in a blue-gradient
+         container so both share the gradient bg, matching live structure
+         where they live inside the same .work_testimonials_section. */}
+    <div class="work_testimonials_section text-color-white is-bg-color-blue">
+      <Testimonials bgVariant="none" />
+      <OtherProjects currentSlug="fundbox-pay-checkout" bgColor="transparent" />
+    </div>
+  </main>
+
+  <Footer slot="footer" variant="dark" />
+</BaseLayout>
+
+{/* Jump-to dropdown — hover-to-open (same pattern as Cinch). */}
+<script>
+  const dropdowns = document.querySelectorAll<HTMLElement>('.work_dropdown');
+  dropdowns.forEach((d) => {
+    d.addEventListener('mouseenter', () => d.classList.add('is-open'));
+    d.addEventListener('mouseleave', () => d.classList.remove('is-open'));
+  });
+</script>

@@ -50,6 +50,16 @@
   --color-brand-purple-700: #683a8d; /* results section bg */
   --color-brand-purple-900: #221430; /* darkest section bg */
 
+  /* Fundbox Pay Checkout brand palette — testimonials gradient,
+     user-testing card tints, in-context grid cards. Tokenized so any
+     future Fundbox/fintech surface updates in one place. */
+  --color-brand-teal-500: #00bd9c;  /* testimonials gradient start */
+  --color-brand-blue-500: #0051a6;  /* testimonials gradient mid */
+  --color-brand-blue-900: #223447;  /* in-context dark card bg */
+  --color-brand-pink-100: #f5eff4;  /* terms test light-pink card bg */
+  --color-brand-blue-100: #d3edf2;  /* in-context pale blue card bg */
+  --color-neutral-100: #f4f4f5;     /* in-context pale gray card bg */
+
   /* Overlays (tint layers / glass effects) */
   --color-overlay-black-10: #0000001a; /* carousel arrow bg, slider-button */
   --color-overlay-white-13: #ffffff21; /* principle cards white overlay */
@@ -1795,6 +1805,584 @@
     position: static;
     inset: auto;
     object-fit: initial;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Fundbox Pay Checkout — section-specific classes
+     Literal port of live Webflow CSS (see
+     ../orly-website.webflow/css/orly-website.webflow.css lines
+     3111–3672, 4739–5017, 5640–5894). Values reference @theme tokens
+     wherever the live code used a token-equivalent hex. Section
+     wrappers use the same .padding-global / .container-large /
+     .padding-section-* shell as Cinch.
+     ────────────────────────────────────────────────────────────── */
+
+  /* Section 5 — Friction Problem (navy-dark bg, 2-col illustration + text) */
+  .work_problem_section {
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  .work_problem_section.is-color-navy-dark {
+    background-color: var(--color-navy-dark);
+    z-index: 1;
+  }
+  .fundux_problem_component {
+    grid-column-gap: 3.5rem;
+    grid-row-gap: 3.5rem;
+    flex-flow: row;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr .5fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    place-items: center stretch;
+    display: grid;
+  }
+  @media (width <=991px) {
+    .fundux_problem_component {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (width <=767px) {
+    .fundux_problem_component {
+      grid-row-gap: 3.6rem;
+      flex-flow: column;
+      grid-template-columns: 1fr;
+      display: flex;
+    }
+  }
+  .problem_image-blur {
+    z-index: -1;
+    position: absolute;
+    bottom: -55%;
+    right: -35%;
+  }
+  @media (width <=767px) {
+    .problem_image-blur {
+      bottom: -24%;
+      right: -30%;
+    }
+  }
+
+  /* Section 6 — Opportunity (navy-dark bg, 2-col text + image with
+     bg-image-wrapper overlay + blur/shadow decorative layers) */
+  .work_opportunity_section.is-color-navy-dark {
+    background-color: var(--color-navy-dark);
+    z-index: 1;
+  }
+  .opportunity_component {
+    grid-column-gap: 3.6rem;
+    grid-row-gap: 3.5rem;
+    flex-flow: row;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    place-items: center stretch;
+    display: grid;
+  }
+  @media (width <=991px) {
+    .opportunity_component {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (width <=767px) {
+    .opportunity_component {
+      grid-column-gap: 0rem;
+      grid-row-gap: 0rem;
+      flex-flow: column;
+      display: flex;
+    }
+  }
+  .problem_opportunity {
+    object-fit: contain;
+    min-height: 600px;
+  }
+  @media (width <=991px) {
+    .problem_opportunity.hide-mobile-landscape {
+      min-height: auto;
+    }
+  }
+  @media (width <=767px) {
+    .problem_opportunity {
+      order: 0;
+      min-height: auto;
+    }
+  }
+  .problem_image-shadow {
+    z-index: -1;
+    object-fit: none;
+    position: absolute;
+    inset: -25% 0% auto;
+  }
+  @media (width <=991px) {
+    .problem_image-shadow {
+      display: none;
+    }
+  }
+  .opportunity_image-blur {
+    z-index: -1;
+    position: absolute;
+    inset: auto auto -52% -30%;
+  }
+
+  /* Section 7 — Flow Mapping (pattern bg, flowchart SVG) */
+  .work_flow-mapping_section {
+    z-index: 1;
+    background-image: url('/assets/work/cinch/Section.webp'); /* shared pattern bg */
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-size: cover;
+  }
+  @media (width <=767px) {
+    .work_flow-mapping_section {
+      display: none;
+    }
+  }
+  .work_opportunity_component-diagram {
+    grid-column-gap: 3.6rem;
+    grid-row-gap: 3.5rem;
+    flex-flow: row;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    place-items: center stretch;
+    position: relative;
+  }
+  .work_opportunity_intro {
+    width: 100%;
+  }
+  .work_opportunity_diagram {
+    z-index: -1;
+    width: 100%;
+    min-height: 430px;
+    position: relative;
+  }
+  @media (width <=991px) {
+    .work_opportunity_diagram {
+      z-index: 1;
+      min-height: auto;
+    }
+  }
+  @media (width <=767px) {
+    .work_opportunity_diagram {
+      aspect-ratio: 16 / 9;
+      min-height: auto;
+    }
+  }
+
+  /* Section 8 + 10 — User Testing (two variants; shared shell) */
+  .work_user-testing_section.color_background-light,
+  .work_user-testing_iteration_section.color_background-light {
+    z-index: 1;
+    background-color: var(--color-bg-light);
+  }
+  .work_user-testing_component {
+    grid-column-gap: 4rem;
+    grid-row-gap: 4rem;
+    flex-flow: column;
+    display: flex;
+  }
+  @media (width <=991px) {
+    .work_user-testing_component {
+      grid-column-gap: 3rem;
+      grid-row-gap: 3rem;
+    }
+  }
+  @media (width <=767px) {
+    .work_user-testing_component {
+      grid-column-gap: 3rem;
+      grid-row-gap: 3rem;
+    }
+  }
+  .work_user-testing_intro {
+    grid-column-gap: 4rem;
+    grid-row-gap: 4rem;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    justify-content: space-between;
+    place-items: start stretch;
+    width: 100%;
+    display: grid;
+  }
+  @media (width <=991px) {
+    .work_user-testing_intro {
+      grid-column-gap: 3rem;
+      grid-row-gap: 3rem;
+    }
+  }
+  @media (width <=767px) {
+    .work_user-testing_intro {
+      grid-column-gap: 2rem;
+      grid-row-gap: 2rem;
+      flex-flow: column;
+      display: flex;
+    }
+  }
+  .work_user-testing_comparison {
+    z-index: 1;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    border-radius: 40px;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 600px;
+    display: grid;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <=991px) {
+    .work_user-testing_comparison {
+      flex-flow: row;
+    }
+  }
+  @media (width <=767px) {
+    .work_user-testing_comparison {
+      grid-column-gap: 0rem;
+      grid-row-gap: 0rem;
+      flex-flow: column;
+      grid-template-columns: 1fr;
+    }
+  }
+  .work_user-testing_variant {
+    grid-column-gap: 4rem;
+    grid-row-gap: 4rem;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    display: flex;
+  }
+  @media (width <=991px) {
+    .work_user-testing_variant {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  }
+  @media (width <=767px) {
+    .work_user-testing_variant {
+      grid-column-gap: 3rem;
+      grid-row-gap: 3rem;
+    }
+  }
+  .work_user-testing_variant-text {
+    flex-flow: column;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    padding-top: 1rem;
+    display: flex;
+  }
+  .work_user-testing_quote {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    display: flex;
+  }
+  .work_user-testing_quote-text {
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    flex-flow: column;
+    display: flex;
+  }
+  .line-vertical {
+    background-color: #000;
+    width: 1px;
+    height: 100%;
+  }
+  .work_user-testing_insight {
+    flex-flow: row;
+    width: 100%;
+    height: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+  }
+  @media (width <=767px) {
+    .work_user-testing_insight {
+      padding-top: 1rem;
+    }
+  }
+  .work_user-testing-visual {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+  }
+  @media (width <=991px) {
+    .work_user-testing-visual {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  .user-testing-media-first {
+    z-index: 5;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+  }
+  .user-testing-media-first.mobile {
+    display: none;
+  }
+  @media (width <=767px) {
+    .user-testing-media-first {
+      object-fit: contain;
+      min-height: 15rem;
+      display: none;
+    }
+    .user-testing-media-first.mobile {
+      min-height: auto;
+      display: block;
+    }
+  }
+  .user-testing-media-secondary {
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0%;
+  }
+  /* Section 10 — iteration variant uses a light-pink card to distinguish */
+  .div-block-43-copy {
+    z-index: 4;
+    grid-column-gap: 3.5rem;
+    grid-row-gap: 3.5rem;
+    background-color: var(--color-brand-pink-100);
+    border-radius: 40px;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: grid;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <=767px) {
+    .div-block-43-copy {
+      grid-column-gap: 2rem;
+      grid-row-gap: 2rem;
+      flex-flow: column;
+      display: flex;
+    }
+  }
+  .in-context-media {
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    max-height: 40rem;
+    position: relative;
+    bottom: -10%;
+    left: 5%;
+    overflow: hidden;
+  }
+  @media (width <=991px) {
+    .in-context-media {
+      min-height: 29rem;
+      max-height: none;
+      top: 0;
+      bottom: 0%;
+      overflow: visible;
+    }
+  }
+  @media (width <=767px) {
+    .in-context-media {
+      object-fit: contain;
+      min-height: 15rem;
+      position: static;
+    }
+  }
+
+  /* Section 9 — In-Context (5-card lightbox grid) */
+  .work_in-context_section {
+    z-index: 1;
+  }
+  .grid-images {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    flex-flow: row;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;
+    width: 100%;
+    display: grid;
+  }
+  @media (width <=991px) {
+    .grid-images {
+      grid-template-columns: 1fr 1fr;
+      grid-auto-rows: auto;
+    }
+  }
+  @media (width <=767px) {
+    .grid-images {
+      grid-column-gap: 1.5rem;
+      grid-row-gap: 1.5rem;
+      flex-flow: column;
+      grid-template-rows: auto;
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+      grid-auto-columns: 1fr;
+      display: flex;
+    }
+  }
+  .grid-images-1-25 {
+    background-color: var(--color-brand-blue-100);
+    border-radius: var(--radius-2xl);
+    padding: 1.5rem;
+  }
+  .grid-images-1-25.bg-color-gray100 {
+    background-color: var(--color-neutral-100);
+  }
+  @media (width <=767px) {
+    .grid-images-1-25.bg-color-gray100 {
+      order: 3;
+    }
+  }
+  .grid-images-3 {
+    border-radius: var(--radius-2xl);
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .grid-images-3.bg-color-gray100 {
+    background-color: var(--color-neutral-100);
+  }
+  @media (width <=767px) {
+    .grid-images-3.hide-mobile-landscape {
+      order: 2;
+    }
+  }
+  .grid-images-4 {
+    text-align: center;
+    background-color: var(--color-brand-blue-900);
+    border-radius: var(--radius-2xl);
+    min-height: auto;
+    padding: 6rem 1.5rem 6.25rem;
+  }
+  .grid-images-4.flex-center {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <=767px) {
+    .grid-images-4 {
+      order: 2;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  /* Section 11 — Lifestyle (4 product screenshots on gradient bg) */
+  .work_lifestyle_section {
+    z-index: 1;
+    height: 100vh;
+    max-height: 780px;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <=767px) {
+    .work_lifestyle_section {
+      height: auto;
+      max-height: none;
+      display: none;
+    }
+  }
+  .lifestyle_media-wrapper {
+    grid-template-rows: auto auto;
+    grid-template-columns: 1.5fr 1fr;
+    grid-auto-columns: 1fr;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-height: 780px;
+    display: flex;
+  }
+  @media (width <=991px) {
+    .lifestyle_media-wrapper {
+      max-height: none;
+    }
+  }
+  @media (width <=767px) {
+    .lifestyle_media-wrapper {
+      grid-column-gap: 2.5rem;
+      grid-row-gap: 2.5rem;
+      flex-flow: column;
+    }
+  }
+  .lifestyle-left-content {
+    grid-column-gap: 2.5rem;
+    grid-row-gap: 2.5rem;
+    flex-flow: column;
+    grid-auto-columns: 1fr;
+    display: grid;
+  }
+  .lifestyle-image {
+    object-fit: contain;
+  }
+  .lifestyle-image.square {
+    width: 232px;
+  }
+  .lifestyle-image.portrait {
+    aspect-ratio: 2 / 3;
+    width: 232px;
+  }
+  .lifestyle-image.right {
+    width: 300px;
+  }
+  @media (width <=991px) {
+    .lifestyle-image.right {
+      object-position: 50% 0%;
+    }
+  }
+
+  /* Section 12 — Testimonials blue-gradient variant */
+  .work_testimonials_section.is-bg-color-blue {
+    background-image: linear-gradient(
+      202deg,
+      var(--color-brand-teal-500),
+      var(--color-brand-blue-500) 50%,
+      var(--color-navy-dark)
+    );
+  }
+
+  /* Helper: show/hide at tablet-landscape breakpoint (767px) */
+  .show-mobile-landscape {
+    display: none;
+  }
+  @media (width <=767px) {
+    .show-mobile-landscape {
+      display: block;
+    }
+    .hide-mobile-landscape {
+      display: none;
+    }
+  }
+  .image-cover.contain {
+    object-fit: contain;
+  }
+  .image-cover.contain-absolute {
+    position: absolute;
+    object-fit: contain;
+    inset: 0;
+  }
+  .image-cover.x1-5 {
+    transform: scale(1.5);
+    transform-origin: center;
+  }
+  .text-weight-semibold {
+    font-weight: 600;
+  }
+  .text-style-capitalize {
+    text-transform: capitalize;
   }
 
   /* Section 13: testimonials */
