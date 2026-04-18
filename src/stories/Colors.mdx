@@ -1,0 +1,88 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+
+<Meta title="Design System/Colors" />
+
+# Color Architecture
+
+The portfolio's color system follows a strict logical division:
+1. **Global & Persistent Colors**: Core neutral values used sitewide for backgrounds, text, and structural UI elements.
+2. **Page-Specific Accents**: Thematic color palettes that change depending on the page (e.g., the Homepage has its distinct accents, and each Case Study gets its own branded identity).
+
+<br/>
+
+## 1. Global & Persistent Colors
+*These colors exist universally across the site for core structure, regardless of the active page theme.*
+
+<ColorPalette>
+  <ColorItem 
+    title="Backgrounds" 
+    subtitle="Theme base colors"
+    colors={{ 
+      Dark: '#171717', 
+      Light: '#f5f5f4' 
+    }} 
+  />
+
+  <ColorItem 
+    title="Neutrals (Dark)" 
+    subtitle="Typography and structural elements"
+    colors={{ 
+      'Neutral / Gray 900': '#171717',
+      'Gray 800': '#27272a'
+    }} 
+  />
+
+  <ColorItem 
+    title="Neutrals (Light)" 
+    subtitle="Dividers, unused tags, and soft UI elements"
+    colors={{ 
+      'Stone 200': '#d6d3d1',
+      'Stone 400': '#a8a29e',
+      'Gray 200': '#e2e8f0',
+      'Gray 400': '#b2c0d1'
+    }} 
+  />
+</ColorPalette>
+
+<br/>
+
+## 2. Page-Specific Accents
+*Accent palettes define the primary identity, buttons, text highlights, and decorative elements of a specific page.*
+
+<ColorPalette>
+  <ColorItem 
+    title="Homepage: Core Accents" 
+    subtitle="Primary buttons, footer, and highlights"
+    colors={{ 
+      'Yellow 300': '#f9e27d',
+      'Yellow 500': '#d1a451',
+      'Yellow 600': '#d9a441'
+    }} 
+  />
+
+  <ColorItem 
+    title="Homepage: Tag Accents" 
+    subtitle="Color-coding for Service cards and Work Grid categories"
+    colors={{ 
+      'Mint 100': '#cff3e6',
+      'Mint 200': '#9ecfb6',
+      'Blue 200': '#7fb9c8',
+      'Blue 400': '#84afe2',
+      'Purple 200': '#e4dbf5',
+      'Purple 400': '#b79be6',
+      'Pink 300': '#e09aaf',
+      'Orange 200': '#f2b38c'
+    }} 
+  />
+
+  <ColorItem 
+    title="Case Study: Cinch" 
+    subtitle="Primary brand identity and accents for the Cinch project page"
+    colors={{ 
+      'Purple Jam': '#662998', 
+      'Persian Indigo': '#3b2084', 
+      'Accent Purple': '#9c5cd1',
+      'Navy Dark': '#14202e' 
+    }} 
+  />
+</ColorPalette>

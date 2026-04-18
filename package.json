@@ -11,7 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
@@ -23,6 +25,14 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.6.0"
+    "@storybook/addon-a11y": "^8.6.0",
+    "@storybook/addon-docs": "^8.6.0",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/html-vite": "^8.6.0",
+    "@types/node": "^25.6.0",
+    "playwright": "^1.59.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "storybook": "^8.6.0"
   }
 }

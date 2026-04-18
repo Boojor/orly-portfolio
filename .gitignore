@@ -38,3 +38,6 @@ screenshots/
 
 # local preview launch config
 .claude/
+
+*storybook.log
+storybook-static
