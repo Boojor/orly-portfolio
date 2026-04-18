@@ -329,4 +329,1379 @@
       display: none;
     }
   }
+
+  /* ──────────────────────────────────────────────────────────────
+     Finsweet Client-First primitives — literal port of live rules
+     from orly-website.webflow.css. Used across case study pages
+     (Cinch first). Each rule and @media block copied verbatim from
+     source; see scripts/cinch-live-css.md for scrape.
+     ────────────────────────────────────────────────────────────── */
+
+  /* Body theme for case studies (live: .white-body) */
+  .white-body {
+    background-color: #fff;
+    color: #000;
+  }
+
+  /* Page padding + containers */
+  .padding-global {
+    align-items: center;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .container-large {
+    width: 100%;
+    max-width: 97.5rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .container-xsmall {
+    width: 100%;
+    max-width: 28rem;
+  }
+  .container-small {
+    width: 100%;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .container-medium {
+    width: 100%;
+    max-width: 64rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .max-width-small {
+    width: 100%;
+    max-width: 30rem;
+  }
+  .max-width-xlarge {
+    width: 100%;
+    max-width: 64rem;
+  }
+
+  /* Section paddings (responsive) — .padding-section-{small,medium,large,huge}
+     with modifiers .hero / .work / .large-top / .large-bottom /
+     .is-bottom-none / .no-bottom */
+  .padding-section-large {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .padding-section-large.hero {
+    padding-top: 9rem;
+  }
+  .padding-section-large.is-bottom-none,
+  .padding-section-large.no-bottom {
+    padding-bottom: 0;
+  }
+  .padding-section-small {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .padding-section-medium {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .padding-section-huge {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+  @media (width <= 991px) {
+    .padding-section-large {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .padding-section-large.hero {
+      padding-top: 8rem;
+    }
+    .padding-section-medium {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+    .padding-section-huge {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+  @media (width <= 767px) {
+    .padding-section-medium,
+    .padding-section-large {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+    .padding-section-large.work {
+      padding-top: 8rem;
+    }
+    .padding-section-large.large-bottom {
+      padding-bottom: 4rem;
+    }
+    .padding-section-large.large-top {
+      padding-top: 4rem;
+    }
+    .padding-section-small {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    .padding-section-huge {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+  @media (width <= 479px) {
+    .padding-section-large {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  /* Typography — live heading styles */
+  .heading-style-h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    line-height: 1.2;
+  }
+  .heading-style-h2 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+  }
+  .heading-style-h2.project-page {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  .heading-style-h4 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  @media (width <= 991px) {
+    .heading-style-h1 {
+      font-size: 3.25rem;
+    }
+    .heading-style-h2 {
+      font-size: 2.75rem;
+    }
+    .heading-style-h4 {
+      font-size: 1.75rem;
+    }
+  }
+  @media (width <= 767px) {
+    .heading-style-h1 {
+      font-size: 2.5rem;
+    }
+    .heading-style-h2 {
+      font-size: 2.25rem;
+    }
+    .heading-style-h2.project-page {
+      font-size: 1.55rem;
+    }
+    .heading-style-h4 {
+      font-size: 1.5rem;
+      line-height: 1.4;
+    }
+  }
+
+  /* Text utilities — size / weight / color / style */
+  .text-size-small { font-size: 0.875rem; }
+  .text-size-medium { font-size: 1.125rem; }
+  @media (width <= 767px) {
+    .text-size-medium { font-size: 1rem; }
+  }
+  .text-weight-bold { font-weight: 700; }
+  .text-weight-medium { font-weight: 500; }
+  .text-weight-light { font-weight: 300; }
+  .text-color-white { color: #fff; }
+  .text-style-capitalize { text-transform: capitalize; }
+  .text-align-right { text-align: right; }
+  @media (width <= 479px) {
+    .heading-style-h4.text-weight-bold.text-align-right.mobile-left {
+      text-align: left;
+    }
+  }
+
+  /* Spacer divs — width: 100%, padding-top: {scale}. Live uses
+     padding-top (not height) so the div collapses when parent
+     width constrains, matching Finsweet Client-First behavior. */
+  .spacer-tiny     { width: 100%; padding-top: 0.25rem; }
+  .spacer-xxsmall  { width: 100%; padding-top: 0.5rem; }
+  .spacer-xsmall   { width: 100%; padding-top: 1rem; }
+  .spacer-small    { width: 100%; padding-top: 1.5rem; }
+  .spacer-medium   { width: 100%; padding-top: 2rem; }
+  .spacer-large    { width: 100%; padding-top: 3rem; }
+  .spacer-xlarge   { width: 100%; padding-top: 4rem; }
+  .spacer-xlarge72px { width: 100%; padding-top: 4.5rem; }
+  .spacer-xxlarge  { width: 100%; padding-top: 5rem; }
+
+  /* Horizontal divider — 1px stone-200 flex child */
+  .divider-horizontal {
+    height: 1px;
+    background-color: #d6d3d1;
+    flex: 1;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Cinch case study — section-specific classes
+     ────────────────────────────────────────────────────────────── */
+
+  /* Section 1: hero */
+  .work_hero_section {
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <= 767px) {
+    .work_hero_section {
+      display: none;
+    }
+  }
+  .hero-content {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-height: 780px;
+    padding-bottom: 2.5rem;
+    display: flex;
+    position: relative;
+  }
+  @media (width <= 991px) {
+    .hero-content {
+      max-height: 540px;
+    }
+  }
+  .work_dropdown {
+    border: 1px solid #fff;
+    background-color: #2626264d;
+    border-radius: 24px;
+    flex-flow: column;
+    position: absolute;
+    inset: auto 0% 2.5rem auto;
+  }
+  .dropdown {
+    z-index: 2;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+  }
+  /* Dropdown collapse — live uses Webflow JS + inline <style data-w-id>
+     to set height:0 until interaction. Simple display toggle: hidden
+     by default, revealed when `.work_dropdown.is-open` is set (the
+     JS in cinch-logistics.astro). Descendant-selector combo with
+     the parent class wins in Tailwind v4 @layer utilities when the
+     CHILD rule is base-specificity only (no .is-open on the child). */
+  .dropdown-text {
+    display: none;
+  }
+  .work_dropdown.is-open .dropdown-text {
+    display: block;
+  }
+  .dropdown-padding {
+    flex-flow: column;
+    padding: 1.125rem 1.5rem;
+    display: flex;
+  }
+  .icon-1x1-small { width: 2rem; height: 2rem; }
+  .icon-1x1-xxsmall { width: 1.25rem; height: 1.25rem; }
+  .line-fill {
+    background-color: #fff;
+    width: 100%;
+    height: 1px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .section_link {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Section 2: case-intro */
+  .work_case-intro_section {
+    background-color: #fff;
+  }
+  .case_meta {
+    column-gap: 1rem;
+    row-gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    align-items: stretch;
+    display: grid;
+  }
+  @media (width <= 767px) {
+    .case_meta {
+      column-gap: 2rem;
+      row-gap: 2rem;
+    }
+  }
+  @media (width <= 479px) {
+    .case_meta {
+      column-gap: 1rem;
+      row-gap: 1rem;
+      flex-flow: row;
+      display: flex;
+    }
+  }
+  .case_meta-list {
+    column-gap: 3.5rem;
+    row-gap: 1rem;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+    place-items: center start;
+    display: grid;
+  }
+  @media (width <= 991px) {
+    .case_meta-list {
+      grid-template-rows: auto auto auto auto;
+      grid-template-columns: auto;
+    }
+  }
+  .case_tags {
+    column-gap: 1rem;
+    row-gap: 1rem;
+    flex-flow: wrap;
+    place-content: flex-start flex-end;
+    place-items: flex-start end;
+    display: flex;
+  }
+  @media (width <= 991px) {
+    .case_tags {
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+  }
+  @media (width <= 767px) {
+    .case_tags {
+      justify-content: flex-start;
+    }
+  }
+  .meta-text {
+    column-gap: 1rem;
+    row-gap: 1rem;
+  }
+  @media (width <= 479px) {
+    .meta-text {
+      flex-flow: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+  }
+  .tag {
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    color: #737373;
+    background-color: #f5f5f4;
+    border: 1px solid #f5f5f4;
+    border-radius: 100px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-flex;
+  }
+  .text-truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  @media (width <= 479px) {
+    .case_tags {
+      width: 50%;
+    }
+  }
+
+  /* Section 5: opportunity */
+  .work_opportunity_section {
+    z-index: 1;
+    background-color: #221430;
+    position: relative;
+  }
+  .work_opportunity_section.text-color-white {
+    overflow: hidden;
+  }
+  .problem_component {
+    column-gap: 3.6rem;
+    row-gap: 3.5rem;
+    flex-flow: row;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 0.75fr;
+    justify-content: flex-start;
+    place-items: center stretch;
+    display: grid;
+  }
+  .problem_diagram {
+    min-height: 600px;
+  }
+  .p-wrapper {
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    flex-flow: column;
+    display: flex;
+  }
+  .image-blur {
+    z-index: -1;
+    position: absolute;
+    inset: auto -30% -50% auto;
+  }
+  /* Live stacks problem_component at 767 (NOT 991) — tablet stays 2-col.
+     BUT .problem_diagram min-height releases at 991 (tablet on) because
+     the 600px fixed height breaks the 2-col layout at narrower widths. */
+  @media (width <= 991px) {
+    .problem_diagram {
+      min-height: auto;
+    }
+  }
+  @media (width <= 767px) {
+    .problem_component {
+      column-gap: 3.6rem;
+      row-gap: 3.5rem;
+      flex-flow: column;
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+  }
+  @media (width <= 479px) {
+    .problem_component {
+      column-gap: 2rem;
+      row-gap: 2rem;
+      justify-content: flex-start;
+      align-items: flex-start;
+      display: flex;
+    }
+  }
+
+  /* Section 4: context */
+  .work_context_section {
+    background-color: #fff;
+  }
+  .context_component {
+    column-gap: 3.5rem;
+    row-gap: 3.5rem;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    display: flex;
+  }
+  .case_component-info {
+    min-width: 20rem;
+  }
+  /* Live stacks context_component at 767, not 991. Tablet stays row. */
+  @media (width <= 767px) {
+    .context_component {
+      flex-flow: column;
+    }
+  }
+  @media (width <= 479px) {
+    .context_component {
+      column-gap: 2rem;
+      row-gap: 2rem;
+    }
+    .case_component-info {
+      flex-flow: column;
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      display: flex;
+    }
+  }
+
+  /* Section 3: outcome */
+  .work_outcome_section {
+    background-color: #fff;
+    position: relative;
+  }
+  .outcome-product {
+    width: 100%;
+  }
+
+  /* Section 6: approach */
+  .work_approach_section {
+    background-color: #fff;
+  }
+  .approach_component {
+    column-gap: 3.5rem;
+    row-gap: 3.5rem;
+    grid-template-columns: 1fr 1fr;
+    justify-content: flex-start;
+    place-items: stretch stretch;
+    width: 100%;
+    display: grid;
+  }
+  .work_approach_decisions {
+    column-gap: 3rem;
+    row-gap: 3rem;
+    flex-flow: column;
+    display: flex;
+  }
+  .approach_principle {
+    background-color: #ffffff21;
+    border-radius: 16px;
+    width: 100%;
+    padding: 2rem;
+  }
+  .approach_principle.is-text {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .approach_media {
+    background-color: #9c5cd1;
+    border: 1px solid #e3d2f5;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  .approach_media.bg-transparent {
+    background-color: transparent;
+  }
+  .approach_card {
+    background-color: #fff;
+    border: 1px solid #e3d2f5;
+    border-radius: 16px;
+    padding: 1.25rem 2rem 1.34375rem;
+  }
+  .approach_image {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .approach_media-border {
+    background-color: #fff;
+    border: 1px solid #e3d2f5;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+  @media (width <= 991px) {
+    .approach_media {
+      max-height: 250px;
+    }
+    .approach_media.bg-transparent {
+      background-color: transparent;
+    }
+    .work_approach_decisions {
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+    .approach_principle {
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+    .approach_principle.is-text {
+      flex-flow: column;
+      flex: 1;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
+  @media (width <= 767px) {
+    .approach_component {
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr;
+    }
+    .approach_media {
+      height: 250px;
+    }
+    .work_approach_decisions {
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+    }
+    .approach_principle.is-text {
+      display: block;
+    }
+  }
+
+  /* Section 7: results */
+  .work_results_section {
+    background-color: #9c5cd1;
+    overflow: hidden;
+  }
+  .results_component {
+    display: flex;
+    flex-flow: column;
+  }
+  .results_heading {
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    max-width: 460px;
+    margin-left: auto;
+    display: flex;
+  }
+  .results_list {
+    column-gap: 4rem;
+    row-gap: 4rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+  }
+  .results_principle {
+    background-color: #ffffff21;
+    border-radius: 16px;
+    width: 100%;
+    padding: 2rem;
+  }
+  .results_principle.is-text {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .results_principle_visual {
+    width: 100%;
+    height: 17.375rem;
+  }
+  .results_principle_persona_image {
+    object-fit: contain;
+    position: relative;
+    top: -55px;
+  }
+  .results_principle_image-structure {
+    position: relative;
+    top: -50px;
+  }
+  .results_principle_image-emotion {
+    position: relative;
+    top: 57px;
+    right: -64px;
+  }
+  .result-text {
+    display: block;
+  }
+  @media (width <= 991px) {
+    .results_list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Section 8: insight */
+  .work_insight_section {
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  .insight_component {
+    column-gap: 5.5rem;
+    row-gap: 5.5rem;
+    flex-flow: column;
+    display: flex;
+  }
+  .insight_content {
+    column-gap: 3.5rem;
+    row-gap: 3.5rem;
+    grid-template-columns: 1fr 1fr;
+    place-items: start stretch;
+    width: 100%;
+    display: grid;
+  }
+  .insight_content-text {
+    width: 100%;
+  }
+  .wraper_insight-media {
+    width: 100%;
+    height: 100%;
+    min-height: 435px;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  .image-cover.insight {
+    object-position: 50% 0%;
+  }
+  @media (width <= 991px) {
+    .image-cover.insight {
+      object-fit: contain;
+      object-position: 50% 100%;
+    }
+    .wraper_insight-media {
+      justify-content: flex-start;
+      align-items: flex-end;
+      width: 100%;
+      height: 100%;
+    }
+    .insight_content {
+      column-gap: 3rem;
+      row-gap: 3rem;
+      grid-template-columns: 0.75fr 1fr;
+      align-items: stretch;
+    }
+    .insight_content-text {
+      padding-bottom: 3rem;
+    }
+  }
+  @media (width <= 767px) {
+    .insight_content {
+      column-gap: 3.5rem;
+      row-gap: 3.5rem;
+      flex-flow: column;
+      grid-template-columns: 1fr;
+    }
+    .insight_content-text {
+      padding-bottom: 0;
+    }
+  }
+  @media (width <= 479px) {
+    .image-cover.insight {
+      position: relative;
+    }
+    .wraper_insight-media {
+      min-height: auto;
+    }
+  }
+
+  /* Section 9: solution */
+  .work_solution_section {
+    background-color: #f5f5f4;
+    overflow: hidden;
+  }
+  .solution_component {
+    display: block;
+  }
+  .solution_content {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    display: flex;
+  }
+  .solution_principle {
+    background-color: #ffffff21;
+    border-radius: 16px;
+    width: 100%;
+    padding: 2rem;
+  }
+  .solution_principle.is-text {
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .image-solution {
+    object-fit: cover;
+    object-position: 50% 0%;
+    width: 100vw;
+    height: 100%;
+    max-height: 540px;
+  }
+  @media (width <= 767px) {
+    .solution_content {
+      flex-flow: column;
+    }
+  }
+
+  /* Section 10: decisions */
+  .work_decisions_section {
+    background-color: #fff;
+  }
+  .work_decisions_component {
+    column-gap: 3.5rem;
+    row-gap: 3.5rem;
+    flex-flow: column;
+    width: 100%;
+    display: flex;
+  }
+  .work_decisions_content {
+    column-gap: 3rem;
+    row-gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+  }
+  .work_decisions_heading {
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+  }
+  .work_decisions_explanation {
+    width: 100%;
+  }
+  .work_decisions_richtext {
+    display: block;
+  }
+  .work_decisions_richtext ul {
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+  .work_decisions_richtext li {
+    margin-bottom: 0.25rem;
+  }
+  .work_decisions_media-group {
+    column-gap: 3rem;
+    row-gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    display: grid;
+  }
+  .work_decisions_primary-media {
+    background-color: #683a8d;
+    border: 1px solid #e3d2f5;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  .work_decisions_secondary-media {
+    background-color: #fff;
+    border: 1px solid #e3d2f5;
+    border-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+  .work_decisions_secondary-image {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+  .work_decisions_tertiary-image {
+    width: 100%;
+    height: 100%;
+  }
+  @media (width <= 767px) {
+    .work_decisions_content {
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr;
+    }
+    .work_decisions_media-group {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Section 11: visual-system */
+  .work_visual-system_section {
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .work_visual-system_component {
+    z-index: 1;
+    flex-flow: column;
+    display: flex;
+    position: relative;
+  }
+  .work_visual-system_typography {
+    display: block;
+    text-align: center;
+    max-width: 44rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .work_visual-system_colors {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .work_visual-system_color-card {
+    column-gap: 4rem;
+    row-gap: 4rem;
+    border: 1px solid #fff;
+    border-radius: 16px;
+    flex-flow: column;
+    width: 100%;
+    max-width: 15.5rem;
+    padding: 1.5rem;
+    display: flex;
+  }
+  /* Live HTML's first card has NO variant class, so it renders with no
+     background (bug in source). Port literally per CLAUDE.md rule. */
+  .work_visual-system_color-card.is-purple-jam {
+    background-color: var(--color-purple-jam);
+  }
+  .work_visual-system_color-card.is-persian-indigo {
+    background-color: var(--color-persian-indigo);
+  }
+  .work_visual-system_color-card.is-gradient {
+    background-image: linear-gradient(359deg, #9d8fc1, #802aa9 48%, #3b2084);
+  }
+  @media (width <= 991px) {
+    .work_visual-system_color-card {
+      max-width: 100%;
+    }
+    .work_visual-system_colors {
+      column-gap: 2rem;
+      row-gap: 2rem;
+      grid-template-columns: 1fr 1fr 1fr;
+      display: grid;
+    }
+  }
+  @media (width <= 767px) {
+    .work_visual-system_colors {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (width <= 479px) {
+    .work_visual-system_color-card {
+      column-gap: 2rem;
+      row-gap: 2rem;
+      padding: 1rem;
+    }
+  }
+  .work_visual-system_color-title {
+    width: 100%;
+    max-width: 4.6875rem;
+  }
+  .work_visual-system_color-meta {
+    display: block;
+  }
+  .work_visual-system_color-row {
+    justify-content: space-between;
+    align-items: flex-start;
+    display: flex;
+  }
+  .text-100vw {
+    z-index: 1;
+    min-width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  .image_bg_work {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Section 12: product */
+  .work_product-section {
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    max-height: 950px;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (width <= 991px) {
+    .work_product-section {
+      aspect-ratio: 3 / 2;
+      height: auto;
+      max-height: none;
+    }
+  }
+
+  /* Section 13: testimonials */
+  .work_testimonials_section {
+    position: relative;
+  }
+  .work_testimonials_section.is-bgcolor-purple {
+    background-color: #9c5cd1;
+  }
+  .team-slider_component {
+    container-type: inline-size;
+  }
+  .team-slider_layout {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    flex-flow: wrap;
+    place-content: center space-between;
+    align-items: center;
+    display: flex;
+  }
+  .team-slider_btn_layout {
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+    flex-flow: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
+  .team-slider_btn_element {
+    display: inline-flex;
+  }
+  .team-slider_cms_wrap {
+    width: 100%;
+    overflow: hidden;
+  }
+  .team-slider_cms_list {
+    display: flex;
+    column-gap: 2rem;
+    width: 100%;
+  }
+  .team-slider_cms_item {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+  .testimonials-label {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
+  .testimonial-header-wrapper {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+  }
+  .testimonial-heading {
+    flex: 1;
+  }
+  .testimonials_slide {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    flex-flow: column;
+    display: flex;
+    position: relative;
+  }
+  .testimonial_card {
+    column-gap: 4rem;
+    row-gap: 4rem;
+    border: 1px solid #fff;
+    border-radius: 40px 96px 96px 40px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem;
+    display: flex;
+  }
+  .testimonial_text {
+    display: block;
+  }
+  .testimonial_author {
+    column-gap: 0.375rem;
+    row-gap: 0.375rem;
+    display: flex;
+  }
+  .testimonial-media {
+    border-radius: 999px;
+    flex: none;
+    width: 9.5rem;
+    height: 9.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .slider-button {
+    border: 1px solid transparent;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
+    border-radius: 999px;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2.5rem;
+    display: flex;
+    text-decoration: none;
+  }
+  .slider_arrow {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+  }
+  .slider_arrow.is-left {
+    transform: rotate(180deg);
+  }
+  @media (width <= 767px) {
+    .testimonial_card {
+      flex-flow: column;
+      padding: 2rem;
+      border-radius: 24px;
+    }
+  }
+
+  /* Section 14: other-projects */
+  .projects_wrapper {
+    display: block;
+  }
+  .projects_heading {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+  }
+  .other_projects_graph {
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
+  .projects_image {
+    width: 100%;
+    max-width: 7.1875rem;
+  }
+  .projects_list {
+    column-gap: 2rem;
+    row-gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
+  }
+  .projects_item {
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+  .projects_item-image {
+    aspect-ratio: 1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .projects_item.w--current {
+    opacity: 0.6;
+  }
+  @media (width <= 767px) {
+    .projects_list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Bulk responsive rules for sections 6-14 that weren't in initial
+     port. Organized by breakpoint, literal port of live CSS.
+     ────────────────────────────────────────────────────────────── */
+
+  @media (width <= 991px) {
+    /* Results */
+    .results_principle {
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+    .results_principle.is-text {
+      display: flex;
+    }
+    .results_heading {
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
+    .results_list {
+      column-gap: 4rem;
+      row-gap: 4rem;
+      flex-flow: column;
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+    .results_principle_image-emotion {
+      top: 0;
+      right: -8%;
+    }
+    .results_principle_persona_image {
+      width: 80%;
+      height: 100%;
+      position: absolute;
+      inset: 0%;
+    }
+    .results_principle_visual {
+      height: 25rem;
+      position: relative;
+      left: 32px;
+    }
+    /* Solution */
+    .solution_principle {
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+    .solution_principle.is-text {
+      display: block;
+    }
+    /* Decisions */
+    .work_decisions_heading {
+      justify-content: space-between;
+    }
+    /* Testimonials */
+    .testimonial_card {
+      border-radius: 96px 96px 16px 16px;
+    }
+    .team-slider_layout {
+      flex: none;
+    }
+    /* Solution image */
+    .image-solution {
+      margin-left: 0;
+    }
+  }
+
+  @media (width <= 767px) {
+    /* Hide on mobile landscape — live uses `.hide-mobile-landscape` */
+    .hide-mobile-landscape {
+      display: none !important;
+    }
+    /* Testimonial avatar shrinks on mobile — live .testimonial-media 767 */
+    .testimonial-media {
+      order: -9999;
+      width: 6rem;
+      height: 6rem;
+    }
+    /* Solution */
+    .solution_content {
+      flex-flow: column;
+    }
+    .solution_component {
+      flex-flow: column;
+    }
+    /* Insight */
+    .wraper_insight-media {
+      grid-template-rows: auto auto;
+      grid-template-columns: 1fr 1fr;
+    }
+    /* Results */
+    .results_principle {
+      flex-flow: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .results_principle_image-structure {
+      width: 100%;
+    }
+    .results_principle_image-emotion {
+      order: -9999;
+      width: 100%;
+      top: -64px;
+      right: 0%;
+    }
+    .results_principle_persona_image {
+      width: 100%;
+    }
+    .results_principle_visual {
+      left: 17px;
+    }
+    /* Decisions */
+    .work_decisions_component {
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+    }
+    .work_decisions_media-group {
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+      flex-flow: column;
+      display: flex;
+    }
+    /* Projects */
+    .projects_heading {
+      flex-flow: column;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .projects_list {
+      flex-flow: column;
+      grid-template-columns: 1fr;
+      display: flex;
+    }
+    .projects_wrapper {
+      flex-flow: column;
+    }
+    /* Other projects graph */
+    .other_projects_graph {
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      display: flex;
+    }
+    /* Testimonials */
+    .testimonial_card {
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+      flex-flow: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1.5rem;
+      border-radius: 24px;
+    }
+    .team-slider_layout {
+      width: 100%;
+    }
+    .team-slider_btn_layout {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
+  @media (width <= 479px) {
+    .insight_component {
+      column-gap: 1.5rem;
+      row-gap: 1.5rem;
+    }
+    .results_heading {
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .results_principle_image-emotion {
+      top: -50px;
+    }
+    .results_principle_persona_image {
+      position: relative;
+    }
+    .results_principle_visual {
+      height: auto;
+    }
+    .work_visual-system_color-row {
+      flex-flow: wrap;
+    }
+    .image-solution {
+      margin-left: 0;
+    }
+  }
+
+  /* Shared image wrappers (used across multiple case-study sections) */
+  .background-image-wrapper {
+    z-index: -1;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    inset: 0%;
+  }
+  .image-cover {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0%;
+  }
 }
+
+/* Unlayered rules — Tailwind v4 `@layer utilities` applies a custom
+   cascade ordering that eats class-qualified specificity bumps, so
+   pseudo-state toggles (e.g. `.dropdown-text.is-open`) lose against
+   their base rule. Putting them here (unlayered) guarantees they win
+   per normal cascade. */

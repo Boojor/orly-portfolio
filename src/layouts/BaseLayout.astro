@@ -6,12 +6,18 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  /** Body class list — case studies pass 'white-body' for light theme. */
+  bodyClass?: string;
+  /** Home renders the fixed hero bg image; case studies don't. */
+  showHeroBg?: boolean;
 }
 
 const {
   title,
   description = 'Orly Boojor — Product Designer. Portfolio of product design work across fintech and logistics.',
   ogImage = '/assets/og-default.jpg',
+  bodyClass = '',
+  showHeroBg = true,
 } = Astro.props;
 
 const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
@@ -46,23 +52,17 @@ const fullTitle = title === site.name ? title : `${title} — ${site.name}`;
 
     <title>{fullTitle}</title>
   </head>
-  <body>
+  <body class={bodyClass}>
     <slot name="nav" />
-    {/* Global hero background image — matches live Webflow .bg-image
-        literally:
-          z-index: -1;
-          object-fit: cover;
-          min-height: 1270px;
-          position: absolute;
-          inset: 0% 0% auto;
-        Sibling of .main-wrapper in live, placed at body level here. */}
-    <img
-      src="/assets/hero/hero-bg.webp"
-      srcset="/assets/hero/hero-bg-p-500.webp 500w, /assets/hero/hero-bg-p-800.webp 800w, /assets/hero/hero-bg-p-1080.webp 1080w, /assets/hero/hero-bg-p-1600.webp 1600w, /assets/hero/hero-bg-p-2000.webp 2000w, /assets/hero/hero-bg-p-2600.webp 2600w, /assets/hero/hero-bg-p-3200.webp 3200w"
-      sizes="100vw"
-      alt=""
-      class="bg-image"
-    />
+    {showHeroBg && (
+      <img
+        src="/assets/hero/hero-bg.webp"
+        srcset="/assets/hero/hero-bg-p-500.webp 500w, /assets/hero/hero-bg-p-800.webp 800w, /assets/hero/hero-bg-p-1080.webp 1080w, /assets/hero/hero-bg-p-1600.webp 1600w, /assets/hero/hero-bg-p-2000.webp 2000w, /assets/hero/hero-bg-p-2600.webp 2600w, /assets/hero/hero-bg-p-3200.webp 3200w"
+        sizes="100vw"
+        alt=""
+        class="bg-image"
+      />
+    )}
     <main>
       <slot />
     </main>

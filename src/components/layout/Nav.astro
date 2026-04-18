@@ -1,6 +1,20 @@
 ---
 import Logo from './Logo.astro';
 import { navLinks, contact, social } from '../../config';
+
+interface Props {
+  /**
+   * 'dark' (default) = home nav — transparent over dark hero, fixed nav dark bg + white text.
+   * 'light' = case-study pages (white body) — live uses `.navbar_fixed.white`: white bg + black text.
+   * Hamburger bars flip to black (live `.menu-icon_line-*.is-black`).
+   */
+  variant?: 'dark' | 'light';
+}
+const { variant = 'dark' } = Astro.props;
+const isLight = variant === 'light';
+const fixedBarsColor = isLight ? 'bg-black' : 'bg-white';
+const fixedNavBg = isLight ? 'bg-white' : 'bg-bg';
+const fixedNavText = isLight ? 'text-black' : 'text-white';
 ---
 {/* Absolute variant: transparent, overlaid on hero. Literal port of
     live: outer padding 0 5%, inner max-w-[97.5rem] mx-auto so nav
@@ -67,13 +81,13 @@ import { navLinks, contact, social } from '../../config';
   {/* Hamburger button (mobile) */}
   <button
     data-mobile-toggle
-    class="md:hidden text-white"
+    class={`md:hidden ${fixedNavText}`}
     aria-label="Open menu"
     aria-expanded="false"
   >
-    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-    <span class="block w-6 h-0.5 bg-white"></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor}`}></span>
   </button>
   </div>
 </nav>
@@ -82,10 +96,11 @@ import { navLinks, contact, social } from '../../config';
     background-color: var(--bg-color) (solid #171717, NO blur, NO border),
     padding: 0.5rem 5%. Transition: fade + slide in from top.
     nav-scroll-swap.ts toggles `nav-fixed--shown` class instead of
-    `hidden` so the transition can animate. */}
+    `hidden` so the transition can animate.
+    Light variant: `.navbar_fixed.white` flips bg to white + text to black. */}
 <nav
   data-nav="fixed"
-  class="nav-fixed fixed top-0 left-0 right-0 z-50 bg-bg px-[5%] py-[0.5rem]"
+  class={`nav-fixed fixed top-0 left-0 right-0 z-50 ${fixedNavBg} px-[5%] py-[0.5rem]`}
 >
   <div class="flex items-center justify-between">
   {/* Live .navbar_logo-link.sticky sizing:
@@ -97,7 +112,7 @@ import { navLinks, contact, social } from '../../config';
   <Logo class="nav-logo-sticky shrink-0 h-auto text-white" />
 
   <div class="hidden md:flex items-center gap-0">
-    <ul class="flex items-center gap-large font-body text-white">
+    <ul class={`flex items-center gap-large font-body ${fixedNavText}`}>
       {navLinks.map((link) => (
         <li>
           <a href={link.href} data-nav-link={link.href.replace('/#', '#')} class="nav-link whitespace-nowrap">
@@ -107,11 +122,11 @@ import { navLinks, contact, social } from '../../config';
       ))}
     </ul>
 
-    <div class="mx-large h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+    <div class={`mx-large h-4 w-px ${isLight ? 'bg-black/40' : 'bg-white/40'} hidden lg:block`} aria-hidden="true"></div>
 
     <a
       href={`mailto:${contact.email}`}
-      class="hidden lg:inline-flex items-center gap-[0.375rem] text-white hover:text-stone-200 transition-colors whitespace-nowrap"
+      class={`hidden lg:inline-flex items-center gap-[0.375rem] ${fixedNavText} hover:opacity-70 transition-opacity whitespace-nowrap`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M1.59375 4.5C1.59375 4.22386 1.81761 4 2.09375 4H17.901C18.1772 4 18.401 4.22386 18.401 4.5V15.5052C18.401 15.7814 18.1772 16.0052 17.901 16.0052H2.09375C1.81761 16.0052 1.59375 15.7813 1.59375 15.5052V4.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -120,13 +135,13 @@ import { navLinks, contact, social } from '../../config';
       <span class="font-body text-sm">{contact.email}</span>
     </a>
 
-    <div class="mx-medium h-4 w-px bg-white/40 hidden lg:block" aria-hidden="true"></div>
+    <div class={`mx-medium h-4 w-px ${isLight ? 'bg-black/40' : 'bg-white/40'} hidden lg:block`} aria-hidden="true"></div>
 
     <a
       href={social.linkedin}
       target="_blank"
       rel="noopener noreferrer"
-      class="hidden lg:inline-flex text-white hover:text-stone-200 transition-colors"
+      class={`hidden lg:inline-flex ${fixedNavText} hover:opacity-70 transition-opacity`}
       aria-label="LinkedIn"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -137,13 +152,13 @@ import { navLinks, contact, social } from '../../config';
 
   <button
     data-mobile-toggle
-    class="md:hidden text-white"
+    class={`md:hidden ${fixedNavText}`}
     aria-label="Open menu"
     aria-expanded="false"
   >
-    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-    <span class="block w-6 h-0.5 bg-white mb-1"></span>
-    <span class="block w-6 h-0.5 bg-white"></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${fixedBarsColor}`}></span>
   </button>
   </div>
 </nav>

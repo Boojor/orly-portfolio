@@ -1,0 +1,673 @@
+---
+// Case study page — literal port of
+// orly-website.webflow/my-work/cinch-logistics-uncluttered.html
+// Body is light themed (.white-body), nav uses light variant.
+// 14 section placeholders below will be ported section-by-section;
+// see /Users/orlyboojor/.claude/plans/transient-cuddling-marshmallow.md
+// for the inventory and verification gates.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/layout/Nav.astro';
+import MobileNav from '../../components/layout/MobileNav.astro';
+import Footer from '../../components/layout/Footer.astro';
+---
+
+<BaseLayout
+  title="Cinch - Logistics, Uncluttered"
+  bodyClass="white-body"
+  showHeroBg={false}
+>
+  <Nav slot="nav" variant="light" />
+  <MobileNav />
+
+  <main>
+    {/* 1. work_hero_section — "Jump to" dropdown + full-bleed hero bg CINCH_1.webp.
+         Live: hidden via display:none on mobile ≤767px. Desktop: 100vh (max 780px).
+         Dropdown positioned absolute bottom-right inside hero-content.
+         TODO(phase-4): wire real dropdown open/close — static for now. */}
+    <header class="work_hero_section" data-cinch-section="hero">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="hero-content">
+            <div class="work_dropdown">
+              <div class="dropdown">
+                <img src="/assets/work/cinch/2222.svg" loading="lazy" alt="" class="icon-1x1-small" />
+                <div class="text-size-small">Jump to</div>
+                <img src="/assets/work/cinch/Arrow-Dot-Down-1-Streamline-Streamline-Regular-3.0.svg" loading="lazy" alt="" class="icon-1x1-small" />
+                <img src="/assets/work/cinch/Arrow-Thick-Down-4-Streamline-Streamline-Regular-3.0.svg" loading="lazy" alt="" class="icon-1x1-small" />
+              </div>
+              <div class="dropdown-text">
+                <div class="dropdown-padding">
+                  <a href="#what-is-cinch" class="section_link">What is Cinch</a>
+                  <div class="line-fill"></div>
+                  {/* Option 2/3/4/4 are placeholder text in live source — port literally per CLAUDE.md rule.
+                      TODO(content): real jump-to targets. */}
+                  <a href="#" class="section_link">Option 2</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 3</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 4</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 4</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper">
+        <img loading="eager" src="/assets/work/cinch/CINCH_1.webp" alt="" class="image-cover" />
+      </div>
+    </header>
+
+    {/* 2. work_case-intro_section — H1 + subtitle + meta list + tag pills */}
+    <section class="work_case-intro_section" data-cinch-section="case-intro">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large work">
+            <div class="max-width-xlarge">
+              <h1 class="heading-style-h1">Cinch - Logistics, Uncluttered</h1>
+              <div class="spacer-xxsmall"></div>
+              <p class="heading-style-h4">Reshaping Cinch from a developer MVP into a workflow engine that drives real coordinator adoption and better decisions.</p>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="divider-horizontal"></div>
+            <div class="spacer-large"></div>
+            <div class="case_meta">
+              <div class="case_meta-list">
+                <div class="meta-text">
+                  <p class="text-weight-bold">Product Context</p>
+                  <p>Outlook add-in</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">End Users</p>
+                  <p>logistics coordinators, mid-managers</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Project Duration</p>
+                  <p>6 Months</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Industry</p>
+                  <p>Logistics SaaS · Freight cost optimization</p>
+                </div>
+              </div>
+              <div class="case_tags">
+                <div class="tag"><div class="text-truncate">UX strategy</div></div>
+                <div class="tag"><div class="text-truncate">Persona definition</div></div>
+                <div class="tag"><div class="text-truncate">Information Architecture</div></div>
+                <div class="tag"><div class="text-truncate">Journey mapping</div></div>
+                <div class="tag"><div class="text-truncate">Visual design</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. work_outcome_section — outcome-product image 22222222.webp */}
+    <header class="work_outcome_section" data-cinch-section="outcome">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-small">
+            <div class="case_media">
+              <img src="/assets/work/cinch/22222222.webp" loading="lazy" alt="" class="outcome-product" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 4. work_context_section (id=what-is-cinch) — H2 + 2-col narrative */}
+    <section id="what-is-cinch" class="work_context_section" data-cinch-section="context">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="context_component">
+              <div class="case_component-info">
+                <h2 class="heading-style-h2 project-page">What is Cinch?</h2>
+                <div class="spacer-xsmall"></div>
+                <p>Cinch is a B2B SaaS platform that helps logistics and finance teams gain control over shipping expenses. When I joined, the product was a developer-built MVP: functional, but hard to love.<br />My mission was to transform it into something teams could trust, adopt, and enjoy using every single day.</p>
+              </div>
+              <p class="heading-style-h4">My work helped turn Cinch <span class="text-weight-bold">from an engineer&rsquo;s MVP into a tool logistics teams actually use.</span> By centering workflows inside Outlook, coordinators could manage shipments end-to-end without leaving their inbox, while buyers finally saw the cost and performance data that drove decisions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. work_opportunity_section — H2 "Defining the Problem" + diagram + blur bg */}
+    <header class="work_opportunity_section text-color-white" data-cinch-section="opportunity">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="problem_component">
+              <img src="/assets/work/cinch/Group-3996.svg" loading="lazy" alt="" class="problem_diagram" />
+              <div class="max-width-small">
+                <h2 class="heading-style-h2 project-page">Defining the Problem</h2>
+                <div class="spacer-xsmall"></div>
+                <div class="p-wrapper">
+                  <p>Cinch&rsquo;s clients are mid-sized manufacturers moving thousands of shipments each month through a maze of emails, spreadsheets, and manual approvals. For logistics teams, Outlook isn&rsquo;t just a communication tool it&rsquo;s their entire workspace, and also their biggest source of chaos.<br /></p>
+                  <p>Every quote, invoice, and vendor update arrives through the same inbox, buried in threads and attachments. Through interviews with coordinators, managers, and founders, one insight became clear: they didn&rsquo;t need another platform to learn. They needed clarity and control inside the tool they already lived in - Outlook.<br /></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        src="/assets/work/cinch/blur.webp"
+        srcset="/assets/work/cinch/blur-p-500.webp 500w, /assets/work/cinch/blur-p-800.webp 800w, /assets/work/cinch/blur.webp 1057w"
+        sizes="100vw"
+        loading="lazy"
+        alt=""
+        class="image-blur"
+      />
+    </header>
+
+    {/* 6. work_approach_section — 2-col image pair + 3 approach cards + lightbox */}
+    <header class="work_approach_section" data-cinch-section="approach">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="approach_component">
+              <div class="work_approach_decisions">
+                <div class="approach_principle is-text">
+                  <div>
+                    <h2 class="heading-style-h2 project-page">Designing For Tight Spaces</h2>
+                    <div class="spacer-xsmall"></div>
+                    <p>Building inside Outlook meant designing for a narrow, fixed pane with strict technical limits. I approached it like a mobile product breaking complex workflows into focused, bite-sized views. <br />My design choices were aimed at giving users a sense of space, even in a 320 pixel window.</p>
+                  </div>
+                </div>
+                <a href="#" class="approach_media">
+                  <img
+                    src="/assets/work/cinch/Frame-1000002355.webp"
+                    srcset="/assets/work/cinch/e796c3602091122c7a28193e2e6b0001_Frame-1000002355-p-500.webp 500w, /assets/work/cinch/Frame-1000002355.webp 571w"
+                    sizes="100vw"
+                    loading="lazy"
+                    alt=""
+                    class="work_decisions_secondary-image"
+                  />
+                </a>
+                <a href="#" class="approach_media bg-transparent">
+                  <img
+                    src="/assets/work/cinch/Pic2.webp"
+                    srcset="/assets/work/cinch/Pic2-p-500.webp 500w, /assets/work/cinch/Pic2.webp 608w"
+                    sizes="100vw"
+                    loading="lazy"
+                    alt=""
+                    class="image-cover"
+                  />
+                </a>
+              </div>
+              <div class="work_approach_decisions">
+                <div class="approach_card">
+                  <p class="text-size-medium text-weight-bold">Navigation Inspired By Mobile Patterns</p>
+                  <div class="spacer-xsmall"></div>
+                  <p>I drew from proven mobile patterns to guide users step by step, revealing only what&rsquo;s relevant in each moment.</p>
+                </div>
+                <div class="approach_card">
+                  <p class="text-size-medium text-weight-bold">Contextually Available Information</p>
+                  <div class="spacer-xsmall"></div>
+                  <p>I surfaced supporting details when needed, using bottom-drawer modals instead of crowded layouts.</p>
+                </div>
+                <div class="approach_card">
+                  <p class="text-size-medium text-weight-bold">Meticulous Typographic Hierarchy</p>
+                  <div class="spacer-xsmall"></div>
+                  <p>I relied on precise typography to direct focus and replace unnecessary visual elements, keeping the experience clear within a 320-pixl space.</p>
+                </div>
+                <div class="approach_media-border">
+                  <a href="#" class="approach_media-border">
+                    <img
+                      src="/assets/work/cinch/Pic22222.webp"
+                      srcset="/assets/work/cinch/Pic22222-p-500.webp 500w, /assets/work/cinch/Pic22222.webp 616w"
+                      sizes="100vw"
+                      loading="lazy"
+                      alt=""
+                      class="approach_image"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 7. work_results_section — 3 results_principle rows (persona / emotion / structure) */}
+    <div class="work_results_section text-color-white" data-cinch-section="results">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="results_component">
+              <div class="results_heading">
+                <h2 class="heading-style-h4 text-weight-bold text-align-right mobile-left">
+                  Turning Complexity Into Clarity,<span class="heading-style-h4"> With UX Foundations</span>
+                </h2>
+              </div>
+              <div class="spacer-xlarge72px"></div>
+              <div class="results_list">
+                <div class="results_principle">
+                  <div class="results_principle_visual">
+                    <img
+                      src="/assets/work/cinch/1111111111111.webp"
+                      srcset="/assets/work/cinch/7e80c5d1fa7320b8f374dd6fb94e35d3_1111111111111-p-500.webp 500w, /assets/work/cinch/7e80c5d1fa7320b8f374dd6fb94e35d3_1111111111111-p-800.webp 800w, /assets/work/cinch/1111111111111.webp 960w"
+                      sizes="100vw"
+                      loading="lazy"
+                      alt=""
+                      class="results_principle_persona_image"
+                    />
+                  </div>
+                  <div class="result-text">
+                    <p class="text-size-medium text-weight-bold">Clarifying Priorities With Personas</p>
+                    <div class="spacer-xsmall"></div>
+                    <p>I interviewed founders, domain experts, and logistics teams who handled shipments daily. We started broad, mapping every possible role, then refined it to the real decision-makers: the logistics coordinator, their manager, and the buyer who needs proof of savings and efficiency.</p>
+                  </div>
+                </div>
+                <div class="results_principle">
+                  <div class="result-text">
+                    <p class="text-size-medium text-weight-bold">Building Empathy Through User Journeys</p>
+                    <div class="spacer-xsmall"></div>
+                    <p>I created detailed workflows from quote to shipment to invoice to identify where time, clarity, or trust was being lost. This helped ensure the first version solved the right problems, not just the visible ones.</p>
+                  </div>
+                  <img src="/assets/work/cinch/333333333.svg" loading="lazy" alt="" class="results_principle_image-emotion" />
+                </div>
+                <div class="results_principle">
+                  <img src="/assets/work/cinch/2222222222.svg" loading="lazy" alt="" class="results_principle_image-structure" />
+                  <div class="result-text">
+                    <p class="text-size-medium text-weight-bold">Structuring The Product With Entities</p>
+                    <div class="spacer-xsmall"></div>
+                    <p>With the team reviewed the full product vision the founders wanted to reach and distilled it into a focused MVP. The goal was to design a UX and UI foundation strong enough for future features to grow naturally on top of it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* 8. work_insight_section — pull-quote + 2-col text+media + bg image */}
+    <div class="work_insight_section" data-cinch-section="insight">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large no-bottom">
+            <div class="insight_component text-color-white">
+              <p class="heading-style-h4">&ldquo;In logistics, <span class="text-span">clarity is a relief</span>. Every second saved means <span class="text-span-2">a shipment that arrives</span> on time and a team that breathes easier.&rdquo;</p>
+              <div class="insight_content">
+                <div class="insight_content-text">
+                  <h2 class="text-size-medium text-weight-bold">Leading With UX Empathy To Create Clarity Under Pressure</h2>
+                  <div class="spacer-xsmall"></div>
+                  <div class="p-wrapper">
+                    <p>Both the quotes and shipments pages needed timeline views but served different goals. Quotes required full route visibility across sea, air, and ground to compare options, while shipments needed live tracking that made delays instantly clear.<br /></p>
+                    <p>I designed two tailored timelines, one for planned routes, one for real progress. Consistent structure, clear hierarchy, and contextual detail keep both views fast to read and easy to act on, even with complex data.<br /></p>
+                    <p>Paulina, a logistics coordinator, starts her day with 200 unread emails. Every minute counts. To help her and her team stay focused, I designed tools that bring order to the chaos.<br /></p>
+                  </div>
+                </div>
+                <div class="wraper_insight-media">
+                  <img
+                    src="/assets/work/cinch/image-297.webp"
+                    srcset="/assets/work/cinch/image-297-p-500.png 500w, /assets/work/cinch/image-297-p-800.png 800w, /assets/work/cinch/image-297-p-1080.png 1080w, /assets/work/cinch/image-297-p-1600.png 1600w, /assets/work/cinch/image-297.webp 5052w"
+                    sizes="100vw"
+                    loading="lazy"
+                    alt=""
+                    class="image-cover insight"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper">
+        <img
+          src="/assets/work/cinch/Section.webp"
+          srcset="/assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-500.webp 500w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-800.webp 800w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-1080.webp 1080w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-1600.webp 1600w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-2000.webp 2000w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-2600.webp 2600w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-3200.webp 3200w, /assets/work/cinch/Section.webp 4400w"
+          sizes="100vw"
+          loading="lazy"
+          alt=""
+          class="image-cover"
+        />
+      </div>
+    </div>
+
+    {/* 9. work_solution_section — "Two Views, One Story" + 2-col + Group-4033 full-bleed */}
+    <div class="work_solution_section" data-cinch-section="solution">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-top">
+            <div class="padding-section-large is-bottom-none">
+              <div class="solution_component">
+                <h2 class="heading-style-h4">Two Views, One Story</h2>
+                <div class="spacer-xlarge"></div>
+                <div class="solution_content">
+                  <div class="solution_principle is-text">
+                    <p class="text-size-medium text-weight-bold">Challenge</p>
+                    <div class="spacer-xsmall"></div>
+                    <p>Cinch had to serve two audiences at once. Operators worked deep in the details, while buyers cared about numbers, savings, and performance.</p>
+                  </div>
+                  <div class="solution_principle is-text">
+                    <p class="text-size-medium text-weight-bold">Solution</p>
+                    <div class="spacer-xsmall"></div>
+                    <p>I created two complementary views that shared one design language. Operators could manage shipments, documents, and communication threads in context, while buyers explored vendor performance, cost summaries, and approval insights in a clean, analytical layout.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="spacer-xlarge"></div>
+      <img
+        src="/assets/work/cinch/Group-4033.webp"
+        srcset="/assets/work/cinch/Group-4033-p-500.webp 500w, /assets/work/cinch/Group-4033-p-800.webp 800w, /assets/work/cinch/Group-4033-p-1080.webp 1080w, /assets/work/cinch/Group-4033-p-1600.webp 1600w, /assets/work/cinch/Group-4033-p-2000.webp 2000w, /assets/work/cinch/Group-4033-p-2600.webp 2600w, /assets/work/cinch/Group-4033-p-3200.webp 3200w, /assets/work/cinch/Group-4033.webp 3552w"
+        sizes="100vw"
+        loading="lazy"
+        alt=""
+        class="image-solution"
+      />
+    </div>
+
+    {/* 10. work_decisions_section — primary lightbox + richtext + media-group */}
+    <header class="work_decisions_section" data-cinch-section="decisions">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="spacer-large show-mobile-landscape"></div>
+            <div class="work_decisions_component">
+              <div class="work_decisions_content">
+                <div class="work_decisions_heading">
+                  <h2 class="heading-style-h4">Designing for Decision Making</h2>
+                  <div class="spacer-large"></div>
+                  <a href="#" class="work_decisions_primary-media">
+                    <img
+                      src="/assets/work/cinch/Frame-1000002355_1.webp"
+                      srcset="/assets/work/cinch/Frame-1000002355_1-p-500.png 500w, /assets/work/cinch/Frame-1000002355_1.webp 591w"
+                      sizes="100vw"
+                      loading="lazy"
+                      alt=""
+                      class="work_decisions_secondary-image"
+                    />
+                  </a>
+                </div>
+                <div class="work_decisions_explanation">
+                  <p class="text-size-medium text-weight-bold">Challenge</p>
+                  <div class="spacer-xsmall"></div>
+                  <p>Cinch isn&rsquo;t just about tracking data. It&rsquo;s about helping people decide faster. Critical approvals, quote comparisons, and shipment follow-ups were hidden across tools and emails.</p>
+                  <div class="spacer-large"></div>
+                  <div class="work_decisions_richtext">
+                    <p class="text-size-medium text-weight-bold">Solution</p>
+                    <p>I chose key interaction patterns that kept decision-making simple and fast:</p>
+                    <ul role="list">
+                      <li>Global smart search that instantly finds entities and context</li>
+                      <li>Inline quote approvals with immediate feedback</li>
+                      <li>Shipment timelines linked directly to source emails for transparency</li>
+                    </ul>
+                    <p>These interactions reduced friction and kept users anchored in one continuous flow.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="work_decisions_media-group">
+                <a href="#" class="work_decisions_secondary-media">
+                  <img
+                    src="/assets/work/cinch/Component.webp"
+                    srcset="/assets/work/cinch/Component-p-500.webp 500w, /assets/work/cinch/Component.webp 608w"
+                    sizes="100vw"
+                    loading="lazy"
+                    alt=""
+                    class="work_decisions_secondary-image"
+                  />
+                </a>
+                <a href="#" class="work_decisions_tertiary-image">
+                  <img
+                    src="/assets/work/cinch/Component2222.webp"
+                    srcset="/assets/work/cinch/Component2222-p-500.webp 500w, /assets/work/cinch/Component2222.webp 608w"
+                    sizes="100vw"
+                    loading="lazy"
+                    alt=""
+                    class="work_decisions_tertiary-image"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 11. work_visual-system_section — typography + CINCH_16.svg + 3 color cards */}
+    <header class="work_visual-system_section text-color-white" data-cinch-section="visual-system">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-huge">
+            <div class="work_visual-system_component">
+              <div class="work_visual-system_typography">
+                <p class="heading-style-h4">Clean, modern type that reads effortlessly, combined with bright, optimistic colors that bring energy without distraction.</p>
+              </div>
+              <div class="spacer-xxlarge"></div>
+              <img src="/assets/work/cinch/CINCH_16.svg" loading="lazy" alt="" class="text-100vw" />
+              <div class="spacer-xxlarge"></div>
+              <div class="work_visual-system_colors">
+                <div class="work_visual-system_color-card">
+                  <div class="work_visual-system_color-title">
+                    <p class="heading-style-h4">Purple Jam</p>
+                  </div>
+                  <div class="work_visual-system_color-meta">
+                    <div class="work_visual-system_color-row"><div>HSL</div><div>273, 58, 38</div></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="divider-horizontal"></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="work_visual-system_color-row"><div>HEX</div><div>#662998</div></div>
+                  </div>
+                </div>
+                <div class="work_visual-system_color-card is-persian-indigo">
+                  <div class="work_visual-system_color-title">
+                    <p class="heading-style-h4">Persian Indigo</p>
+                  </div>
+                  <div class="work_visual-system_color-meta">
+                    <div class="work_visual-system_color-row"><div>HSL</div><div>256, 61, 32</div></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="divider-horizontal"></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="work_visual-system_color-row"><div>HEX</div><div>#3B2084</div></div>
+                  </div>
+                </div>
+                <div class="work_visual-system_color-card is-gradient">
+                  <div class="work_visual-system_color-title">
+                    <p class="heading-style-h4">Dark Sunrise</p>
+                  </div>
+                  <div class="work_visual-system_color-meta">
+                    <div class="work_visual-system_color-row"><div>Start</div><div>#3B2084</div></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="divider-horizontal"></div>
+                    <div class="spacer-xsmall"></div>
+                    <div class="work_visual-system_color-row"><div>End</div><div>#9D8FC1</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="image_bg_work">
+        <img
+          src="/assets/work/cinch/Section.webp"
+          srcset="/assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-500.webp 500w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-800.webp 800w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-1080.webp 1080w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-1600.webp 1600w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-2000.webp 2000w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-2600.webp 2600w, /assets/work/cinch/19bc767372cc9ada5e13ea26591348b7_Section-p-3200.webp 3200w, /assets/work/cinch/Section.webp 4400w"
+          sizes="100vw"
+          loading="lazy"
+          alt=""
+          class="image-cover"
+        />
+      </div>
+    </header>
+
+    {/* 12. work_product-section — full-bleed SectionIMAGE.webp */}
+    <header class="work_product-section" data-cinch-section="product">
+      <img loading="eager" src="/assets/work/cinch/SectionIMAGE.webp" alt="" class="image-cover" />
+    </header>
+
+    {/* 13. work_testimonials_section — purple bg Swiper: 2 slides × 2 stacked cards.
+         Port uses scroll-snap carousel (same contract as home Testimonials); real
+         Swiper deferred to Phase 4. */}
+    <div class="work_testimonials_section is-bgcolor-purple text-color-white" data-cinch-section="testimonials">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="team-slider_component">
+              <div class="section_header">
+                <div class="testimonials-label">
+                  <p class="label-text">Testimonials</p>
+                  <div class="line-fill"></div>
+                </div>
+                <div class="spacer-medium"></div>
+                <div class="testimonial-header-wrapper">
+                  <div class="testimonial-heading">
+                    <h2 class="heading-style-h2">What my team has to say</h2>
+                  </div>
+                  <div class="team-slider_layout">
+                    <div class="team-slider_btn_layout">
+                      <div class="team-slider_btn_element is-prev">
+                        <button type="button" data-carousel-prev="cinch-testimonials" aria-label="Previous testimonial" class="slider-button">
+                          <div class="slider_arrow is-left" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
+                              <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                      <div class="team-slider_btn_element is-next">
+                        <button type="button" data-carousel-next="cinch-testimonials" aria-label="Next testimonial" class="slider-button">
+                          <div class="slider_arrow" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
+                              <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer-large"></div>
+              <div class="team-slider_cms_wrap">
+                <div class="team-slider_cms_list" data-carousel="cinch-testimonials">
+                  <div class="team-slider_cms_item" data-carousel-slide>
+                    <div class="testimonials_slide">
+                      <div class="testimonial_card">
+                        <div class="testimonial_text">
+                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user experience that just works.&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user.&rdquo;</p>
+                          <div class="spacer-small"></div>
+                          <div class="testimonial_author">
+                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
+                            <p class="text-size-small">CEO, Kestrel</p>
+                          </div>
+                        </div>
+                        <div class="testimonial-media">
+                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
+                        </div>
+                      </div>
+                      <div class="testimonial_card">
+                        <div class="testimonial_text">
+                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a userthat just.&rdquo;</p>
+                          <div class="spacer-small"></div>
+                          <div class="testimonial_author">
+                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
+                            <p class="text-size-small">CEO, Kestrel</p>
+                          </div>
+                        </div>
+                        <div class="testimonial-media">
+                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="team-slider_cms_item" data-carousel-slide>
+                    <div class="testimonials_slide">
+                      <div class="testimonial_card">
+                        <div class="testimonial_text">
+                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user experience that just works.&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user.&rdquo;</p>
+                          <div class="spacer-small"></div>
+                          <div class="testimonial_author">
+                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
+                            <p class="text-size-small">CEO, Kestrel</p>
+                          </div>
+                        </div>
+                        <div class="testimonial-media">
+                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
+                        </div>
+                      </div>
+                      <div class="testimonial_card">
+                        <div class="testimonial_text">
+                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a userthat just.&rdquo;</p>
+                          <div class="spacer-small"></div>
+                          <div class="testimonial_author">
+                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
+                            <p class="text-size-small">CEO, Kestrel</p>
+                          </div>
+                        </div>
+                        <div class="testimonial-media">
+                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 14. projects_wrapper — "Explore more of my work" 3-thumbnail grid.
+               Lives inside the testimonials container in live HTML. */}
+          <div class="padding-section-small" data-cinch-section="other-projects">
+            <div class="projects_wrapper">
+              <div class="projects_heading">
+                <div class="other_projects_graph">
+                  <img loading="lazy" src="/assets/work/cinch/Group-4006.svg" alt="" class="projects_image" />
+                  <div class="divider-horizontal"></div>
+                </div>
+                <h2 class="heading-style-h2">Explore more of my work</h2>
+              </div>
+              <div class="spacer-large"></div>
+              <div class="projects_list">
+                <a href="/my-work/cinch-logistics" aria-current="page" class="projects_item w--current">
+                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
+                </a>
+                <a href="/my-work/fundbox-pay-checkout" class="projects_item">
+                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
+                </a>
+                <a href="/my-work/fundbox-partnerships" class="projects_item">
+                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+{/* Jump-to dropdown — static port of live Webflow behavior.
+    Live defaults the dropdown pane to height:0px via inline <style>
+    data-w-id rules, then Webflow JS toggles on click. We mirror that:
+    .work_dropdown.is-open reveals .dropdown-text (CSS transition in
+    global.css). Clicking a link also closes so the user can jump. */}
+<script>
+  const dropdowns = document.querySelectorAll<HTMLElement>('.work_dropdown');
+  dropdowns.forEach((wrap) => {
+    const trigger = wrap.querySelector<HTMLElement>('.dropdown');
+    const pane = wrap.querySelector<HTMLElement>('.dropdown-text');
+    if (!trigger || !pane) return;
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      wrap.classList.toggle('is-open');
+    });
+    pane.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => wrap.classList.remove('is-open'));
+    });
+  });
+</script>
