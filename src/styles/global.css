@@ -1954,10 +1954,10 @@
     inset: auto auto -52% -30%;
   }
 
-  /* Section 7 — Flow Mapping (pattern bg, flowchart SVG) */
+  /* Section 7 — Flow Mapping (light grid pattern bg, flowchart SVG) */
   .work_flow-mapping_section {
     z-index: 1;
-    background-image: url('/assets/work/cinch/Section.webp'); /* shared pattern bg */
+    background-image: url('/assets/work/fundbox-pay-checkout/Grid-graphics.svg');
     background-position: 0 0;
     background-repeat: repeat-y;
     background-size: cover;
