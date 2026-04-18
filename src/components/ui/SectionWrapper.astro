@@ -30,10 +30,14 @@ const padYClass: Record<string, string> = {
   'section-huge': 'py-section-huge',
 };
 
-const outer = ['px-[5%]', padYClass[padY as keyof typeof padYClass], rootClass]
+// Classes `padding-global` + `container-large` live in global.css
+// and already resolve through the same --space-section-inset /
+// --container-site-xxxlarge tokens used across case-study sections.
+// Using them here unifies home + case-study shell into one source.
+const outer = ['padding-global', padYClass[padY as keyof typeof padYClass], rootClass]
   .filter(Boolean)
   .join(' ');
-const inner = ['mx-auto max-w-[97.5rem]', innerClass].filter(Boolean).join(' ');
+const inner = ['container-large', innerClass].filter(Boolean).join(' ');
 ---
 <Tag {...rest} class={outer}>
   <div class={inner}>

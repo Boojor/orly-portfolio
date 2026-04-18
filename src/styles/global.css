@@ -94,6 +94,13 @@
   --container-site-large: 64rem;
   --container-site-xlarge: 80rem;
   --container-site-xxlarge: 96rem;
+  /* The site's primary content cap — used by SectionWrapper on home
+     and `.container-large` on case-study pages. 97.5rem = 1560px. */
+  --container-site-xxxlarge: 97.5rem;
+
+  /* Horizontal page inset shared by SectionWrapper + .padding-global.
+     Edit here to change gutters everywhere at once. */
+  --space-section-inset: 5%;
 
   /* Typography size scale — only covers values that don't already
      exist in Tailwind defaults (text-sm 0.875 / text-base 1 /
@@ -123,10 +130,12 @@
   --leading-heading: 1.2;
   --leading-body: 1.4;
 
-  /* Radii use Tailwind 4 defaults (sm 0.125rem → 3xl 1.5rem). Live
-     Webflow uses a mix: .work_visuals = 16px (=2xl), .button = 16px,
-     .testimonial_card = asymmetric 40/96/96/40 handled inline,
-     pill shapes use rounded-full (9999px). Do NOT zero these out. */
+  /* Radii — Tailwind 4 defaults cover 2xl (1rem=16px) and 3xl
+     (1.5rem=24px). Custom brand radii below cover the asymmetric
+     testimonial-card + principle-card shapes used on case-study
+     pages. One edit to these tokens updates every occurrence. */
+  --radius-card-lg: 2.5rem;   /* 40px — testimonial card rounded-left */
+  --radius-pill-xl: 6rem;     /* 96px — testimonial/principle card rounded-right */
 }
 
 @layer base {
@@ -444,16 +453,18 @@
     color: #000;
   }
 
-  /* Page padding + containers */
+  /* Page padding + containers. Values pulled from @theme tokens so
+     editing --space-section-inset or --container-site-xxxlarge once
+     updates every case-study section AND the home SectionWrapper. */
   .padding-global {
     align-items: center;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: var(--space-section-inset);
+    padding-right: var(--space-section-inset);
   }
 
   .container-large {
     width: 100%;
-    max-width: 97.5rem;
+    max-width: var(--container-site-xxxlarge);
     margin-left: auto;
     margin-right: auto;
   }
@@ -1173,7 +1184,7 @@
 
   .approach_principle {
     background-color: var(--color-overlay-white-13);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     width: 100%;
     padding: 2rem;
   }
@@ -1187,7 +1198,7 @@
   .approach_media {
     background-color: var(--color-purple-600);
     border: 1px solid var(--color-brand-purple-100);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -1204,7 +1215,7 @@
   .approach_card {
     background-color: #fff;
     border: 1px solid var(--color-brand-purple-100);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     padding: 1.25rem 2rem 1.34375rem;
   }
 
@@ -1218,7 +1229,7 @@
   .approach_media-border {
     background-color: #fff;
     border: 1px solid var(--color-brand-purple-100);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -1307,7 +1318,7 @@
 
   .results_principle {
     background-color: var(--color-overlay-white-13);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     width: 100%;
     padding: 2rem;
   }
@@ -1485,7 +1496,7 @@
 
   .solution_principle {
     background-color: var(--color-overlay-white-13);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     width: 100%;
     padding: 2rem;
   }
@@ -1577,7 +1588,7 @@
   .work_decisions_primary-media {
     background-color: var(--color-brand-purple-700);
     border: 1px solid var(--color-brand-purple-100);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -1589,7 +1600,7 @@
   .work_decisions_secondary-media {
     background-color: #fff;
     border: 1px solid var(--color-brand-purple-100);
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -1684,7 +1695,7 @@
     column-gap: 4rem;
     row-gap: 4rem;
     border: 1px solid #fff;
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     flex-flow: column;
     width: 100%;
     max-width: 15.5rem;
@@ -1868,7 +1879,7 @@
     column-gap: 4rem;
     row-gap: 4rem;
     border: 1px solid #fff;
-    border-radius: 40px 96px 96px 40px;
+    border-radius: var(--radius-card-lg) var(--radius-pill-xl) var(--radius-pill-xl) var(--radius-card-lg);
     justify-content: space-between;
     align-items: center;
     padding: 3rem;
@@ -1923,7 +1934,7 @@
     .testimonial_card {
       flex-flow: column;
       padding: 2rem;
-      border-radius: 24px;
+      border-radius: var(--radius-3xl);
     }
   }
 
@@ -1961,7 +1972,7 @@
   }
 
   .projects_item {
-    border-radius: 16px;
+    border-radius: var(--radius-2xl);
     position: relative;
     overflow: hidden;
     display: block;
@@ -2054,7 +2065,7 @@
 
     /* Testimonials */
     .testimonial_card {
-      border-radius: 96px 96px 16px 16px;
+      border-radius: var(--radius-pill-xl) var(--radius-pill-xl) var(--radius-2xl) var(--radius-2xl);
     }
 
     .team-slider_layout {
@@ -2168,7 +2179,7 @@
       justify-content: space-between;
       align-items: flex-start;
       padding: 1.5rem;
-      border-radius: 24px;
+      border-radius: var(--radius-3xl);
     }
 
     .team-slider_layout {
