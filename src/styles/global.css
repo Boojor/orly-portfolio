@@ -2329,7 +2329,10 @@
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    /* Live uses 1rem here, but the Item.svg text renders edge-to-edge
+       with so little padding. Bumping to 3rem (48px) adds visible
+       breathing room + shrinks the SVG contents accordingly. */
+    padding: 3rem;
     display: flex;
     position: relative;
     overflow: hidden;
