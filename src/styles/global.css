@@ -2240,9 +2240,6 @@
     grid-auto-columns: 1fr;
     width: 100%;
     display: grid;
-    /* Cells hug natural content height instead of stretching to the
-       tallest cell in their row — matches live's masonry-look. */
-    align-items: start;
   }
   /* Webflow masonry-style row spans: each grid child spans a different
      row count so columns interleave heights (safe-card → dark card,
