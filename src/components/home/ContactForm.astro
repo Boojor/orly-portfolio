@@ -4,13 +4,11 @@
 //   default: yellow footer bg → BLACK text/borders, DARK bg submit button
 //   dark:    dark footer bg  → WHITE text/borders, YELLOW submit button
 //
-// Live CSS references (default):
-//   .form_input { border: 1px solid #fff; border-radius: 999px; ... }
-//   .form_input.black { border-color: black; color: black; }
-//   .button.is-secondary { background: black; color: white; radius: 16px; }
-//
 // Phase 2: UI only. Stub handler logs payload + reveals success message.
 // Phase 5 deploy task will wire a real handler (Formspree / Netlify / mailto).
+
+import Button from '../ui/Button.astro';
+import FormField from '../ui/FormField.astro';
 
 interface Props {
   variant?: 'default' | 'dark';
@@ -18,22 +16,14 @@ interface Props {
 
 const { variant = 'default' } = Astro.props;
 const isDark = variant === 'dark';
+const submitVariant = isDark ? 'submit-gold' : 'submit-dark';
 
-// Label text color
-const labelColor = isDark ? 'text-white' : 'text-bg';
-// Input text + border + placeholder colors
-const inputClasses = isDark
-  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white placeholder:text-white/80 placeholder:font-light focus:outline-none focus:ring-2 focus:ring-white/20'
-  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20';
-const selectClasses = isDark
-  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-white/20 appearance-none bg-no-repeat'
-  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg focus:outline-none focus:ring-2 focus:ring-bg/20 appearance-none bg-no-repeat';
-// Submit: dark variant uses gold bg (matches image13 top ref); default stays dark.
-const submitClasses = isDark
-  ? 'inline-flex items-center gap-small rounded-2xl bg-yellow-500 px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-yellow-600'
-  : 'inline-flex items-center gap-small rounded-2xl bg-bg px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-bg/90';
-// SVG chevron stroke color matches text
-const chevronStroke = isDark ? 'white' : 'black';
+const reasonOptions = [
+  { value: 'placeholder', label: 'Please select' },
+  { value: 'First', label: 'First choice' },
+  { value: 'Second', label: 'Second choice' },
+  { value: 'Third', label: 'Third choice' },
+];
 ---
 <form
   id="email-form"
@@ -43,95 +33,39 @@ const chevronStroke = isDark ? 'white' : 'black';
   data-contact-form
   class="flex flex-col gap-small"
 >
-  {/* Field 1: Name */}
-  <div class="flex items-center gap-medium">
-    <label
-      for="contact-name"
-      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0', labelColor]}
-    >
-      Hey, I&rsquo;m
-    </label>
-    <input
-      type="text"
-      id="contact-name"
-      name="name"
-      placeholder="Your name"
-      required
-      class={inputClasses}
-    />
-  </div>
-
-  {/* Field 2: Email (live uses type="text") */}
-  <div class="flex items-center gap-medium">
-    <label
-      for="contact-email"
-      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0 whitespace-nowrap', labelColor]}
-    >
-      Please get back to me via
-    </label>
-    <input
-      type="text"
-      id="contact-email"
-      name="email"
-      placeholder="Your email"
-      required
-      class={inputClasses}
-    />
-  </div>
-
-  {/* Field 3: Select */}
-  <div class="flex items-center gap-medium">
-    <label
-      for="contact-reason"
-      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0 whitespace-nowrap', labelColor]}
-    >
-      I&rsquo;m reaching out about
-    </label>
-    <select
-      id="contact-reason"
-      name="reason"
-      required
-      class={selectClasses}
-      style={`background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='${chevronStroke}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-position: calc(100% - 1.5rem) center;`}
-    >
-      <option value="placeholder">Please select</option>
-      <option value="First">First choice</option>
-      <option value="Second">Second choice</option>
-      <option value="Third">Third choice</option>
-    </select>
-  </div>
+  <FormField
+    label="Hey, I&rsquo;m"
+    id="contact-name"
+    name="name"
+    type="text"
+    placeholder="Your name"
+    required
+    isDark={isDark}
+  />
+  <FormField
+    label="Please get back to me via"
+    id="contact-email"
+    name="email"
+    type="text"
+    placeholder="Your email"
+    required
+    isDark={isDark}
+    labelNowrap
+  />
+  <FormField
+    label="I&rsquo;m reaching out about"
+    id="contact-reason"
+    name="reason"
+    type="select"
+    options={reasonOptions}
+    required
+    isDark={isDark}
+    labelNowrap
+  />
 
   {/* Submit — default: dark bg; dark variant: gold bg. 16px radius either way. */}
   <div class="mt-small">
-    <button
-      type="submit"
-      class={submitClasses}
-    >
-      Send it
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M0.8125 8H15.1875"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-        <path
-          d="M8.47949 14.7077L15.1878 7.99935L8.47949 1.29102"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        ></path>
-      </svg>
-    </button>
+    <Button variant={submitVariant} arrow="right" type="submit">Send it</Button>
   </div>
 
   {/* Success / error states — hidden until a real backend is wired in Phase 5 */}

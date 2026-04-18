@@ -12,6 +12,11 @@
 // purple bg used on case-study pages (per QA: "same layout as home,
 // just change bg color").
 
+import Button from '../ui/Button.astro';
+import Heading from '../ui/Heading.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import SectionWrapper from '../ui/SectionWrapper.astro';
+
 interface Testimonial {
   quote: string;
   name: string;
@@ -79,25 +84,20 @@ const bgSrcset = [
     </>
   )}
 
-  <div class="relative z-10 px-[5%] py-section-large">
-    <div class="mx-auto max-w-[97.5rem]">
-      {/* Header: label + heading + arrows (arrows deferred to Phase 4) */}
+  <SectionWrapper as="div" class="relative z-10">
+    {/* Header: label + heading + arrows (arrows deferred to Phase 4) */}
       <div class="flex flex-col gap-medium">
         {/* Label row */}
         <div class="flex items-center gap-small">
-          <p class="font-body text-xs uppercase tracking-widest text-stone-200">
-            Testimonials
-          </p>
+          <Eyebrow>Testimonials</Eyebrow>
           <div class="h-px flex-1 bg-white/30" aria-hidden="true"></div>
         </div>
 
         {/* Heading + arrows */}
         <div class="flex flex-col gap-medium md:flex-row md:items-end md:justify-between md:gap-large">
-          <h2
-            class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.15] font-black text-white max-w-site-large"
-          >
+          <Heading as="h2" size="section" leading="tight" weight="black" class="text-white max-w-site-large">
             What my team has to say
-          </h2>
+          </Heading>
 
           {/* Prev/Next buttons — wired to carousel-behavior.ts via
               data-carousel-prev/next. Infinite wrap: clicking prev on
@@ -112,32 +112,18 @@ const bgSrcset = [
               left edge and next to the right edge. At md+ revert to
               natural width + adjacent grouping. */}
           <div class="flex w-full justify-between gap-[0.5rem] md:w-auto md:justify-start">
-            <button
-              type="button"
+            <Button
+              variant="arrow-circle"
+              arrow="left"
+              ariaLabel="Previous testimonial"
               data-carousel-prev="testimonials"
-              aria-label="Previous testimonial"
-              class="inline-flex items-center justify-center rounded-full border border-transparent bg-[#0000001a] px-[2.5rem] py-[1rem] text-white transition-opacity hover:opacity-100 cursor-pointer"
-            >
-              <div class="flex h-4 w-4 items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none" class="rotate-180">
-                  <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </div>
-            </button>
-            <button
-              type="button"
+            />
+            <Button
+              variant="arrow-circle"
+              arrow="right"
+              ariaLabel="Next testimonial"
               data-carousel-next="testimonials"
-              aria-label="Next testimonial"
-              class="inline-flex items-center justify-center rounded-full border border-transparent bg-[#0000001a] px-[2.5rem] py-[1rem] text-white transition-opacity hover:opacity-100 cursor-pointer"
-            >
-              <div class="flex h-4 w-4 items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
-                  <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-                  <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </div>
-            </button>
+            />
           </div>
         </div>
       </div>
@@ -213,8 +199,7 @@ const bgSrcset = [
           />
         ))}
       </div>
-    </div>
-  </div>
+  </SectionWrapper>
 </section>
 
 <style>

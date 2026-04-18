@@ -1,0 +1,56 @@
+---
+// Icon — centralized registry of every SVG icon inlined more than
+// once across the site. Swap `<svg>…</svg>` markup with
+// `<Icon name="mail" />` so one edit propagates everywhere.
+//
+// Registry:
+//   • mail   — 20×20 envelope (Nav absolute, Nav fixed, Footer)
+//   • linkedin — 20×20 (Nav absolute, Nav fixed)
+//   • arrow-right — 16×16 long-stem arrow (used inside Button + stories)
+//   • chevron-down — 12×8 (select dropdown indicator)
+//
+// All icons use `fill`/`stroke: currentColor` so their color matches
+// surrounding text without per-call overrides.
+
+const {
+  name,
+  size,
+  class: extraClass = '',
+  ...rest
+} = Astro.props;
+
+// Default size per icon. Callers can override via explicit `size` or
+// by passing a sizing class (`w-5 h-5`) through `class`.
+const defaultSize: Record<string, { w: number; h: number }> = {
+  mail: { w: 20, h: 20 },
+  linkedin: { w: 20, h: 20 },
+  'arrow-right': { w: 16, h: 16 },
+  'chevron-down': { w: 12, h: 8 },
+};
+
+const d = defaultSize[name as keyof typeof defaultSize] ?? { w: 20, h: 20 };
+const w = size ?? d.w;
+const h = size ?? d.h;
+---
+{name === 'mail' && (
+  <svg xmlns="http://www.w3.org/2000/svg" width={w} height={h} viewBox="0 0 20 20" fill="none" aria-hidden="true" class={extraClass} {...rest}>
+    <path d="M1.59375 4.5C1.59375 4.22386 1.81761 4 2.09375 4H17.901C18.1772 4 18.401 4.22386 18.401 4.5V15.5052C18.401 15.7814 18.1772 16.0052 17.901 16.0052H2.09375C1.81761 16.0052 1.59375 15.7813 1.59375 15.5052V4.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M2.19824 6.25098L10.0016 11.2031L17.805 6.25098" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+)}
+{name === 'linkedin' && (
+  <svg xmlns="http://www.w3.org/2000/svg" width={w} height={h} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class={extraClass} {...rest}>
+    <path d="M0 2.788C0 1.98.27 1.313.81.788 1.351.263 2.054 0 2.919 0c.849 0 1.537.259 2.062.776.54.533.81 1.228.81 2.085 0 .776-.262 1.422-.788 1.94C4.463 5.332 3.753 5.6 2.873 5.6h-.024c-.85 0-1.537-.267-2.062-.8C.263 4.267 0 3.596 0 2.788ZM.301 24V7.806h5.143V24H.301ZM8.293 24h5.143v-9.042c0-.566.062-1.003.186-1.31.216-.55.544-1.014.984-1.394.44-.38.992-.57 1.656-.57 1.73 0 2.595 1.22 2.595 3.661V24H24v-9.285c0-2.392-.54-4.206-1.622-5.443C21.297 8.036 19.869 7.418 18.093 7.418c-1.993 0-3.545.897-4.657 2.691v.049h-.023l.023-.049V7.806H8.293c.031.517.046 2.125.046 4.824 0 2.699-.015 6.489-.046 11.37Z"></path>
+  </svg>
+)}
+{name === 'arrow-right' && (
+  <svg xmlns="http://www.w3.org/2000/svg" width={w} height={h} viewBox="0 0 16 16" fill="none" aria-hidden="true" class={extraClass} {...rest}>
+    <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    <path d="M8.47949 14.7077L15.1878 7.99935L8.47949 1.29102" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+)}
+{name === 'chevron-down' && (
+  <svg xmlns="http://www.w3.org/2000/svg" width={w} height={h} viewBox="0 0 12 8" fill="none" aria-hidden="true" class={extraClass} {...rest}>
+    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+  </svg>
+)}

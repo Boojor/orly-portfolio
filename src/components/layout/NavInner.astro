@@ -1,0 +1,71 @@
+---
+// NavInner — the logo + links + email + LinkedIn + hamburger block
+// shared between the absolute and fixed <nav> wrappers in Nav.astro.
+// Previously these two blocks were duplicated verbatim (~60 lines
+// each); extracting here means one edit to nav content changes both
+// variants. Visibility / bg / padding stay on the parent <nav>.
+import Logo from './Logo.astro';
+import Icon from '../ui/Icon.astro';
+import { navLinks, contact, social } from '../../config';
+
+const {
+  navText,
+  barsColor,
+  dividerColor,
+  logoClass,
+} = Astro.props;
+---
+<div class="flex items-center justify-between">
+  <Logo class={`${logoClass} shrink-0 h-auto text-white`} />
+
+  {/* Desktop nav: links + email + divider + LinkedIn. Hidden below md. */}
+  <div class="hidden md:flex items-center gap-0">
+    <ul class={`flex items-center gap-large font-body ${navText}`}>
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            data-nav-link={link.href.replace('/#', '#')}
+            class="nav-link whitespace-nowrap"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class={`mx-large h-4 w-px ${dividerColor} hidden lg:block`} aria-hidden="true"></div>
+
+    <a
+      href={`mailto:${contact.email}`}
+      class={`hidden lg:inline-flex items-center gap-[0.375rem] ${navText} hover:opacity-70 transition-opacity whitespace-nowrap`}
+    >
+      <Icon name="mail" />
+      <span class="font-body text-sm">{contact.email}</span>
+    </a>
+
+    <div class={`mx-medium h-4 w-px ${dividerColor} hidden lg:block`} aria-hidden="true"></div>
+
+    <a
+      href={social.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={`hidden lg:inline-flex ${navText} hover:opacity-70 transition-opacity`}
+      aria-label="LinkedIn"
+    >
+      <Icon name="linkedin" />
+    </a>
+  </div>
+
+  {/* Hamburger button (mobile) */}
+  <button
+    data-mobile-toggle
+    class={`md:hidden ${navText}`}
+    aria-label="Open menu"
+    aria-expanded="false"
+  >
+    <span class={`block w-6 h-0.5 ${barsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${barsColor} mb-1`}></span>
+    <span class={`block w-6 h-0.5 ${barsColor}`}></span>
+  </button>
+</div>

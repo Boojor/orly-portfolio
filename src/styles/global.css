@@ -40,6 +40,24 @@
   --color-persian-indigo: #3b2084;
   --color-navy-dark: #14202e;
 
+  /* Brand purple ramp — case-study sections use these values raw in
+     multiple places (pastel borders 5×, gradient stops, pull-quote
+     emphasis, section bgs). Tokenized so "one place controls all". */
+  --color-brand-purple-100: #e3d2f5; /* pastel border, 5× in global.css */
+  --color-brand-purple-300: #9d8fc1; /* gradient start */
+  --color-brand-purple-400: #c47dff; /* pull-quote emphasis */
+  --color-brand-purple-500: #802aa9; /* gradient mid */
+  --color-brand-purple-700: #683a8d; /* results section bg */
+  --color-brand-purple-900: #221430; /* darkest section bg */
+
+  /* Overlays (tint layers / glass effects) */
+  --color-overlay-black-10: #0000001a; /* carousel arrow bg, slider-button */
+  --color-overlay-white-13: #ffffff21; /* principle cards white overlay */
+  --color-overlay-dark-30: #2626264d;  /* dark glass */
+
+  /* Mid gray — fills gap in existing neutral ramp (tag text color). */
+  --color-neutral-500: #737373;
+
   /* Fonts (Typekit loaded in Task 0.4) */
   --font-heading: "neue-haas-grotesk-display", sans-serif;
   --font-body: "neue-haas-grotesk-text", sans-serif;
@@ -76,6 +94,34 @@
   --container-site-large: 64rem;
   --container-site-xlarge: 80rem;
   --container-site-xxlarge: 96rem;
+
+  /* Typography size scale — only covers values that don't already
+     exist in Tailwind defaults (text-sm 0.875 / text-base 1 /
+     text-lg 1.125 / text-xl 1.25 / text-2xl 1.5 / text-4xl 2.25 are
+     defaults). Named semantically so component swaps read clearly.
+     Case-study `.heading-style-h*` classes reference these same
+     tokens so home + case-study scales stay in sync. */
+  --text-h4-mobile: 1.5rem;
+  --text-h4-tablet: 1.75rem;
+  --text-cs-h2-project-mobile: 1.55rem;
+  --text-h3: 2rem;
+  --text-h4-desktop: 2rem;
+  --text-h2-mobile: 2.25rem;
+  --text-h1-mobile: 2.5rem;
+  --text-h2-tablet: 2.75rem;
+  --text-metric: 3rem;
+  --text-h1-tablet: 3.25rem;
+  --text-h1-desktop: 3.25rem;
+  --text-h2-desktop: 3.5rem;
+  --text-cs-h1-desktop: 4rem;
+  --text-h2-footer-desktop: 4.5rem;
+
+  /* Line-height scale — the four unique values used across section
+     headings and body copy. Generates `leading-display` etc. */
+  --leading-display: 1.05;
+  --leading-heading-tight: 1.15;
+  --leading-heading: 1.2;
+  --leading-body: 1.4;
 
   /* Radii use Tailwind 4 defaults (sm 0.125rem → 3xl 1.5rem). Live
      Webflow uses a mix: .work_visuals = 16px (=2xl), .button = 16px,
@@ -342,6 +388,20 @@
     }
   }
 
+  /* Hero headline decorative marks — the three words "figure / it /
+     out" each sit against a small SVG mark. The common styling
+     (no-repeat, right-aligned, 32×32 size, right padding, gold text
+     color) lives here so each span only needs to provide its unique
+     `background-image` URL via inline `style="--hero-mark-img: url(…)"`. */
+  .hero-mark {
+    background-image: var(--hero-mark-img);
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: 32px 32px;
+    padding-right: 3rem;
+    color: var(--color-yellow-500);
+  }
+
   /* Service card padding + heading size — literal port of live's inline
      `@media (max-width: 1200px)` override embedded in index.html (not in
      its main CSS file). Cascade:
@@ -522,19 +582,22 @@
     }
   }
 
-  /* Typography — live heading styles */
+  /* Typography — live heading styles. Font sizes now reference
+     `--text-*` tokens (defined in @theme) so editing the token
+     updates both these classes AND the <Heading> component's
+     Tailwind utilities in one place. */
   .heading-style-h1 {
     font-family: var(--font-heading);
-    font-size: 4rem;
+    font-size: var(--text-cs-h1-desktop);
     font-weight: 700;
-    line-height: 1.2;
+    line-height: var(--leading-heading);
   }
 
   .heading-style-h2 {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
+    font-size: var(--text-h2-desktop);
     font-weight: 900;
-    line-height: 1.2;
+    line-height: var(--leading-heading);
   }
 
   .heading-style-h2.project-page {
@@ -544,85 +607,88 @@
 
   .heading-style-h4 {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: var(--text-h4-desktop);
     font-weight: 400;
-    line-height: 1.2;
+    line-height: var(--leading-heading);
   }
 
   @media (width <=991px) {
     .heading-style-h1 {
-      font-size: 3.25rem;
+      font-size: var(--text-h1-tablet);
     }
 
     .heading-style-h2 {
-      font-size: 2.75rem;
+      font-size: var(--text-h2-tablet);
     }
 
     .heading-style-h4 {
-      font-size: 1.75rem;
+      font-size: var(--text-h4-tablet);
     }
   }
 
   @media (width <=767px) {
     .heading-style-h1 {
-      font-size: 2.5rem;
+      font-size: var(--text-h1-mobile);
     }
 
     .heading-style-h2 {
-      font-size: 2.25rem;
+      font-size: var(--text-h2-mobile);
     }
 
     .heading-style-h2.project-page {
-      font-size: 1.55rem;
+      font-size: var(--text-cs-h2-project-mobile);
     }
 
     .heading-style-h4 {
-      font-size: 1.5rem;
-      line-height: 1.4;
+      font-size: var(--text-h4-mobile);
+      line-height: var(--leading-body);
     }
   }
 
   /* Text utilities — size / weight / color / style */
+  /* Body/utility size ladder. Wires into the same `--text-*` tokens
+     as the heading component + `.heading-style-*` classes so every
+     piece of typography on the site flows from one scale. */
   .text-size-small {
-    font-size: 0.875rem;
+    font-size: 0.875rem; /* = Tailwind text-sm */
   }
 
   .text-size-medium {
-    font-size: 1.125rem;
+    font-size: 1.125rem; /* = Tailwind text-lg */
   }
 
   @media (width <=767px) {
     .text-size-medium {
-      font-size: 1rem;
+      font-size: 1rem; /* = Tailwind text-base */
     }
   }
 
   .text-size-large {
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* = --text-h4-mobile = Tailwind text-2xl */
   }
 
   .text-size-xlarge {
-    font-size: 1.75rem;
+    font-size: var(--text-h4-tablet);
   }
 
   .text-size-2xlarge {
-    font-size: 2rem;
+    font-size: var(--text-h3);
   }
 
   .text-size-3xlarge {
-    font-size: 2.5rem;
+    font-size: var(--text-h1-mobile);
   }
 
   .text-size-4xlarge {
-    font-size: 3.5rem;
+    font-size: var(--text-h2-desktop);
   }
 
   .text-size-5xlarge {
-    font-size: 4rem;
+    font-size: var(--text-cs-h1-desktop);
   }
 
   .text-size-6xlarge {
-    font-size: 4.5rem;
+    font-size: var(--text-h2-footer-desktop);
   }
 
   .text-weight-bold {
@@ -706,7 +772,7 @@
   /* Horizontal divider — 1px stone-200 flex child */
   .divider-horizontal {
     height: 1px;
-    background-color: #d6d3d1;
+    background-color: var(--color-stone-200);
     flex: 1;
   }
 
@@ -747,7 +813,7 @@
      as a rounded pill when closed, gently rounded panel when open. */
   .work_dropdown {
     border: 1px solid #fff;
-    background-color: #2626264d;
+    background-color: var(--color-overlay-dark-30);
     border-radius: 2.5rem;
     flex-flow: column;
     position: absolute;
@@ -908,9 +974,9 @@
   .tag {
     column-gap: 0.5rem;
     row-gap: 0.5rem;
-    color: #737373;
-    background-color: #f5f5f4;
-    border: 1px solid #f5f5f4;
+    color: var(--color-neutral-500);
+    background-color: var(--color-bg-light);
+    border: 1px solid var(--color-bg-light);
     border-radius: 100px;
     justify-content: center;
     align-items: center;
@@ -936,7 +1002,7 @@
   /* Section 5: opportunity */
   .work_opportunity_section {
     z-index: 1;
-    background-color: #221430;
+    background-color: var(--color-brand-purple-900);
     position: relative;
   }
 
@@ -1106,7 +1172,7 @@
   }
 
   .approach_principle {
-    background-color: #ffffff21;
+    background-color: var(--color-overlay-white-13);
     border-radius: 16px;
     width: 100%;
     padding: 2rem;
@@ -1119,8 +1185,8 @@
   }
 
   .approach_media {
-    background-color: #9c5cd1;
-    border: 1px solid #e3d2f5;
+    background-color: var(--color-purple-600);
+    border: 1px solid var(--color-brand-purple-100);
     border-radius: 16px;
     justify-content: center;
     align-items: center;
@@ -1137,7 +1203,7 @@
 
   .approach_card {
     background-color: #fff;
-    border: 1px solid #e3d2f5;
+    border: 1px solid var(--color-brand-purple-100);
     border-radius: 16px;
     padding: 1.25rem 2rem 1.34375rem;
   }
@@ -1151,7 +1217,7 @@
 
   .approach_media-border {
     background-color: #fff;
-    border: 1px solid #e3d2f5;
+    border: 1px solid var(--color-brand-purple-100);
     border-radius: 16px;
     justify-content: center;
     align-items: center;
@@ -1212,7 +1278,7 @@
 
   /* Section 7: results */
   .work_results_section {
-    background-color: #9c5cd1;
+    background-color: var(--color-purple-600);
     overflow: hidden;
   }
 
@@ -1240,7 +1306,7 @@
   }
 
   .results_principle {
-    background-color: #ffffff21;
+    background-color: var(--color-overlay-white-13);
     border-radius: 16px;
     width: 100%;
     padding: 2rem;
@@ -1391,7 +1457,7 @@
      .text-span and .text-span-2 (title highlight color per QA). */
   .text-span,
   .text-span-2 {
-    color: #c47dff;
+    color: var(--color-brand-purple-400);
   }
 
   /* Legacy .image-cover.insight rules removed — the insight image
@@ -1400,7 +1466,7 @@
 
   /* Section 9: solution */
   .work_solution_section {
-    background-color: #f5f5f4;
+    background-color: var(--color-bg-light);
     overflow: hidden;
   }
 
@@ -1418,7 +1484,7 @@
   }
 
   .solution_principle {
-    background-color: #ffffff21;
+    background-color: var(--color-overlay-white-13);
     border-radius: 16px;
     width: 100%;
     padding: 2rem;
@@ -1509,8 +1575,8 @@
   }
 
   .work_decisions_primary-media {
-    background-color: #683a8d;
-    border: 1px solid #e3d2f5;
+    background-color: var(--color-brand-purple-700);
+    border: 1px solid var(--color-brand-purple-100);
     border-radius: 16px;
     justify-content: center;
     align-items: center;
@@ -1522,7 +1588,7 @@
 
   .work_decisions_secondary-media {
     background-color: #fff;
-    border: 1px solid #e3d2f5;
+    border: 1px solid var(--color-brand-purple-100);
     border-radius: 16px;
     justify-content: center;
     align-items: center;
@@ -1563,7 +1629,7 @@
      scales width proportionally; solid fallback #221430 paints
      anywhere the image doesn't cover. */
   .work_visual-system_section {
-    background-color: #221430;
+    background-color: var(--color-brand-purple-900);
     position: relative;
     overflow: hidden;
   }
@@ -1637,7 +1703,7 @@
   }
 
   .work_visual-system_color-card.is-gradient {
-    background-image: linear-gradient(359deg, #9d8fc1, #802aa9 48%, #3b2084);
+    background-image: linear-gradient(359deg, var(--color-brand-purple-300), var(--color-brand-purple-500) 48%, var(--color-persian-indigo));
   }
 
   @media (width <=991px) {
@@ -1726,7 +1792,7 @@
   }
 
   .work_testimonials_section.is-bgcolor-purple {
-    background-color: #9c5cd1;
+    background-color: var(--color-purple-600);
   }
 
   .team-slider_component {
@@ -1830,7 +1896,7 @@
 
   .slider-button {
     border: 1px solid transparent;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--color-overlay-black-10);
     color: #fff;
     border-radius: 999px;
     justify-content: center;

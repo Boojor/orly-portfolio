@@ -1,0 +1,84 @@
+---
+// FormField — label + input OR select row used by ContactForm.
+// Consolidates the 3 near-identical <div><label><input|select></div>
+// blocks; classes preserved verbatim so the swap is zero-pixel.
+//
+// Props:
+//   • label        — visible label text
+//   • id / name    — input id+name (id is also the label's `for`)
+//   • type         — 'text' (default) | 'email' | 'select'
+//   • placeholder  — input placeholder
+//   • required     — boolean
+//   • options      — [{ value, label }] for select variant
+//   • isDark       — swaps label + border + placeholder colors
+//   • labelNowrap  — adds whitespace-nowrap on labels that must stay
+//                    on one line (fields 2 and 3 in the live form)
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  label: string;
+  id: string;
+  name: string;
+  type?: 'text' | 'email' | 'select';
+  placeholder?: string;
+  required?: boolean;
+  options?: Option[];
+  isDark?: boolean;
+  labelNowrap?: boolean;
+}
+
+const {
+  label,
+  id,
+  name,
+  type = 'text',
+  placeholder,
+  required = false,
+  options = [],
+  isDark = false,
+  labelNowrap = false,
+} = Astro.props;
+
+const labelColor = isDark ? 'text-white' : 'text-bg';
+
+// Literal class strings copied from ContactForm.astro so the swap
+// doesn't shift any pixels.
+const inputClasses = isDark
+  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white placeholder:text-white/80 placeholder:font-light focus:outline-none focus:ring-2 focus:ring-white/20'
+  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20';
+
+const selectClasses = isDark
+  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-white/20 appearance-none bg-no-repeat'
+  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg focus:outline-none focus:ring-2 focus:ring-bg/20 appearance-none bg-no-repeat';
+
+const chevronStroke = isDark ? 'white' : 'black';
+const selectStyle = `background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='${chevronStroke}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-position: calc(100% - 1.5rem) center;`;
+
+const labelBase = 'font-heading text-xl md:text-2xl font-normal shrink-0';
+const labelClass = labelNowrap ? `${labelBase} whitespace-nowrap` : labelBase;
+---
+<div class="flex items-center gap-medium">
+  <label for={id} class:list={[labelClass, labelColor]}>
+    <Fragment set:html={label} />
+  </label>
+  {type === 'select' ? (
+    <select id={id} name={name} required={required} class={selectClasses} style={selectStyle}>
+      {options.map((o) => (
+        <option value={o.value}>{o.label}</option>
+      ))}
+    </select>
+  ) : (
+    <input
+      type={type}
+      id={id}
+      name={name}
+      placeholder={placeholder}
+      required={required}
+      class={inputClasses}
+    />
+  )}
+</div>

@@ -8,6 +8,8 @@
 // `href="#"` tile, which contains the `.project-overlay` block twice in a row
 // inside the same `<a>`. Preserved verbatim per the no-invention rule (same
 // policy that keeps "Design systems that scales" as-is).
+import Button from '../ui/Button.astro';
+
 interface Props {
   href: string;
   thumbnail: string;
@@ -40,21 +42,13 @@ const { href, thumbnail, srcset, alt, duplicateOverlay = false } = Astro.props;
   <div
     class="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
   >
-    <div
-      class="rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl"
-    >
-      DIVE IN
-    </div>
+    <Button variant="outline-pill" as="div">DIVE IN</Button>
   </div>
   {duplicateOverlay && (
     <div
       class="absolute inset-0 flex items-center justify-center bg-bg/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
     >
-      <div
-        class="rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl"
-      >
-        DIVE IN
-      </div>
+      <Button variant="outline-pill" as="div">DIVE IN</Button>
     </div>
   )}
 </a>

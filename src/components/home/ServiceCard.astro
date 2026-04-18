@@ -2,6 +2,8 @@
 // Single service card. Matches the live site's .service_card: 1px white border,
 // asymmetric rounded corners (96/96/32/32), column flex with spacer-driven rhythm,
 // and a row of solid-color pill tags at the bottom.
+import Heading from '../ui/Heading.astro';
+
 export interface Tag {
   label: string;
   color: string; // e.g. 'mint-200' — must exist as a key in TAG_STYLES
@@ -75,9 +77,9 @@ const { icon, heading, description, tags, href = '#' } = Astro.props;
   <!-- spacer-2-5 (~2.5rem) -->
   <div class="h-medium md:h-[2.5rem]" aria-hidden="true" />
 
-  <h3 class="service-card-heading font-heading text-[2rem] leading-[1.2] font-normal">
+  <Heading as="h3" size="card" leading="heading" weight="normal" class="service-card-heading">
     {heading}
-  </h3>
+  </Heading>
 
   <!-- spacer-xxsmall -->
   <div class="h-xxsmall" aria-hidden="true" />

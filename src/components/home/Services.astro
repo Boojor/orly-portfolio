@@ -1,5 +1,8 @@
 ---
 import ServiceCard from './ServiceCard.astro';
+import Button from '../ui/Button.astro';
+import Heading from '../ui/Heading.astro';
+import SectionWrapper from '../ui/SectionWrapper.astro';
 
 // Content hardcoded inline — these are not config, they're content, and there are only 4.
 const services = [
@@ -50,8 +53,7 @@ const services = [
   },
 ];
 ---
-<section id="services" class="px-[5%] py-section-large">
-  <div class="max-w-[97.5rem] mx-auto">
+<SectionWrapper id="services">
     <!-- Section header: label line + H2 + "See all services" secondary button -->
     <header>
       <div class="flex flex-row items-center gap-medium">
@@ -59,22 +61,19 @@ const services = [
           <p class="whitespace-nowrap text-sm tracking-wide text-white/80">My services</p>
           <div class="h-px flex-1 bg-white/80" aria-hidden="true" />
         </div>
-        {/* .button.is-secondary: inherits .button border (1px solid
-            yellow-500), black bg, white text, 16px radius, 1rem 2.5rem
-            padding, 1.125rem/1.4 700 weight */}
-        <a
-          href="#"
-          class="hidden md:inline-flex items-center rounded-2xl border border-yellow-500 bg-black px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-white hover:text-black"
-        >
-          See all services
-        </a>
+        {/* .button.is-secondary — hidden below md; wrapper controls
+            visibility so the shared Button component can carry the
+            literal style string unchanged. */}
+        <div class="hidden md:inline-block">
+          <Button variant="secondary" href="#">See all services</Button>
+        </div>
       </div>
 
       <div class="h-medium" aria-hidden="true" />
 
-      <h2 class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.2] font-black">
+      <Heading as="h2" size="section" leading="heading" weight="black">
         What I do best
-      </h2>
+      </Heading>
     </header>
 
     <!-- spacer-large -->
@@ -137,12 +136,6 @@ const services = [
         which renders the button centered below the carousel at ≤767px.
         Live CSS: button-group is-center → justify-content: center. */}
     <div class="mt-large flex justify-center md:hidden">
-      <a
-        href="#"
-        class="inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-black px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-white hover:text-black"
-      >
-        See all services
-      </a>
+      <Button variant="secondary" href="#">See all services</Button>
     </div>
-  </div>
-</section>
+</SectionWrapper>

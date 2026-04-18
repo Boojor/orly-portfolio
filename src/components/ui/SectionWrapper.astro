@@ -1,0 +1,42 @@
+---
+// SectionWrapper — the `px-[5%] py-section-large mx-auto max-w-[97.5rem]`
+// shell used by Hero, Services, WorkGrid, Testimonials, and other
+// top-level sections. Previously each section hand-rolled these
+// classes (6× `px-[5%]`, 5× `max-w-[97.5rem]`). Centralizing here
+// means one edit changes every page section's inset and cap.
+//
+// Props:
+//   • as         — root tag (default: section)
+//   • padY       — vertical padding key. 'none' skips it so callers
+//                   that need custom rhythm can opt out.
+//   • class      — forwarded to the root for variant bgs / z-index etc.
+//   • innerClass — forwarded to the inner max-w wrapper.
+
+const {
+  as = 'section',
+  padY = 'section-large',
+  class: rootClass = '',
+  innerClass = '',
+  ...rest
+} = Astro.props;
+
+const Tag = as;
+
+const padYClass: Record<string, string> = {
+  'none': '',
+  'section-small': 'py-section-small',
+  'section-medium': 'py-section-medium',
+  'section-large': 'py-section-large',
+  'section-huge': 'py-section-huge',
+};
+
+const outer = ['px-[5%]', padYClass[padY as keyof typeof padYClass], rootClass]
+  .filter(Boolean)
+  .join(' ');
+const inner = ['mx-auto max-w-[97.5rem]', innerClass].filter(Boolean).join(' ');
+---
+<Tag {...rest} class={outer}>
+  <div class={inner}>
+    <slot />
+  </div>
+</Tag>

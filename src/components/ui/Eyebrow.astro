@@ -1,0 +1,16 @@
+---
+// Eyebrow — uppercase section label appearing above H2s in WorkGrid
+// and Testimonials. Literal class string preserved (font-body text-xs
+// uppercase tracking-widest + optional color override).
+const {
+  color = 'text-stone-200',
+  as = 'p',
+  class: extraClass = '',
+  ...rest
+} = Astro.props;
+const Tag = as;
+const classes = `font-body text-xs uppercase tracking-widest ${color} ${extraClass}`.trim();
+---
+<Tag {...rest} class={classes}>
+  <slot />
+</Tag>

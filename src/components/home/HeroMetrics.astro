@@ -1,4 +1,5 @@
 ---
+import Heading from '../ui/Heading.astro';
 // Hero metric callouts. Copy comes from the parent `Hero.astro` so the
 // values stay editable in one place. The layout is a vertical stack so it
 // can live inside the hero's right-hand column (desktop) or stretch across
@@ -21,9 +22,9 @@ const { metrics } = Astro.props;
   {
     metrics.map((m) => (
       <div class="flex flex-col items-end justify-center w-full text-right">
-        <span class="font-heading text-[3rem] text-white leading-none">
+        <Heading as="span" size="metric" leading="none" weight="normal" class="text-white">
           {m.value}
-        </span>
+        </Heading>
         <span class="mt-xxsmall font-body text-sm text-stone-200">
           {m.label}
         </span>

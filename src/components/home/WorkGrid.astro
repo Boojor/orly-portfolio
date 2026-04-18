@@ -13,6 +13,9 @@
 // the same "DIVE IN" hover overlay — real links and placeholder links
 // alike.
 import WorkTile from './WorkTile.astro';
+import Button from '../ui/Button.astro';
+import Heading from '../ui/Heading.astro';
+import SectionWrapper from '../ui/SectionWrapper.astro';
 
 const thumbnail = '/assets/work/Project-thumbnail.webp';
 const srcset =
@@ -34,9 +37,8 @@ const tiles = [
       Mobile (≤767px): flex column, all stacked, tiles aspect-square max-w 44rem
       Tablet (768-991): 2-col grid, tiles aspect-square max-w 25rem
       Desktop (992+):   2-col grid, tiles min-h 30rem (non-square) */}
-<section id="my-work" class="px-[5%] py-section-large">
-  <div class="mx-auto max-w-[97.5rem]">
-    <div data-work-layout class="grid grid-cols-1 md:grid-cols-2 gap-x-[2rem] gap-y-[1.5rem] md:gap-y-[4rem] min-[992px]:gap-y-[3rem]">
+<SectionWrapper id="my-work">
+  <div data-work-layout class="grid grid-cols-1 md:grid-cols-2 gap-x-[2rem] gap-y-[1.5rem] md:gap-y-[4rem] min-[992px]:gap-y-[3rem]">
       {/* 1. Cinch tile */}
       <WorkTile
         href={tiles[0].href}
@@ -66,21 +68,16 @@ const tiles = [
         </div>
 
         <div class="flex flex-col items-start">
-          <h2 class="font-heading text-[2.25rem] md:text-[2.75rem] xl:text-[3.5rem] leading-[1.15] font-black">
+          <Heading as="h2" size="section" leading="tight" weight="black">
             Examples of My Work
-          </h2>
+          </Heading>
           <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-stone-200 leading-relaxed">
             Working across industries keeps my thinking fresh and my skills
             sharp. But I&rsquo;m especially drawn to complex B2B products where
             the layers, decisions, and details turn the work into something
             deeply rewarding.
           </p>
-          <a
-            href="#"
-            class="mt-medium inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-yellow-500 px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-yellow-600 hover:border-yellow-600"
-          >
-            See all work
-          </a>
+          <Button variant="primary" href="#" class="mt-medium">See all work</Button>
         </div>
       </div>
 
@@ -119,5 +116,4 @@ const tiles = [
         alt={tiles[4].alt}
       />
     </div>
-  </div>
-</section>
+</SectionWrapper>

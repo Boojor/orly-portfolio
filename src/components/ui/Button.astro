@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+// Button — shared component covering every button variant that
+// currently appears across the site as inline markup. Classes are
+// literal copies of the existing usages so swapping in this component
+// produces ZERO pixel diff at any breakpoint:
+//
+//   • primary       — Hero + WorkGrid primary CTA (gold pill, white label)
+//   • secondary     — Services CTA (dark pill, gold border, white label)
+//   • submit-dark   — ContactForm default-variant submit (dark pill + arrow)
+//   • submit-gold   — ContactForm dark-variant submit (gold pill + arrow)
+//   • arrow-circle  — Testimonials prev/next (translucent round + arrow)
+//   • outline-pill  — WorkTile DIVE IN (transparent round, white border)
+//
+// `arrow` prop:
+//   • none  (default) — label only
+//   • right           — 16×16 long-stem arrow after label
+//   • left            — same arrow flipped via rotate-180
+//
+// Renders <a href> when `href` is given, otherwise <button type>.
+
+// Arbitrary extra HTML attributes (data-*, aria-*, id, name, etc.)
+// are forwarded to the rendered tag via the `rest` object below.
+const {
+  variant = 'primary',
+  arrow = 'none',
+  href,
+  type = 'button',
+  ariaLabel,
+  class: extraClass = '',
+  as,
+  ...rest
+} = Astro.props;
+
+// Literal class strings, copied verbatim from the components these
+// variants originated in. Do not "tidy" — parity must stay exact.
+const variantClasses = {
+  primary:
+    'inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-yellow-500 px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-yellow-600 hover:border-yellow-600',
+  secondary:
+    'inline-flex items-center justify-center rounded-2xl border border-yellow-500 bg-black px-[2.5rem] py-[1rem] font-heading text-[1.125rem] leading-[1.4] font-bold text-white transition-colors hover:bg-white hover:text-black',
+  'submit-dark':
+    'inline-flex items-center gap-small rounded-2xl bg-bg px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-bg/90',
+  'submit-gold':
+    'inline-flex items-center gap-small rounded-2xl bg-yellow-500 px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-yellow-600',
+  'arrow-circle':
+    'inline-flex items-center justify-center rounded-full border border-transparent bg-[#0000001a] px-[2.5rem] py-[1rem] text-white transition-opacity hover:opacity-100 cursor-pointer',
+  'outline-pill':
+    'rounded-full border border-white px-xlarge py-small font-heading text-xl text-white md:text-2xl',
+};
+
+const classes = `${variantClasses[variant as keyof typeof variantClasses]} ${extraClass}`.trim();
+const Tag = as ?? (href ? 'a' : 'button');
+// Only pass `href` to anchor tags; only pass `type` to button tags.
+const tagProps: Record<string, string> = {};
+if (Tag === 'a' && href) tagProps.href = href;
+if (Tag === 'button') tagProps.type = type;
+---
+<Tag
+  {...tagProps}
+  {...rest}
+  class={classes}
+  aria-label={ariaLabel}
+>
+  {arrow === 'left' && <Icon name="arrow-right" class="rotate-180" />}
+  <slot />
+  {arrow === 'right' && <Icon name="arrow-right" />}
+</Tag>
