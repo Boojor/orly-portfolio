@@ -9,6 +9,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Nav from '../../components/layout/Nav.astro';
 import MobileNav from '../../components/layout/MobileNav.astro';
 import Footer from '../../components/layout/Footer.astro';
+import ScrollNavSwapper from '../../components/layout/ScrollNavSwapper.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
+import OtherProjects from '../../components/work/OtherProjects.astro';
 ---
 
 <BaseLayout
@@ -24,6 +27,7 @@ import Footer from '../../components/layout/Footer.astro';
          Live: hidden via display:none on mobile ≤767px. Desktop: 100vh (max 780px).
          Dropdown positioned absolute bottom-right inside hero-content.
          TODO(phase-4): wire real dropdown open/close — static for now. */}
+    <ScrollNavSwapper />
     <header class="work_hero_section" data-cinch-section="hero">
       <div class="padding-global">
         <div class="container-large">
@@ -135,11 +139,12 @@ import Footer from '../../components/layout/Footer.astro';
       </div>
     </section>
 
-    {/* 5. work_opportunity_section — H2 "Defining the Problem" + diagram + blur bg */}
+    {/* 5. work_opportunity_section — H2 "Defining the Problem" + diagram + blur bg.
+         Bottom padding trimmed to `is-bottom-small` per QA (image6). */}
     <header class="work_opportunity_section text-color-white" data-cinch-section="opportunity">
       <div class="padding-global">
         <div class="container-large">
-          <div class="padding-section-large">
+          <div class="padding-section-large is-bottom-small">
             <div class="problem_component">
               <img src="/assets/work/cinch/Group-3996.svg" loading="lazy" alt="" class="problem_diagram" />
               <div class="max-width-small">
@@ -298,21 +303,28 @@ import Footer from '../../components/layout/Footer.astro';
                 <div class="insight_content-text">
                   <h2 class="text-size-medium text-weight-bold">Leading With UX Empathy To Create Clarity Under Pressure</h2>
                   <div class="spacer-xsmall"></div>
+                  {/* Paragraph order per Figma design (node 824-25294):
+                      Paulina → Quotes/Shipments → Timelines. */}
                   <div class="p-wrapper">
+                    <p>Paulina, a logistics coordinator, starts her day with 200 unread emails. Every minute counts. To help her and her team stay focused, I designed tools that bring order to the chaos.<br /></p>
                     <p>Both the quotes and shipments pages needed timeline views but served different goals. Quotes required full route visibility across sea, air, and ground to compare options, while shipments needed live tracking that made delays instantly clear.<br /></p>
                     <p>I designed two tailored timelines, one for planned routes, one for real progress. Consistent structure, clear hierarchy, and contextual detail keep both views fast to read and easy to act on, even with complex data.<br /></p>
-                    <p>Paulina, a logistics coordinator, starts her day with 200 unread emails. Every minute counts. To help her and her team stay focused, I designed tools that bring order to the chaos.<br /></p>
                   </div>
                 </div>
+                {/* Phone card per Figma: 399px wide, offset -48px up so
+                    it extends above the section top; rounded 32px with a
+                    10px semi-transparent dark border and a purple glow. */}
                 <div class="wraper_insight-media">
-                  <img
-                    src="/assets/work/cinch/image-297.webp"
-                    srcset="/assets/work/cinch/image-297-p-500.png 500w, /assets/work/cinch/image-297-p-800.png 800w, /assets/work/cinch/image-297-p-1080.png 1080w, /assets/work/cinch/image-297-p-1600.png 1600w, /assets/work/cinch/image-297.webp 5052w"
-                    sizes="100vw"
-                    loading="lazy"
-                    alt=""
-                    class="image-cover insight"
-                  />
+                  <div class="insight-phone-card">
+                    <img
+                      src="/assets/work/cinch/image-297.webp"
+                      srcset="/assets/work/cinch/image-297-p-500.png 500w, /assets/work/cinch/image-297-p-800.png 800w, /assets/work/cinch/image-297-p-1080.png 1080w, /assets/work/cinch/image-297-p-1600.png 1600w, /assets/work/cinch/image-297.webp 5052w"
+                      sizes="400px"
+                      loading="lazy"
+                      alt=""
+                      class="insight-phone-image"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -375,10 +387,15 @@ import Footer from '../../components/layout/Footer.astro';
           <div class="padding-section-large">
             <div class="spacer-large show-mobile-landscape"></div>
             <div class="work_decisions_component">
+              {/* Title above the 2-col grid so the right-column text
+                  aligns to the TOP OF THE IMAGE on the left, not to
+                  the section heading. Per QA annotation on image8.
+                  No spacer between h2 and content — .work_decisions_component
+                  is a flex column with row-gap that provides the spacing,
+                  matching the "Two Views, One Story" solution section. */}
+              <h2 class="heading-style-h4 work_decisions_title">Designing for Decision Making</h2>
               <div class="work_decisions_content">
                 <div class="work_decisions_heading">
-                  <h2 class="heading-style-h4">Designing for Decision Making</h2>
-                  <div class="spacer-large"></div>
                   <a href="#" class="work_decisions_primary-media">
                     <img
                       src="/assets/work/cinch/Frame-1000002355_1.webp"
@@ -496,7 +513,7 @@ import Footer from '../../components/layout/Footer.astro';
           sizes="100vw"
           loading="lazy"
           alt=""
-          class="image-cover"
+          class="visual-system_bg-image"
         />
       </div>
     </header>
@@ -506,166 +523,42 @@ import Footer from '../../components/layout/Footer.astro';
       <img loading="eager" src="/assets/work/cinch/SectionIMAGE.webp" alt="" class="image-cover" />
     </header>
 
-    {/* 13. work_testimonials_section — purple bg Swiper: 2 slides × 2 stacked cards.
-         Port uses scroll-snap carousel (same contract as home Testimonials); real
-         Swiper deferred to Phase 4. */}
-    <div class="work_testimonials_section is-bgcolor-purple text-color-white" data-cinch-section="testimonials">
-      <div class="padding-global">
-        <div class="container-large">
-          <div class="padding-section-large">
-            <div class="team-slider_component">
-              <div class="section_header">
-                <div class="testimonials-label">
-                  <p class="label-text">Testimonials</p>
-                  <div class="line-fill"></div>
-                </div>
-                <div class="spacer-medium"></div>
-                <div class="testimonial-header-wrapper">
-                  <div class="testimonial-heading">
-                    <h2 class="heading-style-h2">What my team has to say</h2>
-                  </div>
-                  <div class="team-slider_layout">
-                    <div class="team-slider_btn_layout">
-                      <div class="team-slider_btn_element is-prev">
-                        <button type="button" data-carousel-prev="cinch-testimonials" aria-label="Previous testimonial" class="slider-button">
-                          <div class="slider_arrow is-left" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
-                              <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                          </div>
-                        </button>
-                      </div>
-                      <div class="team-slider_btn_element is-next">
-                        <button type="button" data-carousel-next="cinch-testimonials" aria-label="Next testimonial" class="slider-button">
-                          <div class="slider_arrow" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 16 16" fill="none">
-                              <path d="M0.8125 8H15.1875" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M8.47949 14.7087L15.1878 8.00033L8.47949 1.29199" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="spacer-large"></div>
-              <div class="team-slider_cms_wrap">
-                <div class="team-slider_cms_list" data-carousel="cinch-testimonials">
-                  <div class="team-slider_cms_item" data-carousel-slide>
-                    <div class="testimonials_slide">
-                      <div class="testimonial_card">
-                        <div class="testimonial_text">
-                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user experience that just works.&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user.&rdquo;</p>
-                          <div class="spacer-small"></div>
-                          <div class="testimonial_author">
-                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
-                            <p class="text-size-small">CEO, Kestrel</p>
-                          </div>
-                        </div>
-                        <div class="testimonial-media">
-                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
-                        </div>
-                      </div>
-                      <div class="testimonial_card">
-                        <div class="testimonial_text">
-                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a userthat just.&rdquo;</p>
-                          <div class="spacer-small"></div>
-                          <div class="testimonial_author">
-                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
-                            <p class="text-size-small">CEO, Kestrel</p>
-                          </div>
-                        </div>
-                        <div class="testimonial-media">
-                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="team-slider_cms_item" data-carousel-slide>
-                    <div class="testimonials_slide">
-                      <div class="testimonial_card">
-                        <div class="testimonial_text">
-                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user experience that just works.&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a user.&rdquo;</p>
-                          <div class="spacer-small"></div>
-                          <div class="testimonial_author">
-                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
-                            <p class="text-size-small">CEO, Kestrel</p>
-                          </div>
-                        </div>
-                        <div class="testimonial-media">
-                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
-                        </div>
-                      </div>
-                      <div class="testimonial_card">
-                        <div class="testimonial_text">
-                          <p class="heading-style-h4 text-weight-light">&ldquo;Hiring Orly was one of our best product decisions. She has a unique talent for translating high-level business goals into a userthat just.&rdquo;</p>
-                          <div class="spacer-small"></div>
-                          <div class="testimonial_author">
-                            <p class="text-size-small text-weight-medium">Sarah Jenkins</p>
-                            <p class="text-size-small">CEO, Kestrel</p>
-                          </div>
-                        </div>
-                        <div class="testimonial-media">
-                          <img loading="lazy" src="/assets/work/cinch/Avatar-898.svg" alt="" class="image-cover" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    {/* 13. Testimonials — home-page layout per QA (image10); purple bg
+         variant replaces home's photo bg. Layout and copy identical. */}
+    <Testimonials bgVariant="purple" />
 
-          {/* 14. projects_wrapper — "Explore more of my work" 3-thumbnail grid.
-               Lives inside the testimonials container in live HTML. */}
-          <div class="padding-section-small" data-cinch-section="other-projects">
-            <div class="projects_wrapper">
-              <div class="projects_heading">
-                <div class="other_projects_graph">
-                  <img loading="lazy" src="/assets/work/cinch/Group-4006.svg" alt="" class="projects_image" />
-                  <div class="divider-horizontal"></div>
-                </div>
-                <h2 class="heading-style-h2">Explore more of my work</h2>
-              </div>
-              <div class="spacer-large"></div>
-              <div class="projects_list">
-                <a href="/my-work/cinch-logistics" aria-current="page" class="projects_item w--current">
-                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
-                </a>
-                <a href="/my-work/fundbox-pay-checkout" class="projects_item">
-                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
-                </a>
-                <a href="/my-work/fundbox-partnerships" class="projects_item">
-                  <img loading="lazy" src="/assets/work/cinch/Project-thumbnail_1.webp" alt="" class="projects_item-image" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    {/* 14. OtherProjects — shared across all case studies.
+         Per QA (image11): proper thumb proportion, per-case bg color,
+         self-tile dimmed, home-style DIVE IN hover. */}
+    <OtherProjects currentSlug="cinch-logistics" bgColor="#662998" />
   </main>
 
-  <Footer slot="footer" />
+  <Footer slot="footer" variant="dark" />
 </BaseLayout>
 
-{/* Jump-to dropdown — static port of live Webflow behavior.
-    Live defaults the dropdown pane to height:0px via inline <style>
-    data-w-id rules, then Webflow JS toggles on click. We mirror that:
-    .work_dropdown.is-open reveals .dropdown-text (CSS transition in
-    global.css). Clicking a link also closes so the user can jump. */}
+{/* Jump-to dropdown — hover-to-open, hover-out to close (per QA).
+    Hover fires on the whole wrapper so moving from the trigger pill
+    down into the menu pane keeps it open. Touch devices get a click
+    fallback since hover isn't reliable there. */}
 <script>
   const dropdowns = document.querySelectorAll<HTMLElement>('.work_dropdown');
   dropdowns.forEach((wrap) => {
-    const trigger = wrap.querySelector<HTMLElement>('.dropdown');
     const pane = wrap.querySelector<HTMLElement>('.dropdown-text');
-    if (!trigger || !pane) return;
+    const trigger = wrap.querySelector<HTMLElement>('.dropdown');
+    if (!pane || !trigger) return;
+
+    // Desktop: hover open/close on the wrapper so the pane stays
+    // reachable from the trigger.
+    wrap.addEventListener('mouseenter', () => wrap.classList.add('is-open'));
+    wrap.addEventListener('mouseleave', () => wrap.classList.remove('is-open'));
+
+    // Touch fallback: tap trigger to open; tap elsewhere to close.
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       wrap.classList.toggle('is-open');
     });
+
+    // Tapping a link inside the pane closes (navigation will follow).
     pane.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', () => wrap.classList.remove('is-open'));
     });

@@ -1,33 +1,24 @@
 // Nav behavior:
 //
 // 1. Swap between absolute (over hero) and fixed (on scroll past hero).
-//    Uses IntersectionObserver on a sentinel at the top of the hero.
-//    Fixed nav appearance is animated with GSAP: short delay in, then
-//    slide-down + fade-in with an `out` ease that starts slow and
-//    settles — far more elegant than a linear CSS transition.
+//    Uses a scroll listener on a sentinel at the top of the page.
+//    Fixed nav appearance is animated with CSS transitions via a
+//    `nav-fixed--shown` class toggle — reliable under HMR and
+//    cold-load scroll restoration.
 //
 // 2. Scroll-spy: highlights the nav link whose target section is
 //    currently in view. Uses a scroll listener (not IntersectionObserver
 //    with a thin rootMargin band, which misses scrollIntoView cases).
 //    Each frame we pick the section whose top is the LARGEST value
 //    that's still ≤ the activation line (viewport top + ~120px).
-import { gsap } from 'gsap';
 
-// ——— Tunables ———
-// Appear: short delay so the swap isn't instant, then 0.45s ease.out
-// (starts fast-ish, settles smoothly). Disappear is snappier (0.25s)
-// so the absolute nav is visible sooner when scrolling back up.
-const APPEAR_DELAY = 0.08;
-const APPEAR_DURATION = 0.45;
-const APPEAR_EASE = 'power2.out';
-const DISAPPEAR_DURATION = 0.25;
-const DISAPPEAR_EASE = 'power2.in';
-// Scroll-spy activation line: sections whose top is ≤ this y value
-// are considered "at the top". We use 1/3 of the viewport so the
-// active link changes as the next section's heading crosses the
-// upper third of the screen — more natural than a tiny offset.
+// Guard against duplicate init when both the module auto-init at the
+// bottom of this file and the component's `<script>` block call
+// initNavScrollSwap(), and when HMR re-runs the module.
+let __navSwapInited = false;
 
 export function initNavScrollSwap(): void {
+  if (__navSwapInited) return;
   const absoluteNav = document.querySelector<HTMLElement>('[data-nav="absolute"]');
   const fixedNav = document.querySelector<HTMLElement>('[data-nav="fixed"]');
   const sentinel = document.querySelector<HTMLElement>('[data-nav-sentinel]');
@@ -36,54 +27,43 @@ export function initNavScrollSwap(): void {
     console.warn('[nav-scroll-swap] Missing nav or sentinel element.');
     return;
   }
+  __navSwapInited = true;
 
-  // ——— Prep fixed nav initial state (GSAP) ———
-  // Hidden off-screen above, not interactive. GSAP `autoAlpha` sets
-  // both opacity + visibility so the hidden state also skips paint.
-  gsap.set(fixedNav, { autoAlpha: 0, yPercent: -100, pointerEvents: 'none' });
-
-  let fixedTween: gsap.core.Tween | null = null;
-
-  const showFixed = () => {
-    fixedTween?.kill();
-    fixedTween = gsap.to(fixedNav, {
-      autoAlpha: 1,
-      yPercent: 0,
-      pointerEvents: 'auto',
-      delay: APPEAR_DELAY,
-      duration: APPEAR_DURATION,
-      ease: APPEAR_EASE,
-      overwrite: true,
-    });
-  };
-
-  const hideFixed = () => {
-    fixedTween?.kill();
-    fixedTween = gsap.to(fixedNav, {
-      autoAlpha: 0,
-      yPercent: -100,
-      pointerEvents: 'none',
-      duration: DISAPPEAR_DURATION,
-      ease: DISAPPEAR_EASE,
-      overwrite: true,
-    });
-  };
+  const showFixed = () => fixedNav.classList.add('nav-fixed--shown');
+  const hideFixed = () => fixedNav.classList.remove('nav-fixed--shown');
 
   // ——— Nav swap ———
-  const swapObserver = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        absoluteNav.classList.remove('hidden');
-        hideFixed();
-      } else {
-        absoluteNav.classList.add('hidden');
-        showFixed();
-      }
-    },
-    { threshold: 0 },
-  );
-  swapObserver.observe(sentinel);
+  // Scroll-based detection: sentinel.top crossing the viewport top.
+  // IntersectionObserver was flaky across cold load + scroll restoration;
+  // a direct scroll read is deterministic and runs per frame anyway.
+  let lastShown = null as boolean | null;
+  const updateSwap = () => {
+    const shouldShowFixed = sentinel.getBoundingClientRect().top < 0;
+    if (shouldShowFixed === lastShown) return;
+    lastShown = shouldShowFixed;
+    if (shouldShowFixed) {
+      absoluteNav.classList.add('hidden');
+      showFixed();
+    } else {
+      absoluteNav.classList.remove('hidden');
+      hideFixed();
+    }
+  };
+  updateSwap();
+
+  // Always wire swap to scroll — even if no scroll-spy pairs exist
+  // (case-study pages have nav links that point to /#home-sections,
+  // not to sections on this page). Scroll-spy handler attaches
+  // separately below when pairs.length > 0.
+  let swapRafScheduled = false;
+  window.addEventListener('scroll', () => {
+    if (swapRafScheduled) return;
+    swapRafScheduled = true;
+    requestAnimationFrame(() => {
+      swapRafScheduled = false;
+      updateSwap();
+    });
+  }, { passive: true });
 
   // ——— Scroll-spy ———
   // Collect [link, sectionEl] pairs, skipping placeholder hrefs like '#'.
@@ -165,7 +145,10 @@ export function initNavScrollSwap(): void {
   const onScroll = () => {
     if (rafScheduled) return;
     rafScheduled = true;
-    requestAnimationFrame(updateActive);
+    requestAnimationFrame(() => {
+      updateSwap();
+      updateActive();
+    });
   };
 
   window.addEventListener('scroll', onScroll, { passive: true });

@@ -1,25 +1,39 @@
 ---
 // Contact form — mirrors live Webflow `#email-form` inside footer_top-content.
-// Lives on the YELLOW footer top, so all text is BLACK and inputs use the
-// `.form_input.black` variant from live CSS:
+// Two variants per QA (image13):
+//   default: yellow footer bg → BLACK text/borders, DARK bg submit button
+//   dark:    dark footer bg  → WHITE text/borders, YELLOW submit button
 //
-//   .form_input {
-//     background-color: transparent;
-//     border: 1px solid #fff;
-//     border-radius: 999px;      /* PILL */
-//     padding: .5rem 1.5rem;
-//     font-size: 1.25rem;
-//     font-weight: 500;
-//   }
-//   .form_input.black {
-//     border-color: black;
-//     color: black;
-//   }
-//
-// Submit button is `.button.is-secondary` = BLACK bg, WHITE text, radius 16px.
+// Live CSS references (default):
+//   .form_input { border: 1px solid #fff; border-radius: 999px; ... }
+//   .form_input.black { border-color: black; color: black; }
+//   .button.is-secondary { background: black; color: white; radius: 16px; }
 //
 // Phase 2: UI only. Stub handler logs payload + reveals success message.
 // Phase 5 deploy task will wire a real handler (Formspree / Netlify / mailto).
+
+interface Props {
+  variant?: 'default' | 'dark';
+}
+
+const { variant = 'default' } = Astro.props;
+const isDark = variant === 'dark';
+
+// Label text color
+const labelColor = isDark ? 'text-white' : 'text-bg';
+// Input text + border + placeholder colors
+const inputClasses = isDark
+  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white placeholder:text-white/80 placeholder:font-light focus:outline-none focus:ring-2 focus:ring-white/20'
+  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20';
+const selectClasses = isDark
+  ? 'w-full rounded-full border border-white bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-white/20 appearance-none bg-no-repeat'
+  : 'w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg focus:outline-none focus:ring-2 focus:ring-bg/20 appearance-none bg-no-repeat';
+// Submit: dark variant uses gold bg (matches image13 top ref); default stays dark.
+const submitClasses = isDark
+  ? 'inline-flex items-center gap-small rounded-2xl bg-yellow-500 px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-yellow-600'
+  : 'inline-flex items-center gap-small rounded-2xl bg-bg px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-bg/90';
+// SVG chevron stroke color matches text
+const chevronStroke = isDark ? 'white' : 'black';
 ---
 <form
   id="email-form"
@@ -33,7 +47,7 @@
   <div class="flex items-center gap-medium">
     <label
       for="contact-name"
-      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0"
+      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0', labelColor]}
     >
       Hey, I&rsquo;m
     </label>
@@ -43,7 +57,7 @@
       name="name"
       placeholder="Your name"
       required
-      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20"
+      class={inputClasses}
     />
   </div>
 
@@ -51,7 +65,7 @@
   <div class="flex items-center gap-medium">
     <label
       for="contact-email"
-      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0 whitespace-nowrap"
+      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0 whitespace-nowrap', labelColor]}
     >
       Please get back to me via
     </label>
@@ -61,7 +75,7 @@
       name="email"
       placeholder="Your email"
       required
-      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg placeholder:text-bg placeholder:font-light focus:outline-none focus:ring-2 focus:ring-bg/20"
+      class={inputClasses}
     />
   </div>
 
@@ -69,7 +83,7 @@
   <div class="flex items-center gap-medium">
     <label
       for="contact-reason"
-      class="font-heading text-xl md:text-2xl font-normal text-bg shrink-0 whitespace-nowrap"
+      class:list={['font-heading text-xl md:text-2xl font-normal shrink-0 whitespace-nowrap', labelColor]}
     >
       I&rsquo;m reaching out about
     </label>
@@ -77,8 +91,8 @@
       id="contact-reason"
       name="reason"
       required
-      class="w-full rounded-full border border-bg bg-transparent px-medium py-xsmall font-heading text-base md:text-xl font-medium text-bg focus:outline-none focus:ring-2 focus:ring-bg/20 appearance-none bg-no-repeat"
-      style="background-image: url(&quot;data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'&gt;&lt;path d='M1 1.5L6 6.5L11 1.5' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/&gt;&lt;/svg&gt;&quot;); background-position: calc(100% - 1.5rem) center;"
+      class={selectClasses}
+      style={`background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='${chevronStroke}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-position: calc(100% - 1.5rem) center;`}
     >
       <option value="placeholder">Please select</option>
       <option value="First">First choice</option>
@@ -87,11 +101,11 @@
     </select>
   </div>
 
-  {/* Submit — .button.is-secondary: black bg, white text, 16px radius */}
+  {/* Submit — default: dark bg; dark variant: gold bg. 16px radius either way. */}
   <div class="mt-small">
     <button
       type="submit"
-      class="inline-flex items-center gap-small rounded-2xl bg-bg px-large py-small font-heading text-base md:text-lg font-bold text-white transition-colors hover:bg-bg/90"
+      class={submitClasses}
     >
       Send it
       <svg
@@ -121,10 +135,10 @@
   </div>
 
   {/* Success / error states — hidden until a real backend is wired in Phase 5 */}
-  <p data-form-success class="hidden font-body text-sm text-bg">
+  <p data-form-success class:list={['hidden font-body text-sm', isDark ? 'text-white' : 'text-bg']}>
     Thank you! Your submission has been received!
   </p>
-  <p data-form-error class="hidden font-body text-sm text-red-800">
+  <p data-form-error class={`hidden font-body text-sm ${isDark ? 'text-red-300' : 'text-red-800'}`}>
     Oops! Something went wrong while submitting the form.
   </p>
 </form>

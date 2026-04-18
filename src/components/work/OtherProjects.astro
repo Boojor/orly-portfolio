@@ -1,0 +1,152 @@
+---
+// "Explore more of my work" — shared across all 3 case studies.
+// Matches QA image11 design spec:
+//   - 3 thumbnails, proportions match home page WorkTile (square on
+//     mobile/tablet, min-height-driven at desktop so they read as
+//     near-square tiles, not wide landscapes)
+//   - Section bg color varies per case study (`bgColor` prop)
+//   - Current-page tile is dimmed via opacity (live `w--current`) but
+//     still shows the "DIVE IN" hover overlay for consistency
+//   - All tiles get the home-page hover overlay
+//
+// Thumbnails are a placeholder `Project-thumbnail_1.webp` on live for
+// every case study (Orly hasn't produced per-project thumbs yet).
+
+interface Project {
+  slug: string;
+  href: string;
+  thumbnail: string;
+  alt: string;
+}
+
+export interface Props {
+  currentSlug: string;
+  bgColor?: string;
+  projects?: Project[];
+}
+
+const defaultProjects: Project[] = [
+  {
+    slug: 'cinch-logistics',
+    href: '/my-work/cinch-logistics',
+    thumbnail: '/assets/work/cinch/Project-thumbnail_1.webp',
+    alt: 'Cinch Logistics case study',
+  },
+  {
+    slug: 'fundbox-pay-checkout',
+    href: '/my-work/fundbox-pay-checkout',
+    thumbnail: '/assets/work/cinch/Project-thumbnail_1.webp',
+    alt: 'Fundbox Pay Checkout case study',
+  },
+  {
+    slug: 'fundbox-partnerships',
+    href: '/my-work/fundbox-partnerships',
+    thumbnail: '/assets/work/cinch/Project-thumbnail_1.webp',
+    alt: 'Fundbox Partnerships case study',
+  },
+];
+
+const { currentSlug, bgColor, projects = defaultProjects } = Astro.props;
+---
+<section
+  class="other-projects text-color-white"
+  style={bgColor ? `background-color: ${bgColor};` : undefined}
+>
+  <div class="padding-global">
+    <div class="container-large">
+      <div class="padding-section-small">
+        <div class="projects_wrapper">
+          <div class="projects_heading">
+            <div class="other_projects_graph">
+              <img loading="lazy" src="/assets/work/cinch/Group-4006.svg" alt="" class="projects_image other-projects_graph-icon" />
+              <div class="divider-horizontal"></div>
+            </div>
+            <h2 class="heading-style-h2">Explore more of my work</h2>
+          </div>
+          <div class="spacer-large"></div>
+          <div class="projects_list">
+            {projects.map((p) => {
+              const isCurrent = p.slug === currentSlug;
+              return (
+                <a
+                  href={p.href}
+                  aria-current={isCurrent ? 'page' : undefined}
+                  class:list={['projects_item', 'other-projects_tile', 'group', isCurrent && 'is-current']}
+                >
+                  <img
+                    loading="lazy"
+                    src={p.thumbnail}
+                    alt={p.alt}
+                    class="projects_item-image"
+                  />
+                  <div class="other-projects_overlay">
+                    <div class="other-projects_dive-in">DIVE IN</div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Tile proportion: 4/3 landscape — matches home page WorkTile
+     (which renders ~632×480 = 1.32 aspect at desktop). Applied at
+     every breakpoint so 3-per-row on desktop and stacked on mobile
+     both read as landscape cards, not square or tall portraits.
+     All tiles render identically (including the current page) so
+     the grid reads as a consistent set; hover overlay fires the
+     same way everywhere. */
+  .other-projects_tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    aspect-ratio: 4 / 3;
+    background-color: rgb(0 0 0 / 0.1);
+  }
+  .other-projects_tile .projects_item-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .other-projects_overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(23 23 23 / 0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  .other-projects_tile:hover .other-projects_overlay,
+  .other-projects_tile:focus-visible .other-projects_overlay {
+    opacity: 1;
+  }
+  /* Current-page tile is dimmed per QA (image11): left-most thumbnail
+     on Cinch page is the Cinch tile, rendered at lower opacity so the
+     grid signals "you are here" while still responding to hover. */
+  .other-projects_tile.is-current .projects_item-image {
+    opacity: 0.45;
+  }
+  .other-projects_dive-in {
+    border: 1px solid #fff;
+    border-radius: 999px;
+    padding: 0.5rem 2rem;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: #fff;
+  }
+  @media (min-width: 768px) {
+    .other-projects_dive-in {
+      font-size: 1.5rem;
+    }
+  }
+</style>

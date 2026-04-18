@@ -213,7 +213,7 @@
      Scroll-spy adds .is-active to the link whose section is in view. */
   .nav-link {
     display: inline-block;
-    color: #fff;
+    color: inherit;
     border: 1px solid transparent;
     border-radius: 999px;
     padding: 0.5rem 1rem;
@@ -225,13 +225,30 @@
     color: var(--color-yellow-500);
   }
 
-  /* Fixed nav: initial state hidden via opacity + visibility only.
-     Do NOT declare transform here — GSAP owns the transform and
-     would otherwise stack its translate on top of ours, leaving
-     the nav stuck off-screen after tweening to yPercent:0. */
+  /* Fixed nav: initial state hidden above viewport, non-interactive.
+     Appears (slides down + fades in) when `.nav-fixed--shown` is added
+     by nav-scroll-swap.ts once the sentinel at top of page scrolls
+     out of view. Pure CSS transition — reliable across HMR and
+     scroll-restoration cold loads. */
   .nav-fixed {
     visibility: hidden;
     opacity: 0;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition:
+      opacity 0.25s ease-in,
+      transform 0.25s ease-in,
+      visibility 0s linear 0.25s;
+  }
+  .nav-fixed.nav-fixed--shown {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+    transition:
+      opacity 0.45s 0.08s ease-out,
+      transform 0.45s 0.08s ease-out,
+      visibility 0s linear 0s;
   }
 
   /* Work tiles (.work_visuals literal port) — responsive sizing.
@@ -394,6 +411,9 @@
   .padding-section-large.no-bottom {
     padding-bottom: 0;
   }
+  .padding-section-large.is-bottom-small {
+    padding-bottom: 2rem;
+  }
   .padding-section-small {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -458,6 +478,7 @@
   .heading-style-h1 {
     font-family: var(--font-heading);
     font-size: 4rem;
+    font-weight: 700;
     line-height: 1.2;
   }
   .heading-style-h2 {
@@ -570,10 +591,12 @@
       max-height: 540px;
     }
   }
+  /* Bigger border radius than live (24px) per QA: trigger should read
+     as a rounded pill when closed, gently rounded panel when open. */
   .work_dropdown {
     border: 1px solid #fff;
     background-color: #2626264d;
-    border-radius: 24px;
+    border-radius: 2.5rem;
     flex-flow: column;
     position: absolute;
     inset: auto 0% 2.5rem auto;
@@ -605,9 +628,13 @@
   .work_dropdown.is-open .dropdown-text {
     display: block;
   }
+  /* Open menu text color is white per QA (image4). Live Webflow inherits
+     from body which is .white-body (black text) — that's a source
+     oversight the design brief calls out. Set explicitly here. */
   .dropdown-padding {
     flex-flow: column;
     padding: 1.125rem 1.5rem;
+    color: #fff;
     display: flex;
   }
   .icon-1x1-small { width: 2rem; height: 2rem; }
@@ -736,18 +763,47 @@
   .work_opportunity_section.text-color-white {
     overflow: hidden;
   }
+  /* Grid ratio + gap tuned per QA (image6): diagram should not
+     dominate, text column narrower, bigger breathing room between
+     them. Live is 1fr 0.75fr + 3.6rem gap; design wants roughly
+     2fr 1fr + 6rem gap. Also cap diagram max-width so it doesn't
+     grow past the reference size at wide viewports. */
+  /* Per QA: text + illustration keep their sizes but are each
+     horizontally centered in their own grid cell. `place-items: center`
+     centers children on both axes; `justify-items: center` alone keeps
+     vertical stretch and centers horizontally. We use the latter so
+     tall text still aligns top-to-bottom while the narrower content
+     is centered inside the column. */
+  /* Per QA: both illustration and text block are horizontally centered
+     within their own grid cell. Columns at equal 1fr 1fr so the text
+     column is wide enough for the narrower text block to have visible
+     side margins and read as centered. */
   .problem_component {
-    column-gap: 3.6rem;
+    column-gap: 6rem;
     row-gap: 3.5rem;
     flex-flow: row;
     grid-template-rows: auto;
-    grid-template-columns: 1fr 0.75fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: flex-start;
-    place-items: center stretch;
+    align-items: center;
+    justify-items: center;
     display: grid;
   }
+  /* Opportunity illustration: preserve size (max-width), center
+     horizontally in its column via the grid's justify-items. */
   .problem_diagram {
-    min-height: 600px;
+    width: 100%;
+    height: auto;
+    max-width: 38rem;
+    object-fit: cover;
+  }
+  /* Text block: capped narrower than the column so the auto-margins
+     produce visible horizontal centering on both sides. */
+  .problem_component > .max-width-small {
+    width: 100%;
+    max-width: 26rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   .p-wrapper {
     column-gap: 0.5rem;
@@ -1017,10 +1073,18 @@
     flex-flow: column;
     display: flex;
   }
+  /* Insight content layout per Figma (node 824-25294):
+       - Left text col: 608px fixed
+       - Gap: 56px (3.5rem)
+       - Right col: flex-1 (the phone card sits inside with its own
+         offset so the grid cell doesn't need to sum the offset).
+     The phone card floats up -48px relative to the section — that
+     negative top means the section's visible area remains tidy while
+     the card pokes above into the pull-quote's negative space. */
   .insight_content {
     column-gap: 3.5rem;
     row-gap: 3.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 608px 1fr;
     place-items: start stretch;
     width: 100%;
     display: grid;
@@ -1031,13 +1095,41 @@
   .wraper_insight-media {
     width: 100%;
     height: 100%;
-    min-height: 435px;
     display: flex;
+    justify-content: flex-start;
     position: relative;
+    overflow: visible;
+    min-height: 0;
+  }
+  /* Phone card: 399px wide, ≈699px tall (image is nearly square at
+     5052×5210 source; cover-scaling into a portrait 5:9 box crops
+     neatly to the delivery timeline UI that's at the top of the
+     mockup). Positioned with top:-48px as in Figma so the card
+     extends above the section's top edge. */
+  .insight-phone-card {
+    position: relative;
+    top: -48px;
+    left: 103px;
+    width: 399px;
+    height: 699px;
+    border-radius: 32px;
+    border: 10px solid rgba(34, 20, 48, 0.3);
+    background-color: #f9fbfe;
+    box-shadow: 78.275px 16.34px 280.825px 0px rgba(174, 12, 231, 0.66);
     overflow: hidden;
   }
-  .image-cover.insight {
+  .insight-phone-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: 50% 0%;
+  }
+  /* Pull-quote purple spans — live uses #c47dff for both
+     .text-span and .text-span-2 (title highlight color per QA). */
+  .text-span,
+  .text-span-2 {
+    color: #c47dff;
   }
   @media (width <= 991px) {
     .image-cover.insight {
@@ -1107,14 +1199,24 @@
     border-radius: 0;
     padding: 0;
   }
+  /* Per QA: laptop in Group-4033.webp sits ~8% right of the image
+     horizontal center, so object-position: 50% leaves it visually
+     right-of-center in the viewport. Shift the image left so the
+     laptop reads as centered. translateX ratio is a % of the
+     container width (≈ 8% offset = 115px at 1440). We use a % so
+     it scales with viewport instead of being a fixed pixel value. */
   .image-solution {
     object-fit: cover;
     object-position: 50% 0%;
     width: 100vw;
     height: 100%;
     max-height: 540px;
+    transform: translateX(-8%);
   }
   @media (width <= 767px) {
+    .image-solution {
+      transform: none;
+    }
     .solution_content {
       flex-flow: column;
     }
@@ -1152,9 +1254,11 @@
   .work_decisions_richtext ul {
     padding-left: 1.25rem;
     margin: 0;
+    list-style: disc outside;
   }
   .work_decisions_richtext li {
     margin-bottom: 0.25rem;
+    display: list-item;
   }
   .work_decisions_media-group {
     column-gap: 3rem;
@@ -1204,10 +1308,34 @@
   }
 
   /* Section 11: visual-system */
+  /* Per QA: visual-system sits on dark bg with the Section.webp
+     texture shown at FULL HEIGHT (not cropped), width auto. We use
+     an <img> in the page markup (.image-bg_work) sized via CSS here
+     rather than background-image + background-size:cover, because
+     bg-size:cover was forcing a crop. The image fills height and
+     scales width proportionally; solid fallback #221430 paints
+     anywhere the image doesn't cover. */
   .work_visual-system_section {
-    background-color: #fff;
+    background-color: #221430;
     position: relative;
     overflow: hidden;
+  }
+  .work_visual-system_section .image_bg_work {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .visual-system_bg-image {
+    position: relative;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    object-position: center;
   }
   .work_visual-system_component {
     z-index: 1;
@@ -1215,11 +1343,14 @@
     display: flex;
     position: relative;
   }
+  /* Per QA (image9): top text wider + left-aligned. Live has it
+     centered + max-width 44rem; design wants the paragraph to
+     stretch across the primary content column. */
   .work_visual-system_typography {
     display: block;
-    text-align: center;
-    max-width: 44rem;
-    margin-left: auto;
+    text-align: left;
+    max-width: 60rem;
+    margin-left: 0;
     margin-right: auto;
   }
   .work_visual-system_colors {
@@ -1301,23 +1432,26 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
   }
 
-  /* Section 12: product */
+  /* Section 12: product — full-bleed dashboard mockup.
+     Per QA: show the image at full height (no crop). Remove the
+     fixed 100vh/max-height sizing and let the image render at its
+     natural aspect ratio (width: 100%, height: auto). */
   .work_product-section {
     background-color: #fff;
     width: 100%;
-    height: 100vh;
-    max-height: 950px;
     position: relative;
     overflow: hidden;
   }
-  @media (width <= 991px) {
-    .work_product-section {
-      aspect-ratio: 3 / 2;
-      height: auto;
-      max-height: none;
-    }
+  .work_product-section > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: static;
+    inset: auto;
+    object-fit: initial;
   }
 
   /* Section 13: testimonials */
@@ -1690,6 +1824,7 @@
     display: block;
     position: absolute;
     inset: 0%;
+    overflow: hidden;
   }
   .image-cover {
     object-fit: cover;
@@ -1697,6 +1832,24 @@
     height: 100%;
     position: absolute;
     inset: 0%;
+  }
+
+  /* Background images in the Insight + Visual-system sections: per QA
+     (attached screenshots), the purple texture image must span the
+     FULL WIDTH of the section — any excess HEIGHT gets clipped by the
+     wrapper's overflow:hidden. Previous cover-fit was cropping the
+     sides on tall containers.
+     SCOPED to these two sections only — the hero (also uses
+     .background-image-wrapper) needs the original cover-fit so the
+     rock below the computer stays visible. */
+  .work_insight_section .background-image-wrapper > .image-cover,
+  .work_visual-system_section .image_bg_work > .image-cover {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    inset: 0 0 auto 0;
   }
 }
 

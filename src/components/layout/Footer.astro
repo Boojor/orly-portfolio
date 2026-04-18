@@ -1,42 +1,62 @@
 ---
-// Footer — mirrors live Webflow `.footer_component` exactly.
-// Two-tone:
-//   1. footer_top-content:  YELLOW-500 bg + BLACK text. H2 "Let's work together"
-//      with decorative SVG floating above it, paragraph, and contact form.
-//   2. footer_bottom-content: GRAY-900 bg + WHITE text. Phone + email inline
-//      with icons + copyright line.
+// Footer — mirrors live Webflow `.footer_component` with a `variant`
+// swap for internal (case-study) pages per QA (image12/image13):
+//   default (home):
+//     - top bg yellow, text dark, decorative footer.svg ornament
+//     - form submit button dark bg + white text
+//   dark (case study):
+//     - top bg dark gray-900, text white, NO ornament
+//     - form submit button YELLOW bg + white text
+//     - form field text/borders recolored to be readable on dark
 //
-// Live CSS references:
+// Live CSS references (default/light variant):
 //   .footer_top-content { background-color: yellow-500; color: black; }
 //   .footer_bottom-content { background-color: gray-900; }
 //   .footer_svg { position: absolute; inset: -116px 0% auto 196px;
 //                 width: 126px; } (desktop)
 import ContactForm from '../home/ContactForm.astro';
 import { contact, site } from '../../config';
+
+interface Props {
+  variant?: 'default' | 'dark';
+}
+
+const { variant = 'default' } = Astro.props;
+const isDark = variant === 'dark';
+const topBg = isDark ? 'bg-bg' : 'bg-yellow-500';
+const topText = isDark ? 'text-white' : 'text-bg';
+const topHeadingColor = isDark ? 'text-white' : 'text-bg';
+const topParaColor = isDark ? 'text-white/80' : 'text-bg/80';
 ---
 <footer id="contact" class="text-white">
-  {/* Top section — yellow with black text */}
-  <div class="bg-yellow-500 text-bg">
+  {/* Top section — yellow/light on home, dark on case study pages */}
+  <div class:list={[topBg, topText]}>
     <div class="px-small md:px-large py-section-large">
       <div class="mx-auto max-w-site-xlarge">
         <div class="flex flex-col gap-large lg:grid lg:grid-cols-2 lg:gap-xlarge">
-          {/* Left: heading + svg + paragraph */}
+          {/* Left: heading + ornament SVG + paragraph. Ornament is hidden
+              on case-study pages per QA: "remove the ornament only in
+              internal pages". */}
           <div class="flex flex-col">
-            {/* Wrapper is relative so the decorative SVG can float above the heading */}
             <div class="relative">
               <h2
-                class="font-heading text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-[1.05] font-black capitalize text-bg"
+                class:list={[
+                  'font-heading text-[2.5rem] md:text-[3.5rem] xl:text-[4.5rem] leading-[1.05] font-black capitalize',
+                  topHeadingColor,
+                ]}
               >
                 Let&rsquo;s work together
               </h2>
-              <img
-                src="/assets/footer/footer.svg"
-                alt=""
-                loading="lazy"
-                class="pointer-events-none absolute h-16 w-16 md:h-20 md:w-20 xl:h-[126px] xl:w-[126px] -top-16 right-0 md:-top-24 md:right-4 xl:-top-[116px] xl:left-[196px] xl:right-auto"
-              />
+              {!isDark && (
+                <img
+                  src="/assets/footer/footer.svg"
+                  alt=""
+                  loading="lazy"
+                  class="pointer-events-none absolute h-16 w-16 md:h-20 md:w-20 xl:h-[126px] xl:w-[126px] -top-16 right-0 md:-top-24 md:right-4 xl:-top-[116px] xl:left-[196px] xl:right-auto"
+                />
+              )}
             </div>
-            <p class="mt-medium max-w-site-medium font-body text-base md:text-lg text-bg/80 leading-relaxed">
+            <p class:list={['mt-medium max-w-site-medium font-body text-base md:text-lg leading-relaxed', topParaColor]}>
               I love meeting new people and hearing about interesting problems.
               Drop me a line.
             </p>
@@ -44,7 +64,7 @@ import { contact, site } from '../../config';
 
           {/* Right: form */}
           <div class="w-full">
-            <ContactForm />
+            <ContactForm variant={variant} />
           </div>
         </div>
       </div>
