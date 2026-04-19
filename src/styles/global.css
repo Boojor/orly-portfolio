@@ -1842,6 +1842,12 @@
     background-color: var(--color-navy-dark);
     z-index: 1;
   }
+  /* Partnerships problem variant — literal port of
+     orly-website.webflow.css:3250 (`.work_problem_section.text-color-white.is-color-gray800`). */
+  .work_problem_section.is-color-gray800 {
+    background-color: var(--color-gray-800);
+    z-index: 1;
+  }
   /* .problem_diagram in Fundbox context needs min-height 600px (live rule)
      to anchor the illustration.svg at its intended size. Scoped to
      .fundux_problem_component so Cinch's .problem_component sizing
@@ -2416,6 +2422,20 @@
       var(--color-brand-blue-500) 50%,
       var(--color-navy-dark)
     );
+  }
+
+  /* Partnerships testimonials + OtherProjects shared gray-800 wrapper —
+     literal port of orly-website.webflow.css:2082
+     (`.work_testimonials_section.text-color-white.is-bg-gray800`). */
+  .work_testimonials_section.is-bg-gray800 {
+    background-color: var(--color-gray-800);
+  }
+
+  /* Partnerships hero variant — literal port of
+     orly-website.webflow.css:2435 (`.work_hero_section.is-fundbox`). */
+  .work_hero_section.is-fundbox {
+    background-color: var(--color-gray-800);
+    overflow: hidden;
   }
 
   /* Helper: show/hide at tablet-landscape breakpoint (767px) */

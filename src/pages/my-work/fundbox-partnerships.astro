@@ -42,7 +42,7 @@ const CINCH_ASSETS = '/assets/work/cinch';
          bottom of the frame (unlike cinch which uses plain .image-cover).
          ratio90-49 forces a 90:49 aspect on the bg wrapper. */}
     <ScrollNavSwapper />
-    <header class="work_hero_section" data-partnerships-section="hero">
+    <header class="work_hero_section is-fundbox" data-partnerships-section="hero">
       <div class="padding-global">
         <div class="container-large">
           <div class="hero-content">
@@ -356,12 +356,17 @@ const CINCH_ASSETS = '/assets/work/cinch';
       </div>
     </header>
 
-    {/* 9. Testimonials — same layout as cinch/fundbox-pay-checkout, purple bg
-         variant. If live uses a different accent color we'll swap in Batch 4. */}
-    <Testimonials bgVariant="purple" />
-
-    {/* 10. OtherProjects — shared across all case studies. */}
-    <OtherProjects currentSlug="fundbox-partnerships" bgColor="var(--color-purple-jam)" />
+    {/* 9 + 10. Testimonials + OtherProjects — wrapped in a shared
+         gray-800 container matching live's
+         .work_testimonials_section.text-color-white.is-bg-gray800
+         (orly-website.webflow.css:2082). Both blocks render against
+         one unified dark background, so <Testimonials bgVariant="none">
+         and OtherProjects bgColor="transparent" let the wrapper show
+         through. Same pattern as Pay Checkout's blue-gradient wrapper. */}
+    <div class="work_testimonials_section text-color-white is-bg-gray800">
+      <Testimonials bgVariant="none" />
+      <OtherProjects currentSlug="fundbox-partnerships" bgColor="transparent" />
+    </div>
   </main>
 
   <Footer slot="footer" variant="dark" />
