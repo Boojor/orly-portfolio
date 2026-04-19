@@ -155,9 +155,38 @@ const CINCH_ASSETS = '/assets/work/cinch';
       </div>
     </header>
 
-    {/* 5. work_problem_section — "My Approach: UX Archaeology" — NEW in Batch 2.
-         Placeholder so overall page heights line up during visual-diff. */}
-    <header class="work_problem_section text-color-white is-color-gray800" data-partnerships-section="problem" data-todo="batch-2"></header>
+    {/* 5. work_problem_section — "My Approach: UX Archaeology".
+         Dark gray bg (is-color-gray800), white text. Left column:
+         illustration_1.svg diagram. Right column: heading + intro + bullet
+         questions + closing paragraph. blur_3.webp positioned absolutely
+         bottom-right behind content for depth. */}
+    <header class="work_problem_section text-color-white is-color-gray800" data-partnerships-section="problem">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="fundux_problem_component vertical">
+              <img src={`${ASSETS}/illustration_1.svg`} loading="lazy" alt="" class="problem_diagram" />
+              <div class="max-width-small">
+                <h2 class="heading-style-h2 project-page">My Approach: UX Archaeology</h2>
+                <div class="spacer-xsmall"></div>
+                <p>To fill the research gap, I developed what I came to call &ldquo;UX Archaeology&rdquo; reverse-engineering the partner&rsquo;s existing UI patterns.</p>
+                <div class="spacer-xsmall"></div>
+                <div class="w-richtext">
+                  <p>The questions I ask:</p>
+                  <ul role="list">
+                    <li>What does this platform&rsquo;s current flow assume about user context and attention?</li>
+                    <li>Where does the partner already own the trust relationship?</li>
+                    <li>What interaction patterns do their users take for granted?</li>
+                  </ul>
+                  <p>From there, I&rsquo;d deconstruct Fundbox&rsquo;s product into its core decision moments and rebuild the experience to match the partner&rsquo;s existing narrative.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img src={`${ASSETS}/blur_3.webp`} loading="lazy" alt="" class="problem_image-blur-dark" />
+    </header>
 
     {/* 6. work_in-context_section (eBay) — "Financing as Commerce Behavior" — NEW in Batch 3. */}
     <header class="work_in-context_section overflow-hidden" data-partnerships-section="in-context-ebay" data-todo="batch-3"></header>

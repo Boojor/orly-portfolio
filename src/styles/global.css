@@ -2918,6 +2918,74 @@
     object-position: 50% 50%;
     inset: 0 0 auto 0;
   }
+
+  /* ===========================================================================
+     FUNDBOX PARTNERSHIPS case-study page — port of
+     orly-website.webflow/my-work/untitled-extending-fundbox-through-
+     strategic-partnerships.html.
+     =========================================================================== */
+
+  /* Section 5 — UX Archaeology (work_problem_section with fundux_problem_component)
+     Grid at desktop: 1fr .5fr (diagram narrower, text wider). Has a
+     .vertical modifier that Webflow uses at tablet+ (per live rule at
+     orly-website.webflow.css line 4743) to flip to flex-column. */
+  .fundux_problem_component {
+    grid-column-gap: 3.5rem;
+    grid-row-gap: 3.5rem;
+    flex-flow: row;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr .5fr;
+    grid-auto-columns: 1fr;
+    justify-content: flex-start;
+    place-items: center stretch;
+    display: grid;
+  }
+
+  /* Diagram (illustration_1.svg) — 600px min-height keeps the SVG
+     visible at desktop without the grid cell collapsing. Scoped to
+     .fundux_problem_component so it doesn't affect Cinch's own
+     .problem_diagram rule above. */
+  .fundux_problem_component .problem_diagram {
+    min-height: 600px;
+  }
+
+  /* blur_3.webp absolute-positioned bottom-right of the section, z-index
+     behind content. Same pattern as cinch's .image-blur / fundbox's
+     .opportunity_image-blur. */
+  .problem_image-blur-dark {
+    z-index: -1;
+    position: absolute;
+    bottom: -37%;
+    left: auto;
+    right: -35%;
+  }
+
+  @media (width <=991px) {
+    /* Tablet: grid goes 1fr 1fr (equal), BUT .vertical swaps to flex-col. */
+    .fundux_problem_component {
+      grid-template-columns: 1fr 1fr;
+    }
+    .fundux_problem_component.vertical {
+      flex-flow: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      display: flex;
+    }
+    /* Release fixed min-height so diagram can shrink proportionally. */
+    .fundux_problem_component .problem_diagram {
+      min-height: auto;
+    }
+  }
+
+  @media (width <=767px) {
+    /* Mobile: single column flex stack. */
+    .fundux_problem_component {
+      grid-row-gap: 3.6rem;
+      flex-flow: column;
+      grid-template-columns: 1fr;
+      display: flex;
+    }
+  }
 }
 
 /* Unlayered rules — Tailwind v4 `@layer utilities` applies a custom
