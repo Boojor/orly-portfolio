@@ -1,0 +1,200 @@
+---
+// Case study page — literal port of
+// orly-website.webflow/my-work/untitled-extending-fundbox-through-strategic-partnerships.html
+// Deployed: https://orly-website.webflow.io/my-work/untitled-extending-fundbox-through-strategic-partnerships
+// Local route: /my-work/fundbox-partnerships (clean slug; matches config.ts + OtherProjects).
+//
+// Body is light themed (.white-body), nav uses light variant — same as the
+// other two case-study pages.
+//
+// Built in 4 batches (see plan at ~/.claude/plans/great-now-review-the-sparkling-cake.md):
+//   Batch 1 (this commit): assets + shared sections 1-4 + 9 + placeholder
+//                          <header>s for sections 5-8.
+//   Batch 2: work_problem_section with fundux_problem_component (UX Archaeology).
+//   Batch 3: 3x work_in-context_section (eBay / Synchrony / Stripe partner cases).
+//   Batch 4: polish + heatmap sweep at all 5 BPs.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/layout/Nav.astro';
+import MobileNav from '../../components/layout/MobileNav.astro';
+import Footer from '../../components/layout/Footer.astro';
+import ScrollNavSwapper from '../../components/layout/ScrollNavSwapper.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
+import OtherProjects from '../../components/work/OtherProjects.astro';
+
+const ASSETS = '/assets/work/fundbox-partnerships';
+// Shared Webflow icons live under /assets/work/cinch (first case study that
+// imported them). Mobile-phone.svg, footer.svg, NAVBARLOGO.svg etc. are
+// served via the Nav/Footer components directly and don't need re-import.
+const CINCH_ASSETS = '/assets/work/cinch';
+---
+
+<BaseLayout
+  title="Extending Fundbox Through Strategic Partnerships"
+  bodyClass="white-body"
+  showHeroBg={false}
+>
+  <Nav slot="nav" variant="light" />
+  <MobileNav />
+
+  <main>
+    {/* 1. work_hero_section — "Jump to" dropdown + full-bleed PARTNER_1.png
+         bg. Live: .image-cover.contain.bottom pins the hero photo to the
+         bottom of the frame (unlike cinch which uses plain .image-cover).
+         ratio90-49 forces a 90:49 aspect on the bg wrapper. */}
+    <ScrollNavSwapper />
+    <header class="work_hero_section" data-partnerships-section="hero">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="hero-content">
+            <div class="work_dropdown">
+              <div class="dropdown">
+                <img src={`${CINCH_ASSETS}/2222.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+                <div class="text-size-small">Jump to</div>
+                <img src={`${CINCH_ASSETS}/Arrow-Dot-Down-1-Streamline-Streamline-Regular-3.0.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+                <img src={`${CINCH_ASSETS}/Arrow-Thick-Down-4-Streamline-Streamline-Regular-3.0.svg`} loading="lazy" alt="" class="icon-1x1-small" />
+              </div>
+              <div class="dropdown-text">
+                <div class="dropdown-padding">
+                  {/* Option 1-4 are placeholder labels in live source — port literally per CLAUDE.md rule.
+                      TODO(content): real jump-to targets once anchors are wired. */}
+                  <a href="#" class="section_link">Option 1</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 2</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 3</a>
+                  <div class="line-fill"></div>
+                  <a href="#" class="section_link">Option 4</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="background-image-wrapper ratio90-49">
+        <img loading="eager" src={`${ASSETS}/PARTNER_1.png`} alt="" class="image-cover contain bottom" />
+      </div>
+    </header>
+
+    {/* 2. work_case-intro_section — H1 + subtitle + meta list + tag pills.
+         Copy lifted verbatim from the live export. */}
+    <header class="work_case-intro_section" data-partnerships-section="case-intro">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large work">
+            <div class="max-width-xlarge">
+              <h1 class="heading-style-h1">Extending Fundbox Through Strategic Partnerships</h1>
+              <div class="spacer-xxsmall"></div>
+              <p class="heading-style-h4">Designed Fundbox to feel native inside other products - often in under a week.</p>
+            </div>
+            <div class="spacer-large"></div>
+            <div class="divider-horizontal"></div>
+            <div class="spacer-large"></div>
+            <div class="case_meta">
+              <div class="case_meta-list">
+                <div class="meta-text">
+                  <p class="text-weight-bold">Product Context</p>
+                  <p>Web &amp; Mobile apps</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">End Users</p>
+                  <p>Partner executives evaluating Fundbox integration</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Project Duration</p>
+                  <p>1-2 weeks</p>
+                </div>
+                <div class="meta-text">
+                  <p class="text-weight-bold">Industry</p>
+                  <p>Fintech  ·  B2B Payments  ·  Strategic Partnerships</p>
+                </div>
+              </div>
+              <div class="case_tags">
+                <div class="tag"><div class="text-truncate">UX strategy</div></div>
+                <div class="tag"><div class="text-truncate">Persona definition</div></div>
+                <div class="tag"><div class="text-truncate">Information Architecture</div></div>
+                <div class="tag"><div class="text-truncate">Journey mapping</div></div>
+                <div class="tag"><div class="text-truncate">Visual design</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 3. work_outcome_section — Pic_1.webp featured image. */}
+    <header class="work_outcome_section" data-partnerships-section="outcome">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-small">
+            <div class="case_media">
+              <img src={`${ASSETS}/Pic_1.webp`} loading="lazy" alt="" class="outcome-product" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 4. work_context_section — "What is Fundbox Partnerships?" narrative. */}
+    <header class="work_context_section" data-partnerships-section="context">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="context_component">
+              <div class="case_component-info">
+                <h2 class="heading-style-h2 project-page">What is Fundbox Partnerships?</h2>
+                <div class="spacer-xsmall"></div>
+                <div class="p-wrapper">
+                  <p>Fundbox helps small businesses access credit. <br />As Fundbox matured, growth shifted from direct acquisition to strategic partnerships, embedding credit capabilities inside platforms customers already trusted. eBay, Stripe, Synchrony. <br /></p>
+                  <p>These weren&rsquo;t marketing integrations. They were product extensions. I was Lead Designer for partnership concepts, owning UX strategy, flow design, and high-fidelity prototypes alongside Sales, Product, and Engineering.</p>
+                </div>
+              </div>
+              <p class="heading-style-h4"><span class="text-weight-semibold">How to make a mature fintech product feel native inside someone else&rsquo;s ecosystem</span> with 48-72 hour turnarounds. The prototypes I created were used in executive pitch meetings, aligned internal teams around a shared vision, and directly informed the UX patterns we shipped in Fundbox Pay Checkout.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {/* 5. work_problem_section — "My Approach: UX Archaeology" — NEW in Batch 2.
+         Placeholder so overall page heights line up during visual-diff. */}
+    <header class="work_problem_section text-color-white is-color-gray800" data-partnerships-section="problem" data-todo="batch-2"></header>
+
+    {/* 6. work_in-context_section (eBay) — "Financing as Commerce Behavior" — NEW in Batch 3. */}
+    <header class="work_in-context_section overflow-hidden" data-partnerships-section="in-context-ebay" data-todo="batch-3"></header>
+
+    {/* 7. work_in-context_section (Synchrony) — "Mobile-First for the Field" — NEW in Batch 3. */}
+    <header class="work_in-context_section overflow-hidden" data-partnerships-section="in-context-synchrony" data-todo="batch-3"></header>
+
+    {/* 8. work_in-context_section (Stripe) — "Invisible Finance for Power Users" — NEW in Batch 3. */}
+    <header class="work_in-context_section" data-partnerships-section="in-context-stripe" data-todo="batch-3"></header>
+
+    {/* 9. Testimonials — same layout as cinch/fundbox-pay-checkout, purple bg
+         variant. If live uses a different accent color we'll swap in Batch 4. */}
+    <Testimonials bgVariant="purple" />
+
+    {/* 10. OtherProjects — shared across all case studies. */}
+    <OtherProjects currentSlug="fundbox-partnerships" bgColor="var(--color-purple-jam)" />
+  </main>
+
+  <Footer slot="footer" variant="dark" />
+</BaseLayout>
+
+{/* Jump-to dropdown — hover-to-open, hover-out to close (per QA).
+    Hover fires on the whole wrapper so moving from the trigger pill
+    down into the menu pane keeps it open. Touch devices get a click
+    fallback since hover isn't reliable there.
+    Identical behavior to cinch-logistics.astro. */}
+<script>
+  const dropdowns = document.querySelectorAll<HTMLElement>('.work_dropdown');
+  dropdowns.forEach((wrap) => {
+    const pane = wrap.querySelector<HTMLElement>('.dropdown-text');
+    const trigger = wrap.querySelector<HTMLElement>('.dropdown');
+    if (!pane || !trigger) return;
+    wrap.addEventListener('mouseenter', () => pane.classList.add('is-open'));
+    wrap.addEventListener('mouseleave', () => pane.classList.remove('is-open'));
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      pane.classList.toggle('is-open');
+    });
+  });
+</script>
